@@ -26,4 +26,9 @@ public class PlayerController : MonoBehaviour
         float moveDirection = Input.GetAxisRaw("Horizontal");
         rigidbody2D.linearVelocityX = moveSpeed * moveDirection;
     }
+
+    public void MoveCharacter(Transform destination)
+    {
+        transform.position = destination.position;
+    }
 }
