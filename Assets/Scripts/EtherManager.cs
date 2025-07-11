@@ -24,4 +24,8 @@ public class EtherManager : MonoBehaviour
     }
 
     public int GetEtherCount() { return etherCount; }
+
+    void Update(){
+        // TODO : 에테르의 갯수에 비례하여 캐릭터 채력 지속적으로 감소 시키기
+    }
 }

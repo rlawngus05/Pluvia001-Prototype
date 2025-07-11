@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VisualEffectManager : MonoBehaviour
+public class ScreenEffectManager : MonoBehaviour
 {
-    public static VisualEffectManager Instance { get; private set; }
+    public static ScreenEffectManager Instance { get; private set; }
 
     [SerializeField] private List<AnimationCurve> easingCurves;
     [SerializeField] private GameObject fadePanel;
@@ -27,7 +27,7 @@ public class VisualEffectManager : MonoBehaviour
     public Coroutine FadeIn(float duration = 1.0f, EasingType easingType = EasingType.EaseInOut)
     {
         if (currentFadeCoroutine != null) StopCoroutine(currentFadeCoroutine);
-        currentFadeCoroutine = StartCoroutine(FadeRoutine(0f, 1f, duration, easingCurves[(int)easingType]));
+        currentFadeCoroutine = StartCoroutine(FadeRoutine(0f, 1f, duration, easingType));
 
         return currentFadeCoroutine;
     }
@@ -36,15 +36,16 @@ public class VisualEffectManager : MonoBehaviour
     public Coroutine FadeOut(float duration = 1.0f, EasingType easingType = EasingType.EaseInOut)
     {
         if (currentFadeCoroutine != null) StopCoroutine(currentFadeCoroutine);
-        currentFadeCoroutine = StartCoroutine(FadeRoutine(1f, 0f, duration, easingCurves[(int)easingType]));
+        currentFadeCoroutine = StartCoroutine(FadeRoutine(1f, 0f, duration, easingType));
 
         return currentFadeCoroutine;
     }
 
-    private IEnumerator FadeRoutine(float startAlpha, float endAlpha, float duration, AnimationCurve easingCurve)
+    private IEnumerator FadeRoutine(float startAlpha, float endAlpha, float duration, EasingType easingType)
     {
         float elapsed = 0f;
         CanvasGroup canvasGroup = fadePanel.GetComponent<CanvasGroup>();
+        AnimationCurve easingCurve = easingCurves[(int)easingType];
 
         fadePanel.SetActive(true);
 
@@ -79,6 +80,7 @@ public class VisualEffectManager : MonoBehaviour
     // }
 }
 
+//* easingCurves 리스트에서 각각의 인덱스에 있는 animationCurve와 의미가 일대일대응임.
 public enum EasingType
 {
     EaseInOut,

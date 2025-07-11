@@ -15,13 +15,13 @@ public class Door : MonoBehaviour, IInteractable
 
     private IEnumerator TransitionRoutine()
     {
-        yield return VisualEffectManager.Instance.FadeIn(0.5f);
+        yield return ScreenEffectManager.Instance.FadeIn(0.5f);
 
         PlayerController.Instance.MoveCharacter(destinationPoint);
         CameraManager.Instance.ChangeConfiner(destinationCameraConfiner);
 
         yield return new WaitForSecondsRealtime(0.5f);
 
-        VisualEffectManager.Instance.FadeOut(0.5f);
+        ScreenEffectManager.Instance.FadeOut(0.5f);
     }
 }
