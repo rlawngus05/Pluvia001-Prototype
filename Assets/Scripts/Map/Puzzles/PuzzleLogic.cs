@@ -11,7 +11,9 @@ abstract public class PuzzleLogic : MonoBehaviour
 
     virtual public void OnSolved()
     {
-        onSolvedEvents.Invoke();                                                                    
+        onSolvedEvents.Invoke();
+
+        EtherManager.Instance.AddEtherCount();
     }
     
     public void AddOnSolvedEvent(UnityAction action){
