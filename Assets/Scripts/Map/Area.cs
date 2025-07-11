@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Area : MonoBehaviour
 {
-    [SerializeField] private Collider2D boundary;
+    private CompositeCollider2D boundary;
+    [SerializeField] private List<Door> doors; 
 }
