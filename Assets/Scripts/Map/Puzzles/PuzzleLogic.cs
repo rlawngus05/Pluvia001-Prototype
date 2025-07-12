@@ -16,6 +16,9 @@ abstract public class PuzzleLogic : MonoBehaviour
 
     abstract public void Init();
 
+    //* 기획서에 이 파트 추가하기
+    abstract public void CheckCorretion();
+
     virtual public void OnSolved()
     {
         onSolvedEvents.Invoke();
