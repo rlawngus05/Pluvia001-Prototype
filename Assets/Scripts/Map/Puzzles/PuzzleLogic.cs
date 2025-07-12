@@ -7,6 +7,13 @@ abstract public class PuzzleLogic : MonoBehaviour
     private bool isSolved;
     [SerializeField] private UnityEvent onSolvedEvents;
 
+    private void Awake()
+    {
+        isSolved = true;
+
+        Init();
+    }
+
     abstract public void Init();
 
     virtual public void OnSolved()
