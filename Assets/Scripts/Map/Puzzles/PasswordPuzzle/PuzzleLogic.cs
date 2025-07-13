@@ -9,7 +9,7 @@ abstract public class PuzzleLogic : MonoBehaviour
 
     private void Awake()
     {
-        isSolved = true;
+        isSolved = false;
 
         Init();
     }
@@ -22,6 +22,8 @@ abstract public class PuzzleLogic : MonoBehaviour
     virtual public void OnSolved()
     {
         onSolvedEvents.Invoke();
+
+        isSolved = true;
 
         EtherManager.Instance.AddEtherCount();
     }

@@ -1340,7 +1340,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b44f2b7c2908b14b9fa21d67abc81c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GUI: {fileID: 2032706882}
+  GUI: {fileID: 2032706884}
 --- !u!212 &1120875754
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2428,6 +2428,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2032706883}
   - component: {fileID: 2032706884}
+  - component: {fileID: 2032706885}
   m_Layer: 5
   m_Name: PassWordPuzzleUI
   m_TagString: Untagged
@@ -2469,6 +2470,19 @@ MonoBehaviour:
   m_WorldSpaceSizeMode: 1
   m_WorldSpaceWidth: 1920
   m_WorldSpaceHeight: 1080
+--- !u!114 &2032706885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2032706882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c736329b63a35244a8b0f5027d30feba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _puzzleLogic: {fileID: 9552633}
 --- !u!1 &2096157338
 GameObject:
   m_ObjectHideFlags: 0

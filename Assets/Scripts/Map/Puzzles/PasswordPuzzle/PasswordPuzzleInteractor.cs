@@ -1,18 +1,29 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PasswordPuzzleInteractor : MonoBehaviour, IInteractable
 {
-    [SerializeField] private GameObject GUI;
+    [SerializeField] private UIDocument GUI;
+    private VisualElement _root;
+    
+    private void Awake()
+    {
+        _root = GUI.rootVisualElement;
+    }
 
     public void Interact()
     {
-        if (GUI.activeSelf)
+        if (_root.style.display == DisplayStyle.Flex)
         {
-            GUI.SetActive(false);
+            CloseUI();
         }
         else
         {
-            GUI.SetActive(true);
+            OpenUI();
         }
     }
+
+    public void OpenUI() { _root.style.display = DisplayStyle.Flex; }
+
+    public void CloseUI() { _root.style.display = DisplayStyle.None; }
 }
