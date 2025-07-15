@@ -2,23 +2,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-abstract public class PuzzleLogic : MonoBehaviour
+abstract public class PuzzleLogic : MonoBehaviour, IInitializableObject
 {
-    private bool isSolved;
+    protected bool isSolved;
+    public bool IsSolved => isSolved;
+
     [SerializeField] private UnityEvent onSolvedEvents;
 
     private void Awake()
     {
-        isSolved = true;
+        isSolved = false;
 
-        Init();
+        // Init();
     }
 
     abstract public void Init();
 
+    abstract public void CheckCorrection();
+
     virtual public void OnSolved()
     {
         onSolvedEvents.Invoke();
+
+        isSolved = true;
 
         EtherManager.Instance.AddEtherCount();
     }
