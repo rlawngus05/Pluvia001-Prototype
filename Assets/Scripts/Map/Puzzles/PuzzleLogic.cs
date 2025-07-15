@@ -9,7 +9,7 @@ abstract public class PuzzleLogic : MonoBehaviour, IInitializableObject
 
     [SerializeField] private UnityEvent onSolvedEvents;
 
-    private void Awake()
+    virtual protected void Awake()
     {
         isSolved = false;
 

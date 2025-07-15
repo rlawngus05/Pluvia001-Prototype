@@ -11,8 +11,10 @@ public class PasswordPuzzleLogic : PuzzleLogic
     private List<Action<int>> _digitNumberChangeObervers;
     private List<Action<DigitState>> _digitStateChangeObservers;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         _answerDigits = new int[4];
 
         _digitNumberChangeObervers = new List<Action<int>>();
