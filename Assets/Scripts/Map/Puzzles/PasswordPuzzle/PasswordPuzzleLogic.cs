@@ -2,31 +2,29 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PasswordPuzzle : PuzzleLogic
+public class PasswordPuzzleLogic : PuzzleLogic
 {
     //* _answerDigits와 _inputDigits의 배열의 크기는 동일해야 한다.
     [SerializeField] private int[] _answerDigits;
     [SerializeField] private int[] _inputDigits;
     [SerializeField] private int _remainingChance;
-    private List<Action<int>> _digitNumberChangeObervers = new List<Action<int>>(); //! 이 부분 따로 리펙토링하기
-    private List<Action<DigitState>> _digitStateChangeObservers = new List<Action<DigitState>>();
-    bool isFirstInit = true;
-    //! Awake()함수가 PasswordPuzzleUIScript의 Awake()함수와 동시에 실행되어서, 초기화 순서 문제로 이걸 사용하는 변수임
-    //! 다른 좋은 방법으로 리펙토링 할 수 있는지 확인하기
+    private List<Action<int>> _digitNumberChangeObervers;
+    private List<Action<DigitState>> _digitStateChangeObservers;
+
+    private void Awake()
+    {
+        _answerDigits = new int[4];
+
+        _digitNumberChangeObervers = new List<Action<int>>();
+        _digitStateChangeObservers = new List<Action<DigitState>>();
+    }
 
     [ContextMenu("Init")]
     public override void Init()
     {
-        if (isFirstInit)
+        foreach (Action<int> action in _digitNumberChangeObervers)
         {
-            _answerDigits = new int[4];
-        }
-        else
-        {
-            foreach (Action<int> action in _digitNumberChangeObervers)
-            {
-                action(0);
-            }
+            action(0);
         }
 
         _inputDigits = new int[] { 0, 0, 0, 0 };
@@ -34,26 +32,20 @@ public class PasswordPuzzle : PuzzleLogic
         {
             _answerDigits[i] = UnityEngine.Random.Range(0, 9 + 1);
 
-            if (!isFirstInit)
-            {
-                _digitStateChangeObservers[i](DigitState.Init);
-            }
+            _digitStateChangeObservers[i](DigitState.Init);
         }
 
         _remainingChance = 6;
-
-        isFirstInit = false;
     }
 
     [ContextMenu("CheckCorrection")]
-    public override void CheckCorretion()
+    public override void CheckCorrection()
     {
         bool isCorrect = true;
 
-        //* 정답 비밀번호와 입력 비밀번호가 일치 한지 확인한다.
-        //* 정답 비밀번호와 입력 비밀번호의 차를 구하여, 각각의 번호판의 상태를 변경한다.
         for (int i = 0; i < _inputDigits.Length; i++)
         {
+            //* 정답 비밀번호와 입력 비밀번호가 일치한지 확인한다.
             if (_inputDigits[i] != _answerDigits[i])
             {
                 isCorrect = false;
@@ -62,6 +54,7 @@ public class PasswordPuzzle : PuzzleLogic
             int difference = Math.Abs(_inputDigits[i] - _answerDigits[i]);
             DigitState digitState;
 
+            //* 정답 비밀번호와 입력 비밀번호의 차를 구하여, 각각의 번호판의 상태를 변경한다.
             if (difference == 0)
             {
                 digitState = DigitState.Correct;
@@ -104,12 +97,6 @@ public class PasswordPuzzle : PuzzleLogic
         }
     }
 
-    //* 상승, 하강 버튼 눌렀을때, UI에 CallBack 메시지를 보낼 Observer를 입력 받는 메소드
-    public void AddDigitNumberChangeObserver(Action<int> observerEvent)
-    {
-        _digitNumberChangeObervers.Add(observerEvent);
-    }
-
     //* 상승 버튼 UI 눌렀을때, index 위치의 숫자를 1증가 시킴
     public void OnUpBottonPressed(int index)
     {
@@ -128,7 +115,13 @@ public class PasswordPuzzle : PuzzleLogic
         }
     }
 
-    //* 번호판 UI의 상태를 변경함 -> 색깔 변화를 유도 함.
+    //* 상승, 하강 버튼 눌렀을때, UI에 CallBack 메시지를 보낼 Observer를 입력 받는 메소드
+    public void AddDigitNumberChangeObserver(Action<int> observerEvent)
+    {
+        _digitNumberChangeObervers.Add(observerEvent);
+    }
+
+    //* 번호판 상태가 변화 했음을 UI에게 고지할 Observer를 입력 받는 메소드
     public void AddDigitStateChangeObserver(Action<DigitState> observerEvent)
     {
         _digitStateChangeObservers.Add(observerEvent);
@@ -136,6 +129,9 @@ public class PasswordPuzzle : PuzzleLogic
 
 }
 
+
+//TODO Dictionary 형태로 리펙토링하기
+//* 번호판의 상태를 다루는 열거형
 public enum DigitState
 {
     Correct,

@@ -13,7 +13,7 @@ public class PasswordPuzzleInteractor : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        if (_root.style.display == DisplayStyle.Flex)
+        if (_root.style.display == DisplayStyle.Flex) //* 조건식은 UI가 꺼져있는 상태인 경우을 의미함
         {
             CloseUI();
         }

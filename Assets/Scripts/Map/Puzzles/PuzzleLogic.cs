@@ -2,22 +2,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-abstract public class PuzzleLogic : MonoBehaviour
+abstract public class PuzzleLogic : MonoBehaviour, IInitializableObject
 {
-    private bool isSolved;
+    protected bool isSolved;
+    public bool IsSolved => isSolved;
+
     [SerializeField] private UnityEvent onSolvedEvents;
 
     private void Awake()
     {
         isSolved = false;
 
-        Init();
+        // Init();
     }
 
     abstract public void Init();
 
-    //* 기획서에 이 파트 추가하기
-    abstract public void CheckCorretion();
+    abstract public void CheckCorrection();
 
     virtual public void OnSolved()
     {
