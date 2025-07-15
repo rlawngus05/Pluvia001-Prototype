@@ -152,7 +152,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _answerDigits: 09000000060000000300000006000000
-  _inputDigits: 09000000060000000300000006000000
+  _inputDigits: 00000000000000000000000000000000
   _remainingChance: 6
 --- !u!4 &9552634
 Transform:
@@ -1938,6 +1938,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1706893195}
+  - component: {fileID: 1706893196}
   m_Layer: 0
   m_Name: PasswordPuzzle
   m_TagString: Untagged
@@ -1963,6 +1964,21 @@ Transform:
   - {fileID: 1120875752}
   m_Father: {fileID: 71129578}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1706893196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1706893194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c398c3dfea19b5540b6b236c0bb0ec16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectsWithIntializable:
+  - {fileID: 2032706882}
+  - {fileID: 9552632}
 --- !u!1 &1728164072
 GameObject:
   m_ObjectHideFlags: 0
@@ -2560,6 +2576,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _puzzleLogic: {fileID: 9552633}
+  digitPanelStateDictWrapper:
+    digitPanelStateItems:
+    - digitState: 4
+      color:
+        serializedVersion: 2
+        rgba: 4290690750
+    - digitState: 0
+      color:
+        serializedVersion: 2
+        rgba: 4286105680
+    - digitState: 1
+      color:
+        serializedVersion: 2
+        rgba: 4283489535
+    - digitState: 2
+      color:
+        serializedVersion: 2
+        rgba: 4282795750
+    - digitState: 3
+      color:
+        serializedVersion: 2
+        rgba: 4278386943
 --- !u!1 &2096157338
 GameObject:
   m_ObjectHideFlags: 0

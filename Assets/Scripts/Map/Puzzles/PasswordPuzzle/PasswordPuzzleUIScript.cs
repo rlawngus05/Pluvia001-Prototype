@@ -15,7 +15,7 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IInitializableObject
     }
 
     private void Update() {
-        // digitPanelStatDict = digitPanelStateDictWrapper.ToDictionary(); //! 실시간으로 색깔 조정가능하게 함. 테스트 할 때 만 활성화
+        // digitPanelStatDict = digitPanelStateDictWrapper.ToDictionary(); //! Test : 에디터 상에서 실시간으로 색깔 조정가능하게 함.
     }
 
     public void Init()
