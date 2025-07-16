@@ -1,0 +1,15 @@
+.alphabet-button {
+    width: 7%;
+    height: 28%;
+    background-color: rgb(202, 85, 255);
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    font-size: 120%;
+    -unity-font-style: bold;
+}

@@ -1,0 +1,38 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Scripts/Map/Puzzles/CaesarCipherPuzzle/CaesarCipherPuzzleUSS.uss?fileID=7433441132597879392&amp;guid=4596b8e2eba77834e8aa068d02c65012&amp;type=3#CaesarCipherPuzzleUSS" />
+    <engine:VisualElement name="Root" style="width: 100%; height: 100%; background-color: rgba(255, 255, 255, 0); align-self: auto; align-items: center; justify-content: space-around; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px;">
+        <engine:VisualElement name="Main" style="width: 80%; height: 60%; background-color: rgb(255, 255, 255); border-top-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-width: 2px; border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; border-left-color: rgb(189, 123, 209); border-right-color: rgb(189, 123, 209); border-top-color: rgb(189, 123, 209); border-bottom-color: rgb(189, 123, 209); flex-direction: column;">
+            <engine:VisualElement name="Top" style="flex-grow: 1; height: 60%; width: 100%;" />
+            <engine:VisualElement name="Bottom" style="flex-grow: 0; flex-direction: row; flex-wrap: wrap; background-size: 100% 40%; align-items: center; justify-content: center; height: 40%; flex-shrink: 0; width: 100%;">
+                <engine:VisualElement name="AlphabetContainer" style="flex-grow: 1; flex-direction: row; flex-wrap: wrap; justify-content: space-evenly; align-items: center; padding-left: 1%; padding-right: 1%; width: 100%; height: 100%; padding-top: 2%; padding-bottom: 2%; align-self: flex-end; align-content: center;">
+                    <engine:Button text="A" name="A" class="alphabet-button" />
+                    <engine:Button text="B" name="B" class="alphabet-button" />
+                    <engine:Button text="C" name="C" class="alphabet-button" />
+                    <engine:Button text="D" name="D" class="alphabet-button" />
+                    <engine:Button text="E" name="E" class="alphabet-button" />
+                    <engine:Button text="F" name="F" class="alphabet-button" />
+                    <engine:Button text="G" name="G" class="alphabet-button" />
+                    <engine:Button text="H" name="H" class="alphabet-button" />
+                    <engine:Button text="I" name="I" class="alphabet-button" />
+                    <engine:Button text="J" name="J" class="alphabet-button" />
+                    <engine:Button text="K" name="K" class="alphabet-button" />
+                    <engine:Button text="L" name="L" class="alphabet-button" />
+                    <engine:Button text="N" name="N" class="alphabet-button" />
+                    <engine:Button text="M" name="M" class="alphabet-button" />
+                    <engine:Button text="O" name="O" class="alphabet-button" />
+                    <engine:Button text="P" name="P" class="alphabet-button" />
+                    <engine:Button text="Q" name="Q" class="alphabet-button" />
+                    <engine:Button text="R" name="R" class="alphabet-button" />
+                    <engine:Button text="S" name="S" class="alphabet-button" />
+                    <engine:Button text="T" name="T" class="alphabet-button" />
+                    <engine:Button text="U" name="U" class="alphabet-button" />
+                    <engine:Button text="V" name="V" class="alphabet-button" />
+                    <engine:Button text="W" name="W" class="alphabet-button" />
+                    <engine:Button text="X" name="X" class="alphabet-button" />
+                    <engine:Button text="Y" name="Y" enable-rich-text="true" class="alphabet-button" />
+                    <engine:Button text="Z" name="Z" class="alphabet-button" />
+                </engine:VisualElement>
+            </engine:VisualElement>
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>
