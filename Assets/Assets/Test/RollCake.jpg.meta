@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      RollCake_0: 4999170882276815587
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
