@@ -7,7 +7,7 @@ public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance { get; private set; }
     [SerializeField] Inventory _inventory;
-    private Dictionary<ItemData, int> _dictifyInventory;
+    private Dictionary<ItemData, int> _dictifiedInventory;
 
     void Awake()
     {
@@ -15,7 +15,7 @@ public class InventoryManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            _dictifyInventory = _inventory.ToDictionary();
+            _dictifiedInventory = _inventory.ToDictionary();
         }
         else
         {
@@ -23,17 +23,17 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    public void InsertItem(ItemData item, int amount = 1)
+    public void InsertItem(ItemData itemData, int amount = 1)
     {
-        _inventory.Add(item, amount);
-        UpdateDictifyInventroy();
+        _inventory.Add(itemData, amount);
+        UpdateDictifiedInventroy();
     }
 
-    public bool Delete(ItemData item, int amount = 1)
+    public bool DeleteItem(ItemData itemData, int amount = 1)
     {
-        if (_inventory.Delete(item, amount))
+        if (_inventory.Delete(itemData, amount))
         {
-            UpdateDictifyInventroy();
+            UpdateDictifiedInventroy();
             return true;
         }
 
@@ -42,7 +42,7 @@ public class InventoryManager : MonoBehaviour
 
     public CheckItemResult HasItem(ItemData itemData)
     {
-        if (_dictifyInventory.ContainsKey(itemData) && _dictifyInventory[itemData] != 0)
+        if (_dictifiedInventory.ContainsKey(itemData) && _dictifiedInventory[itemData] != 0)
         {
             return CheckItemResult.Has;
         }
@@ -54,16 +54,16 @@ public class InventoryManager : MonoBehaviour
     {
         if (HasItem(itemData) != CheckItemResult.NotHave)
         {
-            if (_dictifyInventory[itemData] == amount) { return CheckItemResult.Exact; }
-            if (_dictifyInventory[itemData] < amount) { return CheckItemResult.Lack; }
-            if (_dictifyInventory[itemData] > amount) { return CheckItemResult.Over; }
+            if (_dictifiedInventory[itemData] == amount) { return CheckItemResult.Exact; }
+            if (_dictifiedInventory[itemData] < amount) { return CheckItemResult.Lack; }
+            if (_dictifiedInventory[itemData] > amount) { return CheckItemResult.Over; }
         }
 
         return CheckItemResult.NotHave;
     }
 
     [ContextMenu("Update DictifyInventroy")]
-    public void UpdateDictifyInventroy() { _dictifyInventory = _inventory.ToDictionary(); }
+    private void UpdateDictifiedInventroy() { _dictifiedInventory = _inventory.ToDictionary(); }
     
 
     //*
@@ -83,34 +83,34 @@ public class InventoryManager : MonoBehaviour
 
             foreach (InventoryItem item in _inventoryItems)
             {
-                dict[item.GetItemData] = item.GetCount;
+                dict[item.GetItemData] = item.GetAmount;
             }
 
             return dict;
         }
 
-        public void Add(ItemData item, int amount = 1)
+        public void Add(ItemData itemData, int amount)
         {
             foreach (InventoryItem inventoryItem in _inventoryItems)
             {
-                if (inventoryItem.GetItemData == item)
+                if (inventoryItem.GetItemData == itemData)
                 {
                     inventoryItem.Add(amount);
                     return;
                 }
             }
 
-            InventoryItem newItem = new InventoryItem(item);
+            InventoryItem newItem = new InventoryItem(itemData);
             newItem.Add(amount);
 
             _inventoryItems.Add(newItem);
         }
 
-            public bool Delete(ItemData item, int amount = 1)
+        public bool Delete(ItemData itemData, int amount)
         {
             foreach (InventoryItem inventoryItem in _inventoryItems)
             {
-                if (inventoryItem.GetItemData == item)
+                if (inventoryItem.GetItemData == itemData)
                 {
                     return inventoryItem.Delete(amount);
                 }
@@ -124,26 +124,26 @@ public class InventoryManager : MonoBehaviour
     private class InventoryItem
     {
         [SerializeField] private ItemData _itemData;
-        [SerializeField] private int _count;
+        [SerializeField] private int _amount;
 
         public InventoryItem(ItemData itemData)
         {
             _itemData = itemData;
-            _count = 0;
+            _amount = 0;
         }
 
         public ItemData GetItemData => _itemData;
-        public int GetCount => _count;
+        public int GetAmount => _amount;
 
-        public void Add(int value = 1)
+        public void Add(int amount)
         {
-            _count += value;
+            _amount += amount;
         }
-        public bool Delete(int value = 1)
+        public bool Delete(int amount)
         {
-            if (_count > value)
+            if (_amount > amount)
             {
-                _count -= value;
+                _amount -= amount;
                 return true;
             }
 
@@ -152,14 +152,14 @@ public class InventoryManager : MonoBehaviour
     }
 
     //! Test
-    [SerializeField] ItemData testItem;
-    [SerializeField] int testCount;
+    // [SerializeField] ItemData testItem;
+    // [SerializeField] int testCount;
 
-    [ContextMenu("HasItem() Test")]
-    public void HasItemTest()
-    {
-        Debug.Log(HasItemWithAmount(testItem, testCount));
-    }
+    // [ContextMenu("HasItem() Test")]
+    // public void HasItemTest()
+    // {
+    //     Debug.Log(HasItemWithAmount(testItem, testCount));
+    // }
 }
 
 public enum CheckItemResult
