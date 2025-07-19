@@ -3,13 +3,13 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    [SerializeField] protected ItemData originalItemData;
-    protected ItemData itemData;
+    [SerializeField] protected ItemData itemData;
+    // protected ItemData itemData;
 
-    private void Awake()
-    {
-        itemData = Instantiate(originalItemData);
-    }
+    // private void Awake()
+    // {
+    //     itemData = Instantiate(originalItemData);
+    // }
 
     public Sprite GetIcon() { return itemData.Icon; }
     public string GetName() { return itemData.Name; }
