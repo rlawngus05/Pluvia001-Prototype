@@ -41,7 +41,7 @@ public class PasswordPuzzleLogic : PuzzleLogic
     }
 
     [ContextMenu("CheckCorrection")]
-    public override void CheckCorrection()
+    public override bool CheckCorrection()
     {
         bool isCorrect = true;
 
@@ -97,6 +97,8 @@ public class PasswordPuzzleLogic : PuzzleLogic
                 _remainingChance--;
             }
         }
+
+        return isCorrect;
     }
 
     //* 상승 버튼 UI 눌렀을때, index 위치의 숫자를 1증가 시킴
