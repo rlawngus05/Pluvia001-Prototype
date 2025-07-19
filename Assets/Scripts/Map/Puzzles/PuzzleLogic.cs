@@ -18,7 +18,7 @@ abstract public class PuzzleLogic : MonoBehaviour, IInitializableObject
 
     abstract public void Init();
 
-    abstract public void CheckCorrection();
+    abstract public bool CheckCorrection();
 
     virtual public void OnSolved()
     {
