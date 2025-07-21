@@ -15,3 +15,4 @@ MonoBehaviour:
   icon: {fileID: 7602970641636741391, guid: a6a859e5d8f91394b9ab93708cfe2e2d, type: 3}
   itemName: "\uB204\uAD70\uAC00\uC758 \uB099\uC11C"
   content: "5 \\n JYMJW\uB294 \uB9CC\uBB3C\uC758 \uADFC\uC6D0"
+  isUsable: 0
