@@ -66,6 +66,7 @@ public class InventoryManager : MonoBehaviour
     }
 
     [ContextMenu("Update DictifiedInventroy")]
+    // TODO : 특정 시점에서 인벤토리 로직에서 갯수가 0인 아이템은 삭제하는 로직 넣기
     private void UpdateDictifiedInventroy()
     {
         _dictifiedInventory = _inventory.ToDictionary();
