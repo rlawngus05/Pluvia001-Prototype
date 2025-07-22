@@ -6,10 +6,10 @@ public class ItemViewerManager : MonoBehaviour
 {
     public static ItemViewerManager Instance { get; private set; }
 
-    [SerializeField] private GameObject gui;
-    [SerializeField] private Image itemIcon;
-    [SerializeField] private TextMeshProUGUI itemNameText;
-    [SerializeField] private TextMeshProUGUI itemContentText;
+    [SerializeField] private GameObject _gui;
+    [SerializeField] private Image _itemIcon;
+    [SerializeField] private TextMeshProUGUI _itemNameText;
+    [SerializeField] private TextMeshProUGUI _itemContentText;
     [SerializeField] private GameObject _detailContentContainer;
     private GameObject _detailContent;
 
@@ -26,7 +26,7 @@ public class ItemViewerManager : MonoBehaviour
     }
 
     private void Update() {
-        if (gui.activeSelf == true)
+        if (_gui.activeSelf == true)
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
@@ -44,19 +44,19 @@ public class ItemViewerManager : MonoBehaviour
     {
         InventoryViewerManager.Instance.SetState(InventoryState.OpenItemViewer);
 
-        itemIcon.sprite = itemData.Icon;
-        itemNameText.text = itemData.Name;
-        itemContentText.text = itemData.Content;
+        _itemIcon.sprite = itemData.Icon;
+        _itemNameText.text = itemData.Name;
+        _itemContentText.text = itemData.Content;
 
         _detailContent = Instantiate(itemData.DetailContent);
         _detailContent.transform.SetParent(_detailContentContainer.transform, false); //? 두번째 인자의 정체 뭔지 모름 
 
-        gui.SetActive(true);
+        _gui.SetActive(true);
     }
 
     public void Close()
     {
-        gui.SetActive(false);
+        _gui.SetActive(false);
         Destroy(_detailContent);
         InventoryViewerManager.Instance.SetState(InventoryState.Idle);
     }

@@ -7,21 +7,20 @@ using UnityEngine.UI;
 public class InventoryViewerManager : MonoBehaviour
 {
     [SerializeField] private GameObject _Gui;
+    private InventoryState _currentState;
 
     [SerializeField] private List<InventorySlot> _slots;
     [SerializeField] private InventorySlot _currentSlot;
+    [SerializeField] private GameObject _slotFocusImage; //TODO : SlotFocusingImage 적용하기 (현재는 선택되면 배경 색만 바꿈)
     private int _focusingSlotRow;
     private int _focusingSlotColumn;
-    [SerializeField] private GameObject _slotFocusImage;
 
     [SerializeField] private Image _itemIcon;
     [SerializeField] private TextMeshProUGUI _itemNameText;
     [SerializeField] private TextMeshProUGUI _itemContextText;
     [SerializeField] private TextMeshProUGUI _keyNotifier;
-    private InventoryState _currentState;
 
     public static InventoryViewerManager Instance { get; private set; }
-
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -39,11 +38,11 @@ public class InventoryViewerManager : MonoBehaviour
     public void Open()
     {
         _Gui.SetActive(true);
-        InventoryManager.Instance.SetOnDictionaryChangeToGuiEvent(Renew); //TODO : 이거 리펙토링하기. 초기화 문제 때매 null 체크하는 부분이 좀 생김
+        InventoryManager.Instance.SetInventoryGuiOberver(Renew); //TODO : 이거 리펙토링하기. 초기화 문제 때매 null 체크하는 부분이 좀 생김
         PlayerController.Instance.SetState(PlayerState.OpenInventory);
         PlayerInteractor.Instance.SetState(PlayerState.OpenInventory);
 
-        Renew(InventoryManager.Instance.GetDict());
+        Renew(InventoryManager.Instance.GetInventory());
         _focusingSlotRow = 0;
         _focusingSlotColumn = 0;
         ChangeFocusingSlot();
@@ -59,7 +58,11 @@ public class InventoryViewerManager : MonoBehaviour
     //TODO : ItemViewerManager와의 양방향 참조 문제 해결하기
     private void Update()
     {
-        if (_currentState == InventoryState.Idle)
+        if (_currentState == InventoryState.Idle) 
+        //* 이 코드는 혹같은 거임. 원래 의도는, 인벤토리 열었을 때 플레이어 못 움직이게 하는거였음. 
+        //* 근데, 인벤토리 열였을 때, 움직이면 인벤토리 닫는 것으로 얘기가 나옴. 
+        //* 그래서 기존의 인벤토리을 열면 플레이어를 봉쇄시키는 코드에서, 움직이면 그것이 해제 되게 만들게 해놂. 
+        //* 근데 이 구조가 사실상 필요없음. ItemViewerManager 또한 이와 같은 구조가 있음
         {
             if (_Gui.activeSelf == true)
             {
@@ -138,6 +141,7 @@ public class InventoryViewerManager : MonoBehaviour
         }
     }
 
+    //? ChangeFocusSlot()에 이동할 정보에 대한 매개변수를 입력하는게 더 바람직하기 않을까?
     public void ChangeFocusingSlot()
     {
         if (_currentSlot != null) //TODO : 널 체킹 리펙토링 할 수 있는지 확인하기

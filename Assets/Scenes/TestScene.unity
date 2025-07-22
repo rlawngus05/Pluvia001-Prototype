@@ -2759,10 +2759,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e1e14ce504625a449b4b6ff47a5e12e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gui: {fileID: 1275474910}
-  itemIcon: {fileID: 2083547532}
-  itemNameText: {fileID: 1147672214}
-  itemContentText: {fileID: 2027423505}
+  _gui: {fileID: 1275474910}
+  _itemIcon: {fileID: 2083547532}
+  _itemNameText: {fileID: 1147672214}
+  _itemContentText: {fileID: 2027423505}
   _detailContentContainer: {fileID: 1107456775}
 --- !u!1 &684578096
 GameObject:

@@ -8,7 +8,6 @@ public class InventorySlot : MonoBehaviour
     [SerializeField] private Image _itemIcon;
     [SerializeField] private TextMeshProUGUI _itemAmount;
     [SerializeField] private Image _border;
-
     public void SetItemData(ItemData itemData)
     {
         _itemData = itemData;
@@ -16,6 +15,7 @@ public class InventorySlot : MonoBehaviour
         _itemIcon.sprite = _itemData.Icon;
     }
     public ItemData GetItemData() { return _itemData; }
+
     public void SetDefault()
     {
         _itemData = null;

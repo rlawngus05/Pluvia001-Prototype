@@ -8,8 +8,10 @@ public class InventoryManager : MonoBehaviour
     public static InventoryManager Instance { get; private set; }
     [SerializeField] Inventory _inventory;
     private Dictionary<ItemData, int> _dictifiedInventory;
-    private Action<Dictionary<ItemData, int>> onDictionaryChangeToGuiEvent;
+    private Action<Dictionary<ItemData, int>> _inventoryGuiObserver;
 
+    public Dictionary<ItemData, int> GetInventory() { return _dictifiedInventory; }
+    public void SetInventoryGuiOberver(Action<Dictionary<ItemData, int>> evt){ _inventoryGuiObserver = evt; }
     void Awake()
     {
         if (Instance == null)
@@ -63,24 +65,14 @@ public class InventoryManager : MonoBehaviour
         return CheckItemResult.NotHave;
     }
 
-    public Dictionary<ItemData, int> GetDict()
-    {
-        return _dictifiedInventory;
-    }
-
-    public void SetOnDictionaryChangeToGuiEvent(Action<Dictionary<ItemData, int>> evt)
-    {
-        onDictionaryChangeToGuiEvent = evt;
-    }
-
     [ContextMenu("Update DictifiedInventroy")]
     private void UpdateDictifiedInventroy()
     {
         _dictifiedInventory = _inventory.ToDictionary();
 
-        if (onDictionaryChangeToGuiEvent != null)
+        if (_inventoryGuiObserver != null)
         {
-            onDictionaryChangeToGuiEvent(_dictifiedInventory);
+            _inventoryGuiObserver(_dictifiedInventory);
         }
     }
     
@@ -144,15 +136,14 @@ public class InventoryManager : MonoBehaviour
     {
         [SerializeField] private ItemData _itemData;
         [SerializeField] private int _amount;
+        public ItemData ItemData => _itemData;
+        public int Amount => _amount;
 
         public InventoryItem(ItemData itemData)
         {
             _itemData = itemData;
             _amount = 0;
         }
-
-        public ItemData ItemData => _itemData;
-        public int Amount => _amount;
 
         public void Add(int amount)
         {
@@ -169,16 +160,6 @@ public class InventoryManager : MonoBehaviour
             return false;
         }
     }
-
-    //! Test
-    // [SerializeField] ItemData testItem;
-    // [SerializeField] int testCount;
-
-    // [ContextMenu("HasItem() Test")]
-    // public void HasItemTest()
-    // {
-    //     Debug.Log(HasItemWithAmount(testItem, testCount));
-    // }
 }
 
 public enum CheckItemResult
