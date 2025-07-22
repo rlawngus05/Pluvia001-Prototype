@@ -11,7 +11,7 @@ public class ItemViewerManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _itemNameText;
     [SerializeField] private TextMeshProUGUI _itemContentText;
     [SerializeField] private GameObject _detailContentContainer;
-    private GameObject _detailContent;
+    private GameObject _detailContent; //* ItemViewer을 키고 끌 때마다, Prefab을 다시 생성하고 삭제함
 
     private void Awake()
     {
@@ -49,7 +49,7 @@ public class ItemViewerManager : MonoBehaviour
         _itemContentText.text = itemData.Content;
 
         _detailContent = Instantiate(itemData.DetailContent);
-        _detailContent.transform.SetParent(_detailContentContainer.transform, false); //? 두번째 인자의 정체 뭔지 모름 
+        _detailContent.transform.SetParent(_detailContentContainer.transform, false);
 
         _gui.SetActive(true);
     }
@@ -58,6 +58,6 @@ public class ItemViewerManager : MonoBehaviour
     {
         _gui.SetActive(false);
         Destroy(_detailContent);
-        InventoryViewerManager.Instance.SetState(InventoryState.Idle);
+        InventoryViewerManager.Instance.SetState(InventoryState.Idle); //* InventoryViewerManager와의 양방향 참조가 있음
     }
 }

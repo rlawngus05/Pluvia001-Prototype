@@ -10,6 +10,7 @@ public class InventoryViewerManager : MonoBehaviour
     private InventoryState _currentState;
 
     [SerializeField] private List<InventorySlot> _slots;
+    [SerializeField] private int _rowCount;
     [SerializeField] private InventorySlot _currentSlot;
     [SerializeField] private GameObject _slotFocusImage; //TODO : SlotFocusingImage 적용하기 (현재는 선택되면 배경 색만 바꿈)
     private int _focusingSlotRow;
@@ -37,8 +38,9 @@ public class InventoryViewerManager : MonoBehaviour
 
     public void Open()
     {
+        InventoryManager.Instance.SetInventoryGuiOberver(Renew); //! InvetoryManager와의 초기화 순서 문제 때문에, 인벤토리를 킬 때마다, Obsever를 세팅함
+
         _Gui.SetActive(true);
-        InventoryManager.Instance.SetInventoryGuiOberver(Renew); //TODO : 이거 리펙토링하기. 초기화 문제 때매 null 체크하는 부분이 좀 생김
         PlayerController.Instance.SetState(PlayerState.OpenInventory);
         PlayerInteractor.Instance.SetState(PlayerState.OpenInventory);
 
@@ -55,7 +57,6 @@ public class InventoryViewerManager : MonoBehaviour
         PlayerInteractor.Instance.SetState(PlayerState.Idle);
     }
 
-    //TODO : ItemViewerManager와의 양방향 참조 문제 해결하기
     private void Update()
     {
         if (_currentState == InventoryState.Idle) 
@@ -85,7 +86,7 @@ public class InventoryViewerManager : MonoBehaviour
 
                         if (currentItemData is ViewableItemData viewableItemData) //* 상세 보기 가능 아이템이면, 해당 아이템 상세 보기 엶
                         {
-                            ItemViewerManager.Instance.Open(viewableItemData);
+                            ItemViewerManager.Instance.Open(viewableItemData); //* ItemViewerManager와의 양방향 참조가 있음
                         }
                     }
                 }
@@ -144,16 +145,12 @@ public class InventoryViewerManager : MonoBehaviour
     //? ChangeFocusSlot()에 이동할 정보에 대한 매개변수를 입력하는게 더 바람직하기 않을까?
     public void ChangeFocusingSlot()
     {
-        if (_currentSlot != null) //TODO : 널 체킹 리펙토링 할 수 있는지 확인하기
-        {
-            _currentSlot.UnsetFocused();
-        }
+        _currentSlot?.UnsetFocused();
 
-        _currentSlot = _slots[_focusingSlotRow * 4 + _focusingSlotColumn]; //! 가로 슬롯 수의 갯수가 4이여야 작동함
+        _currentSlot = _slots[_focusingSlotRow * _rowCount + _focusingSlotColumn];
 
         ItemData currentSlotItemData = _currentSlot.GetItemData();
 
-        //? 왜 됨
         _itemIcon.sprite = currentSlotItemData?.Icon;
         _itemNameText.text = currentSlotItemData?.Name;
         _itemContextText.text = currentSlotItemData?.Content;
@@ -198,10 +195,12 @@ public class InventoryViewerManager : MonoBehaviour
                 }
             }
 
-            while (index < 16) //! 총 슬롯의 갯수가 딱 16개여야 작동함
+            while (index < _slots.Count)
             {
                 _slots[index++].SetDefault();
             }
+
+            ChangeFocusingSlot();
         }
     }
 
