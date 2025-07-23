@@ -5234,7 +5234,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1706893195
 Transform:
   m_ObjectHideFlags: 0
@@ -6759,7 +6759,7 @@ MonoBehaviour:
     - digitState: 4
       color:
         serializedVersion: 2
-        rgba: 4290690750
+        rgba: 4279900698
     - digitState: 0
       color:
         serializedVersion: 2

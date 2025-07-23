@@ -24,12 +24,12 @@ public class PasswordPuzzleLogic : PuzzleLogic
     [ContextMenu("Init")]
     public override void Init()
     {
+        _inputDigits = new int[] { 0, 0, 0, 0 };
         foreach (Action<int> action in _digitNumberChangeObervers)
         {
             action(0);
         }
 
-        _inputDigits = new int[] { 0, 0, 0, 0 };
         for (int i = 0; i < 4; i++)
         {
             _answerDigits[i] = UnityEngine.Random.Range(0, 9 + 1);
@@ -101,26 +101,36 @@ public class PasswordPuzzleLogic : PuzzleLogic
         return isCorrect;
     }
 
-    //* 상승 버튼 UI 눌렀을때, index 위치의 숫자를 1증가 시킴
-    public void OnUpBottonPressed(int index)
+    public void UpNumber(int index)
     {
-        if (_inputDigits[index] < 9)
-        {
-            _digitNumberChangeObervers[index](++_inputDigits[index]);
-        }
+        if (_inputDigits[index] < 9) { _digitNumberChangeObervers[index](++_inputDigits[index]); }
     }
 
-    //* 하강 버튼 UI 눌렀을때, index 위치의 숫자를 1감소 시킴
-    public void OnDownBottonPressed(int index)
+    public void DownNumber(int index)
     {
-        if (_inputDigits[index] > 0)
-        {
-            _digitNumberChangeObervers[index](--_inputDigits[index]);
-        }
+        if (_inputDigits[index] > 0) { _digitNumberChangeObervers[index](--_inputDigits[index]); }
     }
+
+    // //* 상승 버튼 UI 눌렀을때, index 위치의 숫자를 1증가 시킴
+    // public void OnUpBottonPressed(int index)
+    // {
+    //     if (_inputDigits[index] < 9)
+    //     {
+    //         _digitNumberChangeObervers[index](++_inputDigits[index]);
+    //     }
+    // }
+
+    // //* 하강 버튼 UI 눌렀을때, index 위치의 숫자를 1감소 시킴
+    // public void OnDownBottonPressed(int index)
+    // {
+    //     if (_inputDigits[index] > 0)
+    //     {
+    //         _digitNumberChangeObervers[index](--_inputDigits[index]);
+    //     }
+    // }
 
     //* 상승, 하강 버튼 눌렀을때, UI에 CallBack 메시지를 보낼 Observer를 입력 받는 메소드
-    public void AddDigitNumberChangeObserver(Action<int> observerEvent)
+    public void AddInputNumberChangeObserver(Action<int> observerEvent)
     {
         _digitNumberChangeObervers.Add(observerEvent);
     }
