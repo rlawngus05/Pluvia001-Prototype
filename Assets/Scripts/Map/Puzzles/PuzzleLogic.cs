@@ -9,7 +9,7 @@ abstract public class PuzzleLogic : MonoBehaviour, IInitializableObject
 
     [SerializeField] private UnityEvent onSolvedEvents;
 
-    private void Awake()
+    virtual protected void Awake()
     {
         isSolved = false;
 
@@ -18,7 +18,7 @@ abstract public class PuzzleLogic : MonoBehaviour, IInitializableObject
 
     abstract public void Init();
 
-    abstract public void CheckCorrection();
+    abstract public bool CheckCorrection();
 
     virtual public void OnSolved()
     {

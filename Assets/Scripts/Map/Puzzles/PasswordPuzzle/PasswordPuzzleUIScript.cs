@@ -7,15 +7,15 @@ using UnityEngine.UIElements;
 public class PasswordPuzzleUIScript : MonoBehaviour, IInitializableObject
 {
     [SerializeField] private PasswordPuzzleLogic _puzzleLogic;
-    [SerializeField] private DigitPanelStateDict digitPanelStateDictWrapper;
-    private Dictionary<DigitState, Color32> digitPanelStatDict;
+    [SerializeField] private DigitPanelStateDictWrapper digitPanelStateDictWrapper; //* 유니티 editor 상에서 보여지는 필드
+    private Dictionary<DigitState, Color32> digitPanelStateDict; //* 스크립트 상에서, 사용되는 필드
     
     private void Awake() {
-        digitPanelStatDict = digitPanelStateDictWrapper.ToDictionary();
+        digitPanelStateDict = digitPanelStateDictWrapper.ToDictionary();
     }
 
     private void Update() {
-        // digitPanelStatDict = digitPanelStateDictWrapper.ToDictionary(); //! 실시간으로 색깔 조정가능하게 함. 테스트 할 때 만 활성화
+        // digitPanelStateDict = digitPanelStateDictWrapper.ToDictionary(); //! Test : 에디터 상에서 실시간으로 색깔 조정가능하게 함.
     }
 
     public void Init()
@@ -73,7 +73,7 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IInitializableObject
             {
                 VisualElement digitPanel = digit.Query<VisualElement>("DigitPanel");
 
-                Color32 changedColor = digitPanelStatDict[digitState];
+                Color32 changedColor = digitPanelStateDict[digitState];
                 digitPanel.style.backgroundColor = new StyleColor(changedColor);
             });
         }
@@ -84,8 +84,8 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IInitializableObject
 [Serializable]
 public class DigitPanelStateItem
 {
-    [SerializeField] DigitState digitState;
-    [SerializeField] Color32 color;
+    [SerializeField] private DigitState digitState;
+    [SerializeField] private Color32 color;
 
     public DigitState GetDigitState => digitState;
     public Color32 GetColor => color;
@@ -93,9 +93,9 @@ public class DigitPanelStateItem
 }   
 
 [Serializable]
-public class DigitPanelStateDict
+public class DigitPanelStateDictWrapper
 {
-    [SerializeField] List<DigitPanelStateItem> digitPanelStateItems;
+    [SerializeField] private List<DigitPanelStateItem> digitPanelStateItems;
 
     public Dictionary<DigitState, Color32> ToDictionary()
     {

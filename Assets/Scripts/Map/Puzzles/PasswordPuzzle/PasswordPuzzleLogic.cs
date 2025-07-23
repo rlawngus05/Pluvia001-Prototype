@@ -11,8 +11,10 @@ public class PasswordPuzzleLogic : PuzzleLogic
     private List<Action<int>> _digitNumberChangeObervers;
     private List<Action<DigitState>> _digitStateChangeObservers;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         _answerDigits = new int[4];
 
         _digitNumberChangeObervers = new List<Action<int>>();
@@ -39,7 +41,7 @@ public class PasswordPuzzleLogic : PuzzleLogic
     }
 
     [ContextMenu("CheckCorrection")]
-    public override void CheckCorrection()
+    public override bool CheckCorrection()
     {
         bool isCorrect = true;
 
@@ -79,22 +81,24 @@ public class PasswordPuzzleLogic : PuzzleLogic
         //* 정답이 틀리면, 기회를 1회 줄이고, 만약 기회 모두 소진 상황시, 퍼즐 초기화
         if (isCorrect)
         {
-            Debug.Log("헤으응~♥ 가버렸..!!"); //! 디버그 용도
+            Debug.Log("헤으응~♥ 가버렸..!!"); //! Test
             OnSolved();
         }
         else
         {
             if (_remainingChance == 1)
             {
-                Debug.Log("ㅋ 다시 처음 부터해"); //! 디버그 용도
+                Debug.Log("ㅋ 다시 처음 부터해"); //! Test
                 Init();
             }
             else
             {
-                Debug.Log("허접~ 그것 밖에 안돼? ㅋ"); //! 디버그 용도
+                Debug.Log("허접~ 그것 밖에 안돼? ㅋ"); //! Test
                 _remainingChance--;
             }
         }
+
+        return isCorrect;
     }
 
     //* 상승 버튼 UI 눌렀을때, index 위치의 숫자를 1증가 시킴
@@ -129,8 +133,6 @@ public class PasswordPuzzleLogic : PuzzleLogic
 
 }
 
-
-//TODO Dictionary 형태로 리펙토링하기
 //* 번호판의 상태를 다루는 열거형
 public enum DigitState
 {

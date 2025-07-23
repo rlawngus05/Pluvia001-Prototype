@@ -6,11 +6,11 @@ using UnityEngine;
 public class PuzzleInitializer : MonoBehaviour
 {
     //* 유니티 에디터에서 Interface를 등록할 수 없어서, 게임 오브젝트를 통해 간접적으로 접근함.
-    [SerializeField] List<GameObject> obectsWithIntializable;
+    [SerializeField] List<GameObject> objectsWithIntializable;
     void Start()
     {
         //* Unity Editor 상에서 등록한 객체(GameObject)의 순서에 따라 초기화 함
-        foreach (GameObject gameObject in obectsWithIntializable)
+        foreach (GameObject gameObject in objectsWithIntializable)
         {
             IInitializableObject intializableObject = gameObject.GetComponent<IInitializableObject>();
 
