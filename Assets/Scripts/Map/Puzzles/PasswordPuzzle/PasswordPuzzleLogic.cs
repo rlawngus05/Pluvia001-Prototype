@@ -7,9 +7,11 @@ public class PasswordPuzzleLogic : PuzzleLogic
     //* _answerDigits와 _inputDigits의 배열의 크기는 동일해야 한다.
     [SerializeField] private int[] _answerDigits;
     [SerializeField] private int[] _inputDigits;
-    [SerializeField] private int _remainingChance;
+    [SerializeField] private int _remainChance;
     private List<Action<int>> _digitNumberChangeObervers;
     private List<Action<DigitState>> _digitStateChangeObservers;
+    private Action<int> _remainChanceObserver;
+    private Action _failObserver;
 
     protected override void Awake()
     {
@@ -37,7 +39,8 @@ public class PasswordPuzzleLogic : PuzzleLogic
             _digitStateChangeObservers[i](DigitState.Init);
         }
 
-        _remainingChance = 6;
+        _remainChance = 6;
+        _remainChanceObserver(_remainChance);
     }
 
     [ContextMenu("CheckCorrection")]
@@ -86,15 +89,17 @@ public class PasswordPuzzleLogic : PuzzleLogic
         }
         else
         {
-            if (_remainingChance == 1)
+            _remainChance--;
+            _remainChanceObserver(_remainChance);
+            if (_remainChance == 0)
             {
                 Debug.Log("ㅋ 다시 처음 부터해"); //! Test
+                _failObserver();
                 Init();
             }
             else
             {
                 Debug.Log("허접~ 그것 밖에 안돼? ㅋ"); //! Test
-                _remainingChance--;
             }
         }
 
@@ -130,16 +135,12 @@ public class PasswordPuzzleLogic : PuzzleLogic
     // }
 
     //* 상승, 하강 버튼 눌렀을때, UI에 CallBack 메시지를 보낼 Observer를 입력 받는 메소드
-    public void AddInputNumberChangeObserver(Action<int> observerEvent)
-    {
-        _digitNumberChangeObervers.Add(observerEvent);
-    }
-
+    public void AddInputNumberChangeObserver(Action<int> observerEvent) { _digitNumberChangeObervers.Add(observerEvent); }
     //* 번호판 상태가 변화 했음을 UI에게 고지할 Observer를 입력 받는 메소드
-    public void AddDigitStateChangeObserver(Action<DigitState> observerEvent)
-    {
-        _digitStateChangeObservers.Add(observerEvent);
-    }
+    public void AddDigitStateChangeObserver(Action<DigitState> observerEvent) { _digitStateChangeObservers.Add(observerEvent); }
+    public void SetRemainChanceOberver(Action<int> oberverEvent) { _remainChanceObserver = oberverEvent; }
+    public void SetFailObserve(Action observerEvent) { _failObserver = observerEvent; }
+
 
 }
 

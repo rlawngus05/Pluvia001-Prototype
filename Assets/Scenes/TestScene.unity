@@ -6754,7 +6754,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _puzzleLogic: {fileID: 9552633}
-  digitPanelStateDictWrapper:
+  _digitPanelStateDictWrapper:
     digitPanelStateItems:
     - digitState: 4
       color:
@@ -6767,15 +6767,15 @@ MonoBehaviour:
     - digitState: 1
       color:
         serializedVersion: 2
-        rgba: 4283489535
+        rgba: 4281987839
     - digitState: 2
       color:
         serializedVersion: 2
-        rgba: 4282795750
+        rgba: 4278210045
     - digitState: 3
       color:
         serializedVersion: 2
-        rgba: 4278386943
+        rgba: 4278194175
 --- !u!1001 &2071049049
 PrefabInstance:
   m_ObjectHideFlags: 0
