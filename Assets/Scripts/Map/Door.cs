@@ -10,6 +10,7 @@ public class Door : MonoBehaviour, IInteractable
 
     public void Interact()
     {
+        PlayerController.Instance.SetState(PlayerState.MoveArea);
         StartCoroutine(TransitionRoutine());
     }
 
@@ -20,8 +21,10 @@ public class Door : MonoBehaviour, IInteractable
         PlayerController.Instance.MoveCharacter(destinationPoint);
         CameraManager.Instance.ChangeConfiner(destinationCameraConfiner);
 
-        yield return new WaitForSecondsRealtime(0.5f);
+        yield return new WaitForSecondsRealtime(0.5f); //! 움직이지 못하는 시간이 하드 코딩 되어 있음
 
         ScreenEffectManager.Instance.FadeOut(0.5f);
+
+        PlayerController.Instance.SetState(PlayerState.Idle);
     }
 }

@@ -25,10 +25,15 @@ public class CaesarCipherPuzzleLogic : PuzzleLogic
         base.Awake();
     }
 
-    [ContextMenu(nameof(Init))]
-    public override void Init()
+    [ContextMenu(nameof(Initialize))]
+    public override void Initialize()
     {
         _userInputText = "";
+    }
+
+    public override void Initiate()
+    {
+        throw new NotImplementedException();
     }
 
     public override bool CheckCorrection()
@@ -56,7 +61,7 @@ public class CaesarCipherPuzzleLogic : PuzzleLogic
             if (!isCorrect)
             {
                 _wrongEvent();
-                Init();
+                Initialize();
             }
             else
             {

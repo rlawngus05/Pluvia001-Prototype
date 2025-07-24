@@ -3,17 +3,38 @@ using System.Collections.Generic;
 
 public class PlayerInteractor : MonoBehaviour
 {
-    private IInteractable interactObject;
-    private List<Collider2D> currentColliders = new List<Collider2D>();
+    public static PlayerInteractor Instance { get; private set; }
+
+    private IInteractable _interactObject;
+    private List<Collider2D> _currentColliders = new List<Collider2D>();
+    private PlayerState _currentState;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject); 
+            return;
+        }
+
+        _currentState = PlayerState.Idle;
+    }
 
     private void Update()
     {
-        UpdateClosestInteractable();
-
-        //* 상호작용 키를 누르면, 플레이어와 가장 가까이 있는 상호작용 물체와 상호작용한다.
-        if (interactObject != null && Input.GetKeyDown(KeyCode.F))
+        if (_currentState == PlayerState.Idle)
         {
-            interactObject.Interact();
+            UpdateClosestInteractable();
+
+            //* 상호작용 키를 누르면, 플레이어와 가장 가까이 있는 상호작용 물체와 상호작용한다.
+            if (_interactObject != null && Input.GetKeyDown(KeyCode.F))
+            {
+                _interactObject.Interact();
+            }
         }
     }
 
@@ -23,7 +44,7 @@ public class PlayerInteractor : MonoBehaviour
         float shortestDistance = float.MaxValue;
         IInteractable closest = null;
 
-        foreach (var col in currentColliders)
+        foreach (var col in _currentColliders)
         {
             if (col == null) continue;
 
@@ -35,16 +56,16 @@ public class PlayerInteractor : MonoBehaviour
             }
         }
 
-        interactObject = closest;
+        _interactObject = closest;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Interactable"))
         {
-            if (!currentColliders.Contains(collision))
+            if (!_currentColliders.Contains(collision))
             {
-                currentColliders.Add(collision);
+                _currentColliders.Add(collision);
             }
         }
     }
@@ -53,12 +74,15 @@ public class PlayerInteractor : MonoBehaviour
     {
         if (collision.CompareTag("Interactable"))
         {
-            currentColliders.Remove(collision);
+            _currentColliders.Remove(collision);
 
-            if (collision.GetComponent<IInteractable>() == interactObject)
+            if (collision.GetComponent<IInteractable>() == _interactObject)
             {
-                interactObject = null;
+                _interactObject = null;
             }
         }
     }
+    
+    public void SetState(PlayerState playerState) { _currentState = playerState; }
 }
+
