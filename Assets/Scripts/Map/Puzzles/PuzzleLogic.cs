@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-abstract public class PuzzleLogic : MonoBehaviour, IInitializableObject
+abstract public class PuzzleLogic : MonoBehaviour, IPuzzleObject
 {
     protected bool isSolved;
     public bool IsSolved => isSolved;
@@ -16,7 +16,8 @@ abstract public class PuzzleLogic : MonoBehaviour, IInitializableObject
         // Init();
     }
 
-    abstract public void Init();
+    abstract public void Initialize();
+    abstract public void Initiate();
 
     abstract public bool CheckCorrection();
 
