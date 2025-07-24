@@ -16,7 +16,6 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
     private List<VisualElement> _chanceNotifiers;
 
     private PuzzleUIState _currentState;
-    public void SetState(PuzzleUIState puzzleUIState) { _currentState = puzzleUIState; }
     public PuzzleUIState GetState() { return _currentState; }
 
     [SerializeField] private DigitPanelStateDictWrapper _digitPanelStateDictWrapper; //* 유니티 editor 상에서 보여지는 필드
@@ -91,6 +90,7 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
         _puzzleLogic.SetFailObserver(() =>
         {
             _root.style.display = DisplayStyle.None;
+            Close();
             Initiate();
         });
 
@@ -139,11 +139,27 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
             if (Input.GetKeyDown(KeyCode.Return)) { _puzzleLogic.CheckCorrection(); }
         }
     }
-    
+
     private void ChangeSelectedDigitPanel(int previousIndex, int currentIndex)
     {
         _digitPanels[previousIndex].RemoveFromClassList("digit-panel-selected");
         _digitPanels[currentIndex].AddToClassList("digit-panel-selected");
+    }
+
+    public void Open()
+    {
+        _root.style.display = DisplayStyle.Flex;
+
+        PlayerController.Instance.SetState(PlayerState.OpenPuzzle);
+        _currentState = PuzzleUIState.Open;
+    }
+
+    public void Close()
+    {
+        _root.style.display = DisplayStyle.None;
+
+        PlayerController.Instance.SetState(PlayerState.Idle);
+        _currentState = PuzzleUIState.Close;
     }
 }
 
