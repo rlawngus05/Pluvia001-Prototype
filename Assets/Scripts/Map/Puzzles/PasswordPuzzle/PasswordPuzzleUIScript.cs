@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -13,6 +14,10 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
     private List<VisualElement> _digitPanels;
     private int _currentIndex;
     private List<VisualElement> _chanceNotifiers;
+
+    private PuzzleUIState _currentState;
+    public void SetState(PuzzleUIState puzzleUIState) { _currentState = puzzleUIState; }
+    public PuzzleUIState GetState() { return _currentState; }
 
     [SerializeField] private DigitPanelStateDictWrapper _digitPanelStateDictWrapper; //* 유니티 editor 상에서 보여지는 필드
     private Dictionary<DigitState, Color32> digitPanelStateDict; //* 스크립트 상에서, 사용되는 필드
@@ -43,6 +48,7 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
     public void Initialize()
     {
         _root.style.display = DisplayStyle.None;
+        _currentState = PuzzleUIState.Close;
 
         for (int i = 0; i < 4; i++)
         {
@@ -109,26 +115,29 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
     {
         // digitPanelStateDict = digitPanelStateDictWrapper.ToDictionary(); //! Test : 에디터 상에서 실시간으로 색깔 조정가능하게 함.
 
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (_currentState == PuzzleUIState.Open)
         {
-            if (_currentIndex > 0)
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                ChangeSelectedDigitPanel(_currentIndex, --_currentIndex);
+                if (_currentIndex > 0)
+                {
+                    ChangeSelectedDigitPanel(_currentIndex, --_currentIndex);
+                }
             }
-        }
 
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            if (_currentIndex < 3)
+            if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                ChangeSelectedDigitPanel(_currentIndex, ++_currentIndex);
+                if (_currentIndex < 3)
+                {
+                    ChangeSelectedDigitPanel(_currentIndex, ++_currentIndex);
+                }
             }
+
+            if (Input.GetKeyDown(KeyCode.UpArrow)) { _puzzleLogic.UpNumber(_currentIndex); }
+            if (Input.GetKeyDown(KeyCode.DownArrow)) { _puzzleLogic.DownNumber(_currentIndex); }
+
+            if (Input.GetKeyDown(KeyCode.Return)) { _puzzleLogic.CheckCorrection(); }
         }
-
-        if (Input.GetKeyDown(KeyCode.UpArrow)) { _puzzleLogic.UpNumber(_currentIndex); }
-        if (Input.GetKeyDown(KeyCode.DownArrow)) { _puzzleLogic.DownNumber(_currentIndex); }
-
-        if (Input.GetKeyDown(KeyCode.Return)) { _puzzleLogic.CheckCorrection(); }
     }
     
     private void ChangeSelectedDigitPanel(int previousIndex, int currentIndex)

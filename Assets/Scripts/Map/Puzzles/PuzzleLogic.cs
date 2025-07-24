@@ -12,8 +12,6 @@ abstract public class PuzzleLogic : MonoBehaviour, IPuzzleObject
     virtual protected void Awake()
     {
         isSolved = false;
-
-        // Init();
     }
 
     abstract public void Initialize();
@@ -33,4 +31,10 @@ abstract public class PuzzleLogic : MonoBehaviour, IPuzzleObject
     public void AddOnSolvedEvent(UnityAction action){
         onSolvedEvents.AddListener(action);
     }    
+}
+
+public enum PuzzleUIState
+{
+    Open,
+    Close
 }

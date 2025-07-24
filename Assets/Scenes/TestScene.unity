@@ -3551,7 +3551,7 @@ GameObject:
   - component: {fileID: 1120875753}
   - component: {fileID: 1120875755}
   m_Layer: 0
-  m_Name: PasswordPuzzleInteractor
+  m_Name: PasswordPuzzleUIController
   m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3585,6 +3585,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GUI: {fileID: 2032706884}
+  passwordPuzzleUIScript: {fileID: 2032706885}
 --- !u!212 &1120875754
 SpriteRenderer:
   m_ObjectHideFlags: 0
