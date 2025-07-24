@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -33,6 +34,20 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (_currentState == PlayerState.Idle)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                InventoryViewerManager.Instance.Open();
+
+                _currentState = PlayerState.OpenInventory;
+                PlayerInteractor.Instance.SetState(PlayerState.OpenInventory);
+            }
+        }
+    }
+
     public void MoveCharacter(Transform destination)
     {
         transform.position = destination.position;
@@ -40,7 +55,16 @@ public class PlayerController : MonoBehaviour
 
     public void SetState(PlayerState playerState)
     {
+        StartCoroutine(SetStateCoroutine(playerState));
+    }
+
+    //* 변경된 상태가, 현재 프레임 부터 적용되지 않고 다음 프레임 부터 적용되도록 하는 보조함수
+    private IEnumerator SetStateCoroutine(PlayerState playerState)
+    {
+        yield return null;
+
         _currentState = playerState;
+        PlayerInteractor.Instance.SetState(playerState);
     }
 }
 

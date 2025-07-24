@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
@@ -54,12 +55,11 @@ public class InventoryViewerManager : MonoBehaviour
     {
         _Gui.SetActive(false);
         PlayerController.Instance.SetState(PlayerState.Idle);
-        PlayerInteractor.Instance.SetState(PlayerState.Idle);
     }
 
     private void Update()
     {
-        if (_currentState == InventoryState.Idle) 
+        if (_currentState == InventoryState.Idle)
         //* 이 코드는 혹같은 거임. 원래 의도는, 인벤토리 열었을 때 플레이어 못 움직이게 하는거였음. 
         //* 근데, 인벤토리 열였을 때, 움직이면 인벤토리 닫는 것으로 얘기가 나옴. 
         //* 그래서 기존의 인벤토리을 열면 플레이어를 봉쇄시키는 코드에서, 움직이면 그것이 해제 되게 만들게 해놂. 
@@ -68,6 +68,11 @@ public class InventoryViewerManager : MonoBehaviour
             if (_Gui.activeSelf == true)
             {
                 if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Escape))
+                {
+                    Close();
+                }
+
+                if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
                 {
                     Close();
                 }
@@ -127,17 +132,6 @@ public class InventoryViewerManager : MonoBehaviour
                     }
                 }
 
-                if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
-                {
-                    Close();
-                }
-            }
-            else
-            {
-                if (Input.GetKeyDown(KeyCode.E))
-                {
-                    Open();
-                }
             }
         }
     }
