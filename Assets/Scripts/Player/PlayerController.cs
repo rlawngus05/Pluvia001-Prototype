@@ -30,13 +30,13 @@ public class PlayerController : MonoBehaviour
         if (_currentState == PlayerState.Idle)
         {
             float moveDirection = Input.GetAxisRaw("Horizontal");
-            _rb.linearVelocityX = _moveSpeed * moveDirection;
+            SetVelocityX(moveDirection, _moveSpeed);
         }
     }
 
     private void Update()
     {
-        if (_currentState == PlayerState.Idle)
+        if (_currentState == PlayerState.Idle && Input.GetAxisRaw("Horizontal") == 0.0f)
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
@@ -47,6 +47,8 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
+    private void SetVelocityX(float moveDirection, float moveSpeed) { _rb.linearVelocityX = _moveSpeed * moveDirection; }
 
     public void MoveCharacter(Transform destination)
     {
@@ -65,6 +67,8 @@ public class PlayerController : MonoBehaviour
 
         _currentState = playerState;
         PlayerInteractor.Instance.SetState(playerState);
+        
+        if (playerState == PlayerState.MoveArea) { SetVelocityX(0.0f, 0.0f); }
     }
 }
 
@@ -72,5 +76,6 @@ public enum PlayerState
 {
     Idle,
     OpenInventory,
-    OpenPuzzle
+    OpenPuzzle,
+    MoveArea
 }
