@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      MisakiDere_0: 5963609780462385967
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,8 +1,9 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class CaesarCipherPuzzleUIScript : MonoBehaviour, IInitializableObject
+public class CaesarCipherPuzzleUIScript : MonoBehaviour, IPuzzleObject
 {
     [SerializeField] CaesarCipherPuzzleLogic _puzzleLogic;
     private List<Label> _inputTexts;
@@ -43,8 +44,8 @@ public class CaesarCipherPuzzleUIScript : MonoBehaviour, IInitializableObject
         Button resetButton = root.Query<Button>("ResetButton");
         resetButton.RegisterCallback<ClickEvent>((ClickEvent evt) =>
         {
-            _puzzleLogic.Init();
-            Init();
+            _puzzleLogic.Initialize();
+            Initialize();
         });
 
         _puzzleLogic.SetUserInputTextChangeEvent((string text) =>
@@ -65,15 +66,20 @@ public class CaesarCipherPuzzleUIScript : MonoBehaviour, IInitializableObject
 
         _puzzleLogic.SetWrongEvent(() =>
         {
-            Init();
+            Initialize();
         });
     }
 
-    public void Init()
+    public void Initialize()
     {
         foreach (Label inputText in _inputTexts)
         {
             inputText.text = "";
         }
+    }
+
+    public void Initiate()
+    {
+        throw new NotImplementedException();
     }
 }

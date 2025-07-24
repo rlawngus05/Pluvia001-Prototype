@@ -153,7 +153,7 @@ MonoBehaviour:
       m_Calls: []
   _answerDigits: 09000000060000000300000006000000
   _inputDigits: 00000000000000000000000000000000
-  _remainingChance: 6
+  _remainChance: 0
 --- !u!4 &9552634
 Transform:
   m_ObjectHideFlags: 0
@@ -3551,7 +3551,7 @@ GameObject:
   - component: {fileID: 1120875753}
   - component: {fileID: 1120875755}
   m_Layer: 0
-  m_Name: PasswordPuzzleInteractor
+  m_Name: PasswordPuzzleUIController
   m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3585,6 +3585,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GUI: {fileID: 2032706884}
+  passwordPuzzleUIScript: {fileID: 2032706885}
 --- !u!212 &1120875754
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5234,7 +5235,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1706893195
 Transform:
   m_ObjectHideFlags: 0
@@ -6754,28 +6755,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _puzzleLogic: {fileID: 9552633}
-  digitPanelStateDictWrapper:
+  _digitPanelStateDictWrapper:
     digitPanelStateItems:
     - digitState: 4
       color:
         serializedVersion: 2
-        rgba: 4290690750
+        rgba: 4279900698
     - digitState: 0
       color:
         serializedVersion: 2
-        rgba: 4286105680
+        rgba: 4278242338
     - digitState: 1
       color:
         serializedVersion: 2
-        rgba: 4283489535
+        rgba: 4278255615
     - digitState: 2
       color:
         serializedVersion: 2
-        rgba: 4282795750
+        rgba: 4278223103
     - digitState: 3
       color:
         serializedVersion: 2
-        rgba: 4278386943
+        rgba: 4278190310
 --- !u!1001 &2071049049
 PrefabInstance:
   m_ObjectHideFlags: 0

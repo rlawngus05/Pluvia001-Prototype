@@ -1,82 +1,165 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Rendering.RenderGraphModule;
 using UnityEngine.UIElements;
 
-public class PasswordPuzzleUIScript : MonoBehaviour, IInitializableObject
+public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
 {
     [SerializeField] private PasswordPuzzleLogic _puzzleLogic;
-    [SerializeField] private DigitPanelStateDictWrapper digitPanelStateDictWrapper; //* 유니티 editor 상에서 보여지는 필드
+
+    private VisualElement _root;
+    private List<VisualElement> _digitPanels;
+    private int _currentIndex;
+    private List<VisualElement> _chanceNotifiers;
+
+    private PuzzleUIState _currentState;
+    public PuzzleUIState GetState() { return _currentState; }
+
+    [SerializeField] private DigitPanelStateDictWrapper _digitPanelStateDictWrapper; //* 유니티 editor 상에서 보여지는 필드
     private Dictionary<DigitState, Color32> digitPanelStateDict; //* 스크립트 상에서, 사용되는 필드
-    
-    private void Awake() {
-        digitPanelStateDict = digitPanelStateDictWrapper.ToDictionary();
-    }
 
-    private void Update() {
-        // digitPanelStateDict = digitPanelStateDictWrapper.ToDictionary(); //! Test : 에디터 상에서 실시간으로 색깔 조정가능하게 함.
-    }
-
-    public void Init()
+    private void Awake()
     {
-        VisualElement root = GetComponent<UIDocument>().rootVisualElement;
+        _digitPanels = new List<VisualElement>();
+        _chanceNotifiers = new List<VisualElement>();
 
-        root.style.display = DisplayStyle.None;
-
-        //* 확인 버튼을 눌렀을 때, 정답이 맞는지 확인하는 콜백 함수 등록
-        Button checkButton = root.Query<Button>("CheckButton");
-        checkButton.RegisterCallback<ClickEvent>((ClickEvent evt) =>
-        {
-            _puzzleLogic.CheckCorrection();
-        });
-
-        //* UI창 닫기 버튼 눌렀을 때, UI 비활성화하는 콜백 함수 등록
-        Button exitButton = root.Query<Button>("ExitButton");
-        exitButton.RegisterCallback<ClickEvent>((ClickEvent evt) =>
-        {
-            root.style.display = DisplayStyle.None;
-        });
+        _root = GetComponent<UIDocument>().rootVisualElement;
 
         for (int i = 0; i < 4; i++)
         {
-            VisualElement digit = root.Query<VisualElement>("Digit" + i.ToString());
+            VisualElement digitPanel = _root.Query<VisualElement>("DigitPanel" + i.ToString());
+            _digitPanels.Add(digitPanel);
+        }
 
-            Button upButton = digit.Query<Button>("UpButton");
-            Button downButton = digit.Query<Button>("DownButton");
+        VisualElement chanceNotifierContainer = _root.Query<VisualElement>("ChanceNotifierContainer");
+        for (int i = 0; i < 6; i++)
+        {
+            VisualElement chanceNotifier = chanceNotifierContainer.Query<VisualElement>(i.ToString());
+            _chanceNotifiers.Add(chanceNotifier);
+        }
+
+        digitPanelStateDict = _digitPanelStateDictWrapper.ToDictionary();
+    }
+
+    public void Initialize()
+    {
+        _root.style.display = DisplayStyle.None;
+        _currentState = PuzzleUIState.Close;
+
+        for (int i = 0; i < 4; i++)
+        {
+            VisualElement digitPanel = _root.Query<VisualElement>("DigitPanel" + i.ToString());
 
             int index = i;
-            //* 숫자 상승 버튼을 눌렀을 때, Logic객체의 해당되는 부분의 숫자를 1증가 시키는 콜백 함수 등록
-            upButton.RegisterCallback<ClickEvent>((ClickEvent evt) =>
-            {
-                _puzzleLogic.OnUpBottonPressed(index);
-            });
-
-            //* 숫자 하강 버튼을 눌렀을 때, Logic객체의 해당되는 부분의 숫자를 1감소 시키는 콜백 함수 등록
-            downButton.RegisterCallback<ClickEvent>((ClickEvent evt) =>
-            {
-                _puzzleLogic.OnDownBottonPressed(index);
-            });
-
 
             //* Logic 부분에서 입력 숫자값을 변경 했을 때, 변경된 사실을 받기 위해, Logic 객체에 Observer 함수를 추가함
-            _puzzleLogic.AddDigitNumberChangeObserver((int value) =>
+            _puzzleLogic.AddInputNumberChangeObserver((int value) =>
             {
-                Label label = digit.Query<Label>("Label");
+                Label number = digitPanel.Query<Label>("Number");
 
-                label.text = value.ToString();
+                number.text = value.ToString();
             });
 
 
             //* Logic 객체에서 번호판의 상태를 바꿨을 때, UI에 적용할 수 있도록 Observer 함수를 추가함
             _puzzleLogic.AddDigitStateChangeObserver((DigitState digitState) =>
             {
-                VisualElement digitPanel = digit.Query<VisualElement>("DigitPanel");
+                Label number = digitPanel.Query<Label>("Number");
 
                 Color32 changedColor = digitPanelStateDict[digitState];
-                digitPanel.style.backgroundColor = new StyleColor(changedColor);
+                number.style.color = new StyleColor(changedColor);
             });
         }
+
+        _puzzleLogic.SetRemainChanceOberver((int remainChance) =>
+        {
+            for (int i = 0; i < 6 - remainChance; i++)
+            {
+                if (!_chanceNotifiers[i].ClassListContains("chance-fail")) { _chanceNotifiers[i].AddToClassList("chance-fail"); }
+            }
+
+            for (int i = 6 - remainChance; i < 6; i++)
+            {
+                if (_chanceNotifiers[i].ClassListContains("chance-fail")) { _chanceNotifiers[i].RemoveFromClassList("chance-fail"); }
+            }
+        });
+
+        _puzzleLogic.SetFailObserver(() =>
+        {
+            _root.style.display = DisplayStyle.None;
+            Close();
+            Initiate();
+        });
+
+        Initiate();
+    }
+
+    public void Initiate()
+    {
+        _digitPanels[_currentIndex].RemoveFromClassList("digit-panel-selected");
+        _currentIndex = 0;
+        _digitPanels[_currentIndex].AddToClassList("digit-panel-selected");
+
+        VisualElement chanceNotifierContainer = _root.Query<VisualElement>("ChanceNotifierContainer");
+        for (int i = 0; i < 6; i++)
+        {
+            VisualElement chanceNotifier = chanceNotifierContainer.Query<VisualElement>(i.ToString());
+            chanceNotifier.RemoveFromClassList("chance-fail");
+        }
+    }
+
+    private void Update()
+    {
+        // digitPanelStateDict = digitPanelStateDictWrapper.ToDictionary(); //! Test : 에디터 상에서 실시간으로 색깔 조정가능하게 함.
+
+        if (_currentState == PuzzleUIState.Open)
+        {
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                if (_currentIndex > 0)
+                {
+                    ChangeSelectedDigitPanel(_currentIndex, --_currentIndex);
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                if (_currentIndex < 3)
+                {
+                    ChangeSelectedDigitPanel(_currentIndex, ++_currentIndex);
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.UpArrow)) { _puzzleLogic.UpNumber(_currentIndex); }
+            if (Input.GetKeyDown(KeyCode.DownArrow)) { _puzzleLogic.DownNumber(_currentIndex); }
+
+            if (Input.GetKeyDown(KeyCode.Return)) { _puzzleLogic.CheckCorrection(); }
+        }
+    }
+
+    private void ChangeSelectedDigitPanel(int previousIndex, int currentIndex)
+    {
+        _digitPanels[previousIndex].RemoveFromClassList("digit-panel-selected");
+        _digitPanels[currentIndex].AddToClassList("digit-panel-selected");
+    }
+
+    public void Open()
+    {
+        _root.style.display = DisplayStyle.Flex;
+
+        PlayerController.Instance.SetState(PlayerState.OpenPuzzle);
+        _currentState = PuzzleUIState.Open;
+    }
+
+    public void Close()
+    {
+        _root.style.display = DisplayStyle.None;
+
+        PlayerController.Instance.SetState(PlayerState.Idle);
+        _currentState = PuzzleUIState.Close;
     }
 }
 

@@ -24,7 +24,6 @@ public class PlayerInteractor : MonoBehaviour
         _currentState = PlayerState.Idle;
     }
 
-
     private void Update()
     {
         if (_currentState == PlayerState.Idle)

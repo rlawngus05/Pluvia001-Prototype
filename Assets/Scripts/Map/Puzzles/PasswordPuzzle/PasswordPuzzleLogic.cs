@@ -7,37 +7,46 @@ public class PasswordPuzzleLogic : PuzzleLogic
     //* _answerDigits와 _inputDigits의 배열의 크기는 동일해야 한다.
     [SerializeField] private int[] _answerDigits;
     [SerializeField] private int[] _inputDigits;
-    [SerializeField] private int _remainingChance;
+    [SerializeField] private int _remainChance;
+
     private List<Action<int>> _digitNumberChangeObervers;
     private List<Action<DigitState>> _digitStateChangeObservers;
+    private Action<int> _remainChanceObserver;
+    private Action _failObserver;
 
     protected override void Awake()
     {
         base.Awake();
 
         _answerDigits = new int[4];
+        _inputDigits = new int[4];
 
         _digitNumberChangeObervers = new List<Action<int>>();
         _digitStateChangeObservers = new List<Action<DigitState>>();
     }
 
-    [ContextMenu("Init")]
-    public override void Init()
+    public override void Initialize()
     {
-        foreach (Action<int> action in _digitNumberChangeObervers)
+        Initiate();
+    }
+
+    public override void Initiate()
+    {
+        for (int i = 0; i < _inputDigits.Length; i++)
         {
-            action(0);
+            _inputDigits[i] = 0;
+
+            _digitNumberChangeObervers[i](_inputDigits[i]);
         }
 
-        _inputDigits = new int[] { 0, 0, 0, 0 };
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < _answerDigits.Length; i++)
         {
             _answerDigits[i] = UnityEngine.Random.Range(0, 9 + 1);
 
             _digitStateChangeObservers[i](DigitState.Init);
         }
 
-        _remainingChance = 6;
+        _remainChance = 6;
     }
 
     [ContextMenu("CheckCorrection")]
@@ -86,51 +95,36 @@ public class PasswordPuzzleLogic : PuzzleLogic
         }
         else
         {
-            if (_remainingChance == 1)
+            _remainChanceObserver(--_remainChance);
+            if (_remainChance == 0)
             {
                 Debug.Log("ㅋ 다시 처음 부터해"); //! Test
-                Init();
+                _failObserver();
+                Initiate();
             }
             else
             {
                 Debug.Log("허접~ 그것 밖에 안돼? ㅋ"); //! Test
-                _remainingChance--;
             }
         }
 
         return isCorrect;
     }
 
-    //* 상승 버튼 UI 눌렀을때, index 위치의 숫자를 1증가 시킴
-    public void OnUpBottonPressed(int index)
+    public void UpNumber(int index)
     {
-        if (_inputDigits[index] < 9)
-        {
-            _digitNumberChangeObervers[index](++_inputDigits[index]);
-        }
+        if (_inputDigits[index] < 9) { _digitNumberChangeObervers[index](++_inputDigits[index]); }
     }
 
-    //* 하강 버튼 UI 눌렀을때, index 위치의 숫자를 1감소 시킴
-    public void OnDownBottonPressed(int index)
+    public void DownNumber(int index)
     {
-        if (_inputDigits[index] > 0)
-        {
-            _digitNumberChangeObervers[index](--_inputDigits[index]);
-        }
+        if (_inputDigits[index] > 0) { _digitNumberChangeObervers[index](--_inputDigits[index]); }
     }
 
-    //* 상승, 하강 버튼 눌렀을때, UI에 CallBack 메시지를 보낼 Observer를 입력 받는 메소드
-    public void AddDigitNumberChangeObserver(Action<int> observerEvent)
-    {
-        _digitNumberChangeObervers.Add(observerEvent);
-    }
-
-    //* 번호판 상태가 변화 했음을 UI에게 고지할 Observer를 입력 받는 메소드
-    public void AddDigitStateChangeObserver(Action<DigitState> observerEvent)
-    {
-        _digitStateChangeObservers.Add(observerEvent);
-    }
-
+    public void AddInputNumberChangeObserver(Action<int> observerEvent) { _digitNumberChangeObervers.Add(observerEvent); }
+    public void AddDigitStateChangeObserver(Action<DigitState> observerEvent) { _digitStateChangeObservers.Add(observerEvent); }
+    public void SetRemainChanceOberver(Action<int> oberverEvent) { _remainChanceObserver = oberverEvent; }
+    public void SetFailObserver(Action observerEvent) { _failObserver = observerEvent; }
 }
 
 //* 번호판의 상태를 다루는 열거형

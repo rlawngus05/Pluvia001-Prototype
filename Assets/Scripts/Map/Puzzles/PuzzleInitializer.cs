@@ -12,15 +12,15 @@ public class PuzzleInitializer : MonoBehaviour
         //* Unity Editor 상에서 등록한 객체(GameObject)의 순서에 따라 초기화 함
         foreach (GameObject gameObject in objectsWithIntializable)
         {
-            IInitializableObject intializableObject = gameObject.GetComponent<IInitializableObject>();
+            IPuzzleObject puzzleObject = gameObject.GetComponent<IPuzzleObject>();
 
-            if (intializableObject == null)
+            if (puzzleObject == null)
             {
-                Debug.LogError(gameObject.name + " does not have IInitializableObject"); 
+                Debug.LogError(gameObject.name + " does not have IPuzzleObject"); 
                 continue;
             }
 
-            intializableObject.Init();
+            puzzleObject.Initialize();
         }
     }
 }
