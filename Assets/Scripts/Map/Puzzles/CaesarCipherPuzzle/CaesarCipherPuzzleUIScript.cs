@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -6,80 +7,94 @@ using UnityEngine.UIElements;
 public class CaesarCipherPuzzleUIScript : MonoBehaviour, IPuzzleObject
 {
     [SerializeField] CaesarCipherPuzzleLogic _puzzleLogic;
-    private List<Label> _inputTexts;
-    public int _maxTextLength;
+    [SerializeField] UIDocument _uiDocument;
+
+    private VisualElement _root;
+    private Label _hintPlainText;
+    private Label _hintCipherText;
+    private Label _inputText;
+
+    private PuzzleUIState _currentState;
+    public PuzzleUIState GetState() { return _currentState; }
 
     private void Awake()
     {
-        _maxTextLength = _puzzleLogic.GetMaxTextLength(); //! 테스트 단계서에서 PlainText는 Ether로 고정됨
-        _inputTexts = new List<Label>();
+        _root = _uiDocument.rootVisualElement;
 
-        VisualElement root = GetComponent<UIDocument>().rootVisualElement;
-        root.style.display = DisplayStyle.None;
-
-        for (int i = 0; i < _maxTextLength; i++)
-        {
-            Label inputText = root.Query<Label>("InputText" + i.ToString());
-            _inputTexts.Add(inputText);
-        }
-
-        //* UI창 닫기 버튼 눌렀을 때, UI 비활성화하는 콜백 함수 등록
-        Button exitButton = root.Query<Button>("ExitButton");
-        exitButton.RegisterCallback<ClickEvent>((ClickEvent evt) =>
-        {
-            root.style.display = DisplayStyle.None;
-        });
-
-        for (int i = 0; i < 26; i++)
-        {
-            char currentChar = (char)(i + 'A');
-            Button alphabetButton = root.Query<Button>(currentChar.ToString());
-
-            alphabetButton.RegisterCallback<ClickEvent>((ClickEvent evt) =>
-            {
-                _puzzleLogic.AppendUserInputText(currentChar);
-            });
-        }
-
-        Button resetButton = root.Query<Button>("ResetButton");
-        resetButton.RegisterCallback<ClickEvent>((ClickEvent evt) =>
-        {
-            _puzzleLogic.Initialize();
-            Initialize();
-        });
-
-        _puzzleLogic.SetUserInputTextChangeEvent((string text) =>
-        {
-            for (int i = 0; i < text.Length; i++)
-            {
-                _inputTexts[i].text = text[i].ToString();
-            }
-        });
-
-        _puzzleLogic.SetCorrectEvent(() =>
-        {
-            foreach (Label inputText in _inputTexts)
-            {
-                inputText.AddToClassList("correct-event");
-            }
-        });
-
-        _puzzleLogic.SetWrongEvent(() =>
-        {
-            Initialize();
-        });
+        _hintPlainText = _root.Query<Label>("HintPlainText");
+        _hintCipherText = _root.Query<Label>("HintCipherText");
+        _inputText = _root.Query<Label>("InputText");
     }
 
     public void Initialize()
     {
-        foreach (Label inputText in _inputTexts)
+        _hintPlainText.text = _puzzleLogic.HintPlainText;
+        _hintCipherText.text = _puzzleLogic.HintCipherText;
+
+        _puzzleLogic.SetInputTextChangeObserver((string value) =>
         {
-            inputText.text = "";
-        }
+            _inputText.text = value;
+        });
+
+        _puzzleLogic.SetCorrectEvent(() =>
+        {
+            Debug.Log("UI에서도 반응함..♥");
+        });
     }
 
     public void Initiate()
     {
-        throw new NotImplementedException();
+        _root.style.display = DisplayStyle.None;
+        _currentState = PuzzleUIState.Close;
+    }
+
+    private void Update()
+    {
+        if (_currentState == PuzzleUIState.Open)
+        {
+            if (Input.GetKeyDown(KeyCode.Backspace))
+            {
+                _puzzleLogic.EraseInputText();
+            }
+
+            foreach (KeyCode keyCode in Enum.GetValues(typeof(KeyCode)))
+            {
+                if (Input.GetKeyDown(keyCode))
+                {
+                    if (keyCode >= KeyCode.A && keyCode <= KeyCode.Z)
+                    {
+                        char inputCharacter = (char)('A' + keyCode - KeyCode.A);
+                        _puzzleLogic.AppendInputText(inputCharacter);
+                    }
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                _puzzleLogic.CheckCorrection();
+            }
+        }
+    }
+    
+    public void Open()
+    {
+        StartCoroutine(OpenCoroutine());
+    }
+    //* UI 열려고 F키 눌렀을 때, 이 인식이 문자 입력으로 들어가는것을 막기 위한 보조 함수
+    private IEnumerator OpenCoroutine()
+    {
+        yield return null;
+        _root.style.display = DisplayStyle.Flex;
+
+        PlayerController.Instance.SetState(PlayerState.OpenPuzzle);
+        _currentState = PuzzleUIState.Open;
+    }
+
+    public void Close()
+    {
+        _root.style.display = DisplayStyle.None;
+
+        PlayerController.Instance.SetState(PlayerState.Idle);
+        _currentState = PuzzleUIState.Close;
     }
 }

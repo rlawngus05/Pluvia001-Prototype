@@ -16,11 +16,24 @@ public class PuzzleInitializer : MonoBehaviour
 
             if (puzzleObject == null)
             {
-                Debug.LogError(gameObject.name + " does not have IPuzzleObject"); 
+                Debug.LogError(gameObject.name + " does not have IPuzzleObject");
                 continue;
             }
 
             puzzleObject.Initialize();
+        }
+
+        foreach (GameObject gameObject in objectsWithIntializable)
+        {
+            IPuzzleObject puzzleObject = gameObject.GetComponent<IPuzzleObject>();
+
+            if (puzzleObject == null)
+            {
+                Debug.LogError(gameObject.name + " does not have IPuzzleObject");
+                continue;
+            }
+
+            puzzleObject.Initiate();
         }
     }
 }

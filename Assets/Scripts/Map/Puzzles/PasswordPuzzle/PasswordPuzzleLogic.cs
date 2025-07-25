@@ -27,7 +27,6 @@ public class PasswordPuzzleLogic : PuzzleLogic
 
     public override void Initialize()
     {
-        Initiate();
     }
 
     public override void Initiate()
