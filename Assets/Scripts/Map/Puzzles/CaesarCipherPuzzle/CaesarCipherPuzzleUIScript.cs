@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -8,6 +9,7 @@ public class CaesarCipherPuzzleUIScript : MonoBehaviour, IPuzzleObject
 {
     [SerializeField] CaesarCipherPuzzleLogic _puzzleLogic;
     [SerializeField] UIDocument _uiDocument;
+    [SerializeField] TextMeshProUGUI _answerCipherText;
 
     private VisualElement _root;
     private Label _hintPlainText;
@@ -28,8 +30,9 @@ public class CaesarCipherPuzzleUIScript : MonoBehaviour, IPuzzleObject
 
     public void Initialize()
     {
-        _hintPlainText.text = _puzzleLogic.HintPlainText;
-        _hintCipherText.text = _puzzleLogic.HintCipherText;
+        _hintPlainText.text = _puzzleLogic.HintPlain;
+        _hintCipherText.text = _puzzleLogic.HintCipher;
+        _answerCipherText.text = _puzzleLogic.AnswerCipher;
 
         _puzzleLogic.SetInputTextChangeObserver((string value) =>
         {

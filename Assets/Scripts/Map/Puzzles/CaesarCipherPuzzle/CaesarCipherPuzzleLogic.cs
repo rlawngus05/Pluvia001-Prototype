@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class CaesarCipherPuzzleLogic : PuzzleLogic
 {
-    [SerializeField] private string _answerPlainText;
-    private string _answerCipherText;
-    public string AnswerCipherText => _answerCipherText;
-    [SerializeField] private string _hintPlainText;
-    private string _hintCipherText;
+    [SerializeField] private string _answerPlain;
+    private string _answerCipher;
+    public string AnswerCipher => _answerCipher;
+    [SerializeField] private string _hintPlain;
+    private string _hintCipher;
 
     private int _maxInputTextLength;
     private int _n;
@@ -20,30 +20,30 @@ public class CaesarCipherPuzzleLogic : PuzzleLogic
     {
         base.Awake();
 
-        _answerPlainText = _answerPlainText.ToUpper();
-        _hintPlainText = _hintPlainText.ToUpper();
+        _answerPlain = _answerPlain.ToUpper();
+        _hintPlain = _hintPlain.ToUpper();
         _maxInputTextLength = 8;
     }
 
     public override void Initialize()
     {
-        _answerCipherText = "";
-        _hintCipherText = "";
+        _answerCipher = "";
+        _hintCipher = "";
 
         _n = UnityEngine.Random.Range(3, 8 + 1);
 
-        foreach (char c in _answerPlainText)
+        foreach (char c in _answerPlain)
         {
             char cipherCharacter = (char)((c - 'A' + _n) % 26 + 'A');
 
-            _answerCipherText += cipherCharacter;
+            _answerCipher += cipherCharacter;
         }
 
-        foreach (char c in _hintPlainText)
+        foreach (char c in _hintPlain)
         {
             char cipherCharacter = (char)((c - 'A' + _n) % 26 + 'A');
 
-            _hintCipherText += cipherCharacter;
+            _hintCipher += cipherCharacter;
         }
     }
 
@@ -54,7 +54,7 @@ public class CaesarCipherPuzzleLogic : PuzzleLogic
 
     public override bool CheckCorrection()
     {
-        if (_inputText == _answerPlainText)
+        if (_inputText == _answerPlain)
         {
             Debug.Log("기모취");
             _correctEvent();
@@ -94,8 +94,8 @@ public class CaesarCipherPuzzleLogic : PuzzleLogic
         }
     }
     
-    public string HintPlainText => _hintPlainText;
-    public string HintCipherText => _hintCipherText;
+    public string HintPlain => _hintPlain;
+    public string HintCipher => _hintCipher;
     public void SetInputTextChangeObserver(Action<string> evt) { _inputTextChangeObserver = evt; }
     public void SetCorrectEvent(Action evt) { _correctEvent = evt; }
 }
