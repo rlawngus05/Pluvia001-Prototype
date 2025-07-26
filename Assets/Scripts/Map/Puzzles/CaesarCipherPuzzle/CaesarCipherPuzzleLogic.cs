@@ -3,92 +3,100 @@ using UnityEngine;
 
 public class CaesarCipherPuzzleLogic : PuzzleLogic
 {
-    [SerializeField] string _plainText;
-    [SerializeField] private int _maxTextLength;
-    [SerializeField] int _n;
-    [SerializeField] string _cipherText;
-    private Action<string> _userInputTextChangeEvent;
-    private Action _wrongEvent;
-    private Action _correctEvent;
-    private string _userInputText;
+    [SerializeField] private string _answerPlain;
+    private string _answerCipher;
+    public string AnswerCipher => _answerCipher;
+    [SerializeField] private string _hintPlain;
+    private string _hintCipher;
 
-    protected override void Awake() {
-        _cipherText = "";
+    private int _maxInputTextLength;
+    private int _n;
+    private string _inputText;
 
-        foreach (char c in _plainText)
+    private Action<string> _inputTextChangeObserver;
+    private Action _successObserver;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        _answerPlain = _answerPlain.ToUpper();
+        _hintPlain = _hintPlain.ToUpper();
+        _maxInputTextLength = 8; //! 현재 최대 입력 크기가 8로 하드코딩 됨
+    }
+
+    public override void Initialize()
+    {
+        _answerCipher = "";
+        _hintCipher = "";
+
+        _n = UnityEngine.Random.Range(3, 8 + 1);
+
+        foreach (char c in _answerPlain)
         {
             char cipherCharacter = (char)((c - 'A' + _n) % 26 + 'A');
 
-            _cipherText += cipherCharacter;
+            _answerCipher += cipherCharacter;
         }
 
-        base.Awake();
-    }
+        foreach (char c in _hintPlain)
+        {
+            char cipherCharacter = (char)((c - 'A' + _n) % 26 + 'A');
 
-    [ContextMenu(nameof(Initialize))]
-    public override void Initialize()
-    {
-        _userInputText = "";
+            _hintCipher += cipherCharacter;
+        }
     }
 
     public override void Initiate()
     {
-        throw new NotImplementedException();
+        ClearInputText();
     }
 
     public override bool CheckCorrection()
     {
-        if (_userInputText == _cipherText)
+        if (_inputText == _answerPlain)
         {
             Debug.Log("기모취");
+            _successObserver();
+
             OnSolved();
 
             return true;
         }
-        Debug.Log("틀림");
+
+        ClearInputText();
         return false;
     }
 
-    public void AppendUserInputText(char c)
+    public void AppendInputText(char c)
     {
-        _userInputText += c;
-
-        _userInputTextChangeEvent(_userInputText);
-        if (_userInputText.Length == _maxTextLength)
+        if (_inputText.Length < _maxInputTextLength)
         {
-            bool isCorrect = CheckCorrection();
+            _inputText += c;
 
-            if (!isCorrect)
-            {
-                _wrongEvent();
-                Initialize();
-            }
-            else
-            {
-                _correctEvent();
-            }
+            _inputTextChangeObserver(_inputText);
         }
     }
 
-    public int GetMaxTextLength() { return _maxTextLength; }
-    public void ClearUserInputText()
+    public void ClearInputText()
     {
-        _userInputText = "";
-        _wrongEvent();
+        _inputText = "";
+
+        _inputTextChangeObserver(_inputText);
     }
 
-    public void SetUserInputTextChangeEvent(Action<string> evt)
+    public void EraseInputText()
     {
-        _userInputTextChangeEvent = evt;
-    }
+        if (_inputText.Length > 0)
+        {
+            _inputText = _inputText.Substring(0, _inputText.Length - 1);
 
-    public void SetCorrectEvent(Action evt)
-    {
-        _correctEvent = evt;
+            _inputTextChangeObserver(_inputText);
+        }
     }
-
-    public void SetWrongEvent(Action evt)
-    {
-        _wrongEvent = evt;
-    }
+    
+    public string HintPlain => _hintPlain;
+    public string HintCipher => _hintCipher;
+    public void SetInputTextChangeObserver(Action<string> evt) { _inputTextChangeObserver = evt; }
+    public void SetSuccessObserver(Action evt) { _successObserver = evt; }
 }

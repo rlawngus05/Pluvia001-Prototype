@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PasswordPuzzleLogic : PuzzleLogic
@@ -8,6 +9,7 @@ public class PasswordPuzzleLogic : PuzzleLogic
     [SerializeField] private int[] _answerDigits;
     [SerializeField] private int[] _inputDigits;
     [SerializeField] private int _remainChance;
+    [SerializeField] private TextMeshProUGUI _answerCipherText;
 
     private List<Action<int>> _digitNumberChangeObervers;
     private List<Action<DigitState>> _digitStateChangeObservers;
@@ -27,7 +29,6 @@ public class PasswordPuzzleLogic : PuzzleLogic
 
     public override void Initialize()
     {
-        Initiate();
     }
 
     public override void Initiate()
