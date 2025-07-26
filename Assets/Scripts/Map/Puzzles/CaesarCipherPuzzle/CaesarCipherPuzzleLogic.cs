@@ -14,7 +14,7 @@ public class CaesarCipherPuzzleLogic : PuzzleLogic
     private string _inputText;
 
     private Action<string> _inputTextChangeObserver;
-    private Action _correctEvent;
+    private Action _successObserver;
 
     protected override void Awake()
     {
@@ -22,7 +22,7 @@ public class CaesarCipherPuzzleLogic : PuzzleLogic
 
         _answerPlain = _answerPlain.ToUpper();
         _hintPlain = _hintPlain.ToUpper();
-        _maxInputTextLength = 8;
+        _maxInputTextLength = 8; //! 현재 최대 입력 크기가 8로 하드코딩 됨
     }
 
     public override void Initialize()
@@ -57,7 +57,7 @@ public class CaesarCipherPuzzleLogic : PuzzleLogic
         if (_inputText == _answerPlain)
         {
             Debug.Log("기모취");
-            _correctEvent();
+            _successObserver();
 
             OnSolved();
 
@@ -84,6 +84,7 @@ public class CaesarCipherPuzzleLogic : PuzzleLogic
 
         _inputTextChangeObserver(_inputText);
     }
+
     public void EraseInputText()
     {
         if (_inputText.Length > 0)
@@ -97,5 +98,5 @@ public class CaesarCipherPuzzleLogic : PuzzleLogic
     public string HintPlain => _hintPlain;
     public string HintCipher => _hintCipher;
     public void SetInputTextChangeObserver(Action<string> evt) { _inputTextChangeObserver = evt; }
-    public void SetCorrectEvent(Action evt) { _correctEvent = evt; }
+    public void SetSuccessObserver(Action evt) { _successObserver = evt; }
 }

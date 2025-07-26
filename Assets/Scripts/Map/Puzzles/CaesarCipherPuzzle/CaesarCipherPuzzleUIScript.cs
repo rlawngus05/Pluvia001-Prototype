@@ -39,7 +39,7 @@ public class CaesarCipherPuzzleUIScript : MonoBehaviour, IPuzzleObject
             _inputText.text = value;
         });
 
-        _puzzleLogic.SetCorrectEvent(() =>
+        _puzzleLogic.SetSuccessObserver(() =>
         {
             Debug.Log("UI에서도 반응함..♥");
         });
