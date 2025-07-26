@@ -5061,7 +5061,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0.66
+  m_FillAmount: 0.727
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -6478,7 +6478,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93d4b04eb26b1424ca73bf4bf846041b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  etherCount: 0
+  _etherCount: 0
+  _damage: 5
+  _damagingTime: 5
 --- !u!4 &1838504513
 Transform:
   m_ObjectHideFlags: 0
