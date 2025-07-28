@@ -265,7 +265,7 @@ Transform:
   m_GameObject: {fileID: 18839965}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.88, y: -1.54, z: -10}
+  m_LocalPosition: {x: 7.31, y: -0.88, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1883,7 +1883,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.88, y: -1.54, z: -10}
+  m_LocalPosition: {x: 7.31, y: -0.88, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4747,7 +4747,7 @@ GameObject:
   - component: {fileID: 1298848462}
   - component: {fileID: 1298848464}
   - component: {fileID: 1298848463}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5677,7 +5677,7 @@ Transform:
   m_GameObject: {fileID: 1669490207}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.88, y: -1.54, z: 0}
+  m_LocalPosition: {x: 7.31, y: -0.88, z: 0}
   m_LocalScale: {x: 0.8015091, y: 0.8015091, z: 0.8015091}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5756,7 +5756,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &1669490212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5770,6 +5770,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 5
+  _jumpForce: 6.5
+  _earlyJumpDivder: 2
+  _keepHoldJumpGravityScale: 0.8
+  _unholdJumpGravityScale: 3
+  _maxFallVelocity: 20
   _currentState: 0
 --- !u!114 &1669490213
 MonoBehaviour:
@@ -6193,7 +6198,7 @@ GameObject:
   - component: {fileID: 1728164073}
   - component: {fileID: 1728164075}
   - component: {fileID: 1728164074}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
