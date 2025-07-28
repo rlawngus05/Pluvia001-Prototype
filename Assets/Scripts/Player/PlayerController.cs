@@ -10,7 +10,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _jumpForce;
     [SerializeField] private float _earlyJumpDivder;
-    [SerializeField] private float _keepHoldJumpGravityScale;
     [SerializeField] private float _unholdJumpGravityScale;
     [SerializeField] private float _maxFallVelocity;
     private float _originGravityScale;
