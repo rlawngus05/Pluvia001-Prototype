@@ -2,8 +2,13 @@ using UnityEngine;
 
 public class EtherManager : MonoBehaviour
 {
-    //싱글톤 로직
     public static EtherManager Instance { get; private set; }
+    [SerializeField] private int _etherCount;
+    public int EtherCount => _etherCount; 
+
+    [SerializeField] private int _damage;
+    [SerializeField] private float _damagingTime; //* 단위는 '초'임
+    private float accumulatedTime; 
 
     void Awake()
     {
@@ -15,12 +20,25 @@ public class EtherManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        accumulatedTime = 0;
     }
 
-    [SerializeField] private int etherCount;
+    public void AddEtherCount(int value = 1) { _etherCount += value; }
 
-    public void GetEther(int value = 1)
-    {
-        etherCount += value;
+    void Update(){
+        if (_etherCount >= 3)
+        {
+            if (accumulatedTime >= _damagingTime)
+            {
+                HealthManager.Instance.DecreaseHealth(_damage);
+
+                accumulatedTime = 0;
+            }
+            else
+            {
+                accumulatedTime += Time.deltaTime;
+            }
+        }
     }
 }
