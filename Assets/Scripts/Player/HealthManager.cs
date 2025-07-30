@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class HealthManager : MonoBehaviour
@@ -7,6 +8,9 @@ public class HealthManager : MonoBehaviour
 
     [SerializeField] private int _health;
     public int Health => _health;
+
+    [SerializeField] private bool _isInvincible;
+    [SerializeField] private float _invincibleTime;
 
     private const int MAX_HEALTH = 100;
     private const int MIN_HEALTH = 0;
@@ -46,15 +50,29 @@ public class HealthManager : MonoBehaviour
 
     public void DecreaseHealth(int value = 1)
     {
-        _health -= value;
-        if (_health < MIN_HEALTH)
+        if (!_isInvincible)
         {
-            _health = MIN_HEALTH;
-        }
+            _health -= value;
+            if (_health < MIN_HEALTH)
+            {
+                _health = MIN_HEALTH;
+            }
 
-        _healthChangeObserver(_health, MAX_HEALTH);
+            StartCoroutine(GetInvincible());
+
+            _healthChangeObserver(_health, MAX_HEALTH);
+        }
     }
-    
+
+    private IEnumerator GetInvincible()
+    {
+        _isInvincible = true;
+
+        yield return new WaitForSeconds(_invincibleTime);
+
+        _isInvincible = false;
+    }
+
     //! Test
     // private void Update() {
     //     if (Input.GetKey(KeyCode.LeftArrow))
