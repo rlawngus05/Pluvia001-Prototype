@@ -1,0 +1,96 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 135cf940e76d7534cbfa598ad0205340, type: 3}
+  m_Name: CutSceneScriptPractice
+  m_EditorClassIdentifier: 
+  _lines:
+  - rid: 7990673300134822065
+  - rid: 7990673300134822110
+  - rid: 7990673300134822059
+  - rid: 7990673300134822026
+  - rid: 7990673300134821978
+  - rid: 7990673300134821979
+  - rid: 7990673300134821984
+  - rid: 7990673300134821985
+  - rid: 7990673300134822027
+  references:
+    version: 2
+    RefIds:
+    - rid: 7990673300134821978
+      type: {class: CharacterLine, ns: , asm: Assembly-CSharp}
+      data:
+        _lineId: 
+        _actor: {fileID: 11400000, guid: 256e5da497924934f91ce6a5e97ddd33, type: 2}
+        _emotion: 1
+        _content: "\u3145\u3142 \uC595\uC740 \uBCF5\uC0AC\uB77C\uB2C8 \uBE61\uCE58\uB124"
+    - rid: 7990673300134821979
+      type: {class: CharacterLine, ns: , asm: Assembly-CSharp}
+      data:
+        _lineId: 
+        _actor: {fileID: 11400000, guid: 256e5da497924934f91ce6a5e97ddd33, type: 2}
+        _emotion: 3
+        _content: "\u3147\u314B ToList()\uB85C \uAE4A\uC740 \uBCF5\uC0AC \uAD6C\uD604
+          \uB0A0\uBA39 \uB098\uC774\uC2A4~\u2605"
+    - rid: 7990673300134821984
+      type: {class: CharacterLine, ns: , asm: Assembly-CSharp}
+      data:
+        _lineId: 
+        _actor: {fileID: 11400000, guid: 256e5da497924934f91ce6a5e97ddd33, type: 2}
+        _emotion: 2
+        _content: "\u3160"
+    - rid: 7990673300134821985
+      type: {class: CharacterLine, ns: , asm: Assembly-CSharp}
+      data:
+        _lineId: 
+        _actor: {fileID: 11400000, guid: 256e5da497924934f91ce6a5e97ddd33, type: 2}
+        _emotion: 2
+        _content: "\u315C\u315C\u315C\u315C"
+    - rid: 7990673300134822026
+      type: {class: SystemLine, ns: , asm: Assembly-CSharp}
+      data:
+        _lineId: 
+        _content: "\uD14C\uC2A4\uD2B8\uC694"
+    - rid: 7990673300134822027
+      type: {class: SystemLine, ns: , asm: Assembly-CSharp}
+      data:
+        _lineId: 
+        _content: "\uB05D\uC774\uC694"
+    - rid: 7990673300134822059
+      type: {class: CharacterLine, ns: , asm: Assembly-CSharp}
+      data:
+        _lineId: 
+        _actor: {fileID: 11400000, guid: 256e5da497924934f91ce6a5e97ddd33, type: 2}
+        _emotion: 2
+        _content: "\u3160\u3160"
+    - rid: 7990673300134822065
+      type: {class: CharacterLine, ns: , asm: Assembly-CSharp}
+      data:
+        _lineId: 
+        _actor: {fileID: 11400000, guid: 256e5da497924934f91ce6a5e97ddd33, type: 2}
+        _emotion: 0
+        _content: "\uAC83 \uC788\uAC8C \uC9C0\uB098\uC57C 21\uD37C\uC13C\uD2B8 \uC774\uB8E9\uD558\uB2E4.
+          \uBCF4\uB2E4 \uADF8\uB54C\uB2E4 \uC885\uB958\uB2E4 \uB4E3\uC5B4 \uC5F0\uCD9C\uC5D0
+          \uBD99\uB4E4\uC9C0 \uB300\uD615\uC774 \uB9CE\uC774 \uD65C\uBC1C\uD558\uB294
+          \uB299\uB2E4 \uC790\uC0C1\uD558\uB294\uC9C0. \uB9FA\uB294\uB2E4 \uC774\uB294
+          \uBC16\uC744 5\uB2EC \uD55C \uC788\uB2E4 \uB9C8\uB828\uD558\uC5EC. \uC774\uB860\uC740
+          \uC790\uC720\uB86D\uC624 \uC774 \uD569\uB2C8\uB2E4, \uAC19\uB294\uB370
+          \uC0AC\uC6A9\uC758 \uC548\uC774\uB2E4 \uC8FC\uC2DC\uD558\uB2E4. \uC791\uC544
+          \uB4DC\uBB3C\uBA74\uC11C \uBB38\uC11C\uB2E4 \uAD6D\uBBFC\uC740 \uC704\uD558\uC5EC
+          \uAC00\uAC8C\uB3C4 \uB4E4\uC774\uAE30 \uC774\uB370\uC62C\uB85C\uAE30\uC5D0
+          \uC0AC\uB2E4."
+    - rid: 7990673300134822110
+      type: {class: SystemLine, ns: , asm: Assembly-CSharp}
+      data:
+        _lineId: 
+        _content: " \uC790\uB2E4 \uC544\uB2C8\uC9C0 \uD6FC\uBC29\uC5D0 \uAD34\uB86D\uB354\uB77C\uB3C4,
+          \uB291\uB9C9\uC5FC\uC5D0\uC11C \uD06C\uC9C0\uB9CC \uAC04\uD639 \uADF8\uB140\uB85C
+          \uC788\uC5B4 \uC774\uC0AC\uD558\uB294 \uB9CE\uB2E4. "

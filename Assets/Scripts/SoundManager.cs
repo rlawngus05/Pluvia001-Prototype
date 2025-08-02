@@ -21,10 +21,12 @@ public class SoundManager : MonoBehaviour
 
     public void PlayBgm(AudioClip audioClip) { _bgmManager.Play(audioClip); }
     public void PlaySoundEffect(AudioClip audioClip) { _soundEffectManager.Play(audioClip); }
+    public void PlaySoundEffectWithRandomPich(AudioClip audioClip) { _soundEffectManager.PlayWithRandomPitch(audioClip); }
 
     //! Test
     [SerializeField] private AudioClip _testBgm;
     [SerializeField] private AudioClip _testSoundEffect;
+    [SerializeField] private AudioClip _testSoundEffectWithRandomPitch;
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.Z))
@@ -34,6 +36,10 @@ public class SoundManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.X))
         {
             PlaySoundEffect(_testSoundEffect);
+        }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            PlaySoundEffectWithRandomPich(_testSoundEffectWithRandomPitch);
         }
     }
 }
