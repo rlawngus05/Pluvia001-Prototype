@@ -954,6 +954,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2d205c1c781d384c8a29a24f9e5f2fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _pitchShakeRange: 0
 --- !u!82 &198683049
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5199,6 +5200,7 @@ MonoBehaviour:
   _soundEffectManager: {fileID: 198683048}
   _testBgm: {fileID: 8300000, guid: cb73141369cbd154b8944e95c3d1deb0, type: 3}
   _testSoundEffect: {fileID: 8300000, guid: 7d1f0ea997f10a8448b2ec62e0f20f5e, type: 3}
+  _testSoundEffectWithRandomPitch: {fileID: 8300000, guid: 87b11b75905f88e459d16c54ff2cdcdc, type: 3}
 --- !u!4 &1384190393
 Transform:
   m_ObjectHideFlags: 0
