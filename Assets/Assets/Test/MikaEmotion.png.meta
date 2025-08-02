@@ -248,7 +248,11 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      MikaEmotion_0: -6483993545201458202
+      MikaEmotion_1: -7016519408036746385
+      MikaEmotion_2: -5156036940544707755
+      MikaEmotion_3: 7834333457639118053
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

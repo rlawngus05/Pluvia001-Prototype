@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29211c3992c49ef43a9abbf4eefb4ef2, type: 3}
   m_Name: Mika
   m_EditorClassIdentifier: 
-  _name: "\u30DF\u30AB"
+  _name: "\uBBF8\uCE74"
   _portraits:
   - _type: 0
     _sprite: {fileID: -6483993545201458202, guid: 3956694f97aed8c4888c620b066cafbb, type: 3}
