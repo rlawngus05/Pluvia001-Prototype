@@ -39,20 +39,25 @@ public class HealthManager : MonoBehaviour
 
     public void IncreaseHealth(int value = 1)
     {
-        _health += value;
-        if (_health > MAX_HEALTH)
+        if (_health < MAX_HEALTH)
         {
-            _health = MAX_HEALTH;
-        }
+            _health += value;
+            if (_health > MAX_HEALTH)
+            {
+                _health = MAX_HEALTH;
+            }
 
-        _healthChangeObserver(_health, MAX_HEALTH);
+            _healthChangeObserver(_health, MAX_HEALTH);
+        }
     }
 
     public void DecreaseHealth(int value = 1)
     {
-        if (!_isInvincible)
+        if (!_isInvincible && _health > MIN_HEALTH)
         {
             _health -= value;
+            ExecuteHurtScreenEffect();
+
             if (_health < MIN_HEALTH)
             {
                 _health = MIN_HEALTH;
@@ -61,6 +66,8 @@ public class HealthManager : MonoBehaviour
             StartCoroutine(GetInvincible());
 
             _healthChangeObserver(_health, MAX_HEALTH);
+
+            if (_health == MIN_HEALTH) { OnDead(); }
         }
     }
 
@@ -73,15 +80,15 @@ public class HealthManager : MonoBehaviour
         _isInvincible = false;
     }
 
-    //! Test
-    // private void Update() {
-    //     if (Input.GetKey(KeyCode.LeftArrow))
-    //     {
-    //         DecreaseHealth();
-    //     }
-    //     if (Input.GetKey(KeyCode.RightArrow))
-    //     {
-    //         IncreaseHealth();
-    //     }
-    // }
+    private void ExecuteHurtScreenEffect() { ScreenEffectManager.Instance.ExecuteHurtEffect(_health, MAX_HEALTH, 30, _invincibleTime); }
+
+    private void OnDead()
+    {
+        PlayerController.Instance.SetState(PlayerState.Dead);
+        Debug.Log("사망 애니매이션 실행");
+
+        StartCoroutine(CameraManager.Instance.ExecuteDeadEffect());
+        StartCoroutine(ScreenEffectManager.Instance.ExecuteDeadEffect());
+    }
+
 }

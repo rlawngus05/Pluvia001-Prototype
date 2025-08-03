@@ -126,5 +126,6 @@ public enum PlayerState
     Idle,
     OpenInventory,
     OpenPuzzle,
-    MoveArea
+    MoveArea,
+    Dead
 }
