@@ -99,7 +99,7 @@ public class ScreenEffectManager : MonoBehaviour
     }
 
     //*                     
-    //* 타격 효과 관련 코드
+    //* 피격 효과 관련 코드
     //*
     
     public void ExecuteHurtEffect(float currentHealth, float maxHealth, float maxEffectStartHealth, float invincibleTime)
@@ -145,12 +145,14 @@ public class ScreenEffectManager : MonoBehaviour
 
         _hurtScreenEffect.SetActive(false);
     }
-    
+
     //*                     
     //* 사망 효과 관련 코드
     //*
 
-    public IEnumerator ExecuteDeadEffect()
+    public void ExecuteDeadEffect() { StartCoroutine(ExecuteDeadEffectCoroutine()); }
+
+    public IEnumerator ExecuteDeadEffectCoroutine()
     {
         _deadScreenEffect.SetActive(true);
 

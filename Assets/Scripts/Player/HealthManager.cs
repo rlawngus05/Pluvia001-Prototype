@@ -56,7 +56,7 @@ public class HealthManager : MonoBehaviour
         if (!_isInvincible && _health > MIN_HEALTH)
         {
             _health -= value;
-            ExecuteHurtScreenEffect();
+            OnHurt();
 
             if (_health < MIN_HEALTH)
             {
@@ -80,15 +80,19 @@ public class HealthManager : MonoBehaviour
         _isInvincible = false;
     }
 
-    private void ExecuteHurtScreenEffect() { ScreenEffectManager.Instance.ExecuteHurtEffect(_health, MAX_HEALTH, 30, _invincibleTime); }
+    private void OnHurt()
+    {
+        CameraManager.Instance.ExectueHurtEffect(_health, MAX_HEALTH, 30);
+        ScreenEffectManager.Instance.ExecuteHurtEffect(_health, MAX_HEALTH, 30, _invincibleTime);
+    }
 
     private void OnDead()
     {
         PlayerController.Instance.SetState(PlayerState.Dead);
         Debug.Log("사망 애니매이션 실행");
 
-        StartCoroutine(CameraManager.Instance.ExecuteDeadEffect());
-        StartCoroutine(ScreenEffectManager.Instance.ExecuteDeadEffect());
+        CameraManager.Instance.ExecuteDeadEffect();
+        ScreenEffectManager.Instance.ExecuteDeadEffect();
     }
 
 }
