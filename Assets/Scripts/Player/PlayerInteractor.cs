@@ -5,7 +5,7 @@ public class PlayerInteractor : MonoBehaviour
 {
     public static PlayerInteractor Instance { get; private set; }
 
-    private IInteractable _interactObject;
+    private InteractableObject _interactObject;
     private List<Collider2D> _currentColliders = new List<Collider2D>();
     private PlayerState _currentState;
 
@@ -17,7 +17,7 @@ public class PlayerInteractor : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject); 
+            Destroy(gameObject);
             return;
         }
 
@@ -42,7 +42,7 @@ public class PlayerInteractor : MonoBehaviour
     private void UpdateClosestInteractable()
     {
         float shortestDistance = float.MaxValue;
-        IInteractable closest = null;
+        InteractableObject closest = null;
 
         foreach (var col in _currentColliders)
         {
@@ -52,11 +52,18 @@ public class PlayerInteractor : MonoBehaviour
             if (distance < shortestDistance)
             {
                 shortestDistance = distance;
-                closest = col.GetComponent<IInteractable>();
+                closest = col.GetComponent<InteractableObject>();
             }
         }
 
-        _interactObject = closest;
+        if (closest != _interactObject)
+        {
+            _interactObject?.OffInteractable();
+
+            _interactObject = closest;
+
+            _interactObject.OnInteractable();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -76,8 +83,9 @@ public class PlayerInteractor : MonoBehaviour
         {
             _currentColliders.Remove(collision);
 
-            if (collision.GetComponent<IInteractable>() == _interactObject)
+            if (collision.GetComponent<InteractableObject>() == _interactObject)
             {
+                _interactObject.OffInteractable();
                 _interactObject = null;
             }
         }

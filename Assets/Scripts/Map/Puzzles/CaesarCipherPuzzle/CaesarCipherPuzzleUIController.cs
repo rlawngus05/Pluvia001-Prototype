@@ -1,11 +1,11 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class CaesarCipherPuzzleUIController : MonoBehaviour, IInteractable
+public class CaesarCipherPuzzleUIController : InteractableObject
 {
     [SerializeField] private CaesarCipherPuzzleUIScript caesarCipherPuzzleUIScript;
 
-    public void Interact()
+    public override void Interact()
     {
         if (caesarCipherPuzzleUIScript.GetState() == PuzzleUIState.Close)
         {
