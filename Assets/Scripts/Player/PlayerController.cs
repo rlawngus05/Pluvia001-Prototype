@@ -12,10 +12,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _earlyJumpDivder;
     [SerializeField] private float _unholdJumpGravityScale;
     [SerializeField] private float _maxFallVelocity;
+    [SerializeField] private Animator _animator;
     private float _originGravityScale;
     private bool _isJump;
 
     private Rigidbody2D _rb;
+    private SpriteRenderer _spr;
     [SerializeField] private PlayerState _currentState;
 
     private void Awake()
@@ -30,6 +32,7 @@ public class PlayerController : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         _rb = GetComponent<Rigidbody2D>();
+        _spr = GetComponent<SpriteRenderer>();
         _currentState = PlayerState.Idle;
         _isJump = false;
         _originGravityScale = 1.0f;
@@ -42,9 +45,30 @@ public class PlayerController : MonoBehaviour
         {
             float moveDirection = Input.GetAxisRaw("Horizontal");
             SetVelocityX(moveDirection, _moveSpeed);
+            //* 걷는 애니메이션 + 좌우 전환 로직
+            if (moveDirection == 0.0f)
+            {
+                _animator.SetBool("isWalking", false);
+            }
+            else
+            {   
+                _animator.SetBool("isWalking", true);
+                if (moveDirection == 1.0f) { _spr.flipX = true; }
+                if (moveDirection == -1.0f) { _spr.flipX = false; }
+            }
+            
         }
 
         _rb.linearVelocityY = Mathf.Max(_rb.linearVelocityY, -_maxFallVelocity); //* 낙하 속도 최대치 설정
+        //* 점프 애니메이션 실행
+        if (_isJump) { _animator.SetBool("isJumping", _isJump); }
+        if (_rb.linearVelocityY < 0 && _isJump) { _animator.SetBool("isFalling", true); }
+        if (!_isJump)
+        {
+            _animator.SetBool("isJumping", _isJump);
+            _animator.SetBool("isFalling", false);
+        }
+        
     }
 
     private void Update()
