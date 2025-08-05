@@ -944,7 +944,7 @@ MonoBehaviour:
   _moveSpeed: 3
   _jumpForce: 3
   _earlyJumpDivder: 2
-  _unholdJumpGravityScale: 3
+  _unholdJumpGravityScale: 5
   _maxFallVelocity: 20
   _currentState: 0
 --- !u!212 &1305271332
