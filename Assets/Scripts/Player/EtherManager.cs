@@ -19,7 +19,7 @@ public class EtherManager : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject);
+        // DontDestroyOnLoad(gameObject);
 
         accumulatedTime = 0;
     }
