@@ -1,11 +1,11 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class PasswordPuzzleUIController : MonoBehaviour, IInteractable
+public class PasswordPuzzleUIController : InteractableObject
 {
     [SerializeField] private PasswordPuzzleUIScript passwordPuzzleUIScript;
 
-    public void Interact()
+    public override void Interact()
     {
         if (passwordPuzzleUIScript.GetState() == PuzzleUIState.Close)
         {

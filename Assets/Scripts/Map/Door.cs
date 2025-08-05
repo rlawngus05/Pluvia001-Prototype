@@ -3,12 +3,12 @@ using Cinemachine;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
-public class Door : MonoBehaviour, IInteractable
+public class Door : InteractableObject
 {
     [SerializeField] private Transform destinationPoint;
     [SerializeField] private CompositeCollider2D destinationCameraConfiner;
 
-    public void Interact()
+    public override void Interact()
     {
         PlayerController.Instance.SetState(PlayerState.MoveArea);
         StartCoroutine(TransitionRoutine());
