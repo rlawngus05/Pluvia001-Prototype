@@ -41,11 +41,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _InlineThickness: 0.005
+    - _InlineThickness: 0.0054
     - _OutlineThickness: 0.0051
+    - _isInline: 1
     m_Colors:
-    - _InlineColor: {r: 1, g: 0.5613208, b: 0.5613208, a: 1}
-    - _OutlineColor: {r: 1, g: 0.27467737, b: 0.27467737, a: 1}
+    - _InlineColor: {r: 0, g: 1, b: 0.47127318, a: 1}
+    - _OutlineColor: {r: 0, g: 4, b: 1.9877322, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &6909175881837241145

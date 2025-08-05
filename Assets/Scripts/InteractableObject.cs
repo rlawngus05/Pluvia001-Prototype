@@ -1,6 +1,7 @@
 using System.Linq;
 using UnityEngine;
 
+//* 상호작용 가능한 모든 물체는 InteractableObject를 구현해야 한다.
 public abstract class InteractableObject : MonoBehaviour
 {
     [SerializeField] private Material _interactableEffectMaterial;
