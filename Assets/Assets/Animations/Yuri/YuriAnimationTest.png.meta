@@ -1,0 +1,559 @@
+fileFormatVersion: 2
+guid: 95aa7c632ff2d144086091ee6b8bbe61
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6902954636593793633
+    second: YuriAnimationTest_0
+  - first:
+      213: -7131796977139286850
+    second: YuriAnimationTest_1
+  - first:
+      213: 4166414136869433541
+    second: YuriAnimationTest_2
+  - first:
+      213: -8444107347392502799
+    second: YuriAnimationTest_3
+  - first:
+      213: 3555828052547090788
+    second: YuriAnimationTest_4
+  - first:
+      213: -4054568657515045549
+    second: YuriAnimationTest_5
+  - first:
+      213: 9141154324625712655
+    second: YuriAnimationTest_6
+  - first:
+      213: -1316805915084234587
+    second: YuriAnimationTest_7
+  - first:
+      213: 2645330757582726350
+    second: YuriAnimationTest_8
+  - first:
+      213: -361806294497007082
+    second: YuriAnimationTest_9
+  - first:
+      213: 980905927497444430
+    second: YuriAnimationTest_10
+  - first:
+      213: -2143402893398918703
+    second: YuriAnimationTest_11
+  - first:
+      213: 2176226379121434979
+    second: YuriAnimationTest_12
+  - first:
+      213: 3487583621742179410
+    second: YuriAnimationTest_13
+  - first:
+      213: -941704993284536283
+    second: YuriAnimationTest_14
+  - first:
+      213: -6894949802000674221
+    second: YuriAnimationTest_15
+  - first:
+      213: -515032196760124377
+    second: YuriAnimationTest_16
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: YuriAnimationTest_0
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 710
+        width: 95
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16a0fc62ba83ccf50800000000000000
+      internalID: 6902954636593793633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YuriAnimationTest_1
+      rect:
+        serializedVersion: 2
+        x: 430
+        y: 710
+        width: 95
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ebc78676f64c60d90800000000000000
+      internalID: -7131796977139286850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YuriAnimationTest_2
+      rect:
+        serializedVersion: 2
+        x: 745
+        y: 710
+        width: 95
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c0b447359312d930800000000000000
+      internalID: 4166414136869433541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YuriAnimationTest_3
+      rect:
+        serializedVersion: 2
+        x: 1065
+        y: 710
+        width: 95
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f367693b1180da80800000000000000
+      internalID: -8444107347392502799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YuriAnimationTest_4
+      rect:
+        serializedVersion: 2
+        x: 1385
+        y: 710
+        width: 95
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 469307236c6d85130800000000000000
+      internalID: 3555828052547090788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YuriAnimationTest_5
+      rect:
+        serializedVersion: 2
+        x: 1705
+        y: 710
+        width: 95
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35d126bb9474bb7c0800000000000000
+      internalID: -4054568657515045549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YuriAnimationTest_6
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 390
+        width: 95
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0667542d67ebde70800000000000000
+      internalID: 9141154324625712655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YuriAnimationTest_7
+      rect:
+        serializedVersion: 2
+        x: 425
+        y: 390
+        width: 95
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5a065493ff3c9bde0800000000000000
+      internalID: -1316805915084234587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YuriAnimationTest_8
+      rect:
+        serializedVersion: 2
+        x: 745
+        y: 390
+        width: 95
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec42227fe4a16b420800000000000000
+      internalID: 2645330757582726350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YuriAnimationTest_9
+      rect:
+        serializedVersion: 2
+        x: 1070
+        y: 390
+        width: 95
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61a6103971b9afaf0800000000000000
+      internalID: -361806294497007082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YuriAnimationTest_10
+      rect:
+        serializedVersion: 2
+        x: 1385
+        y: 390
+        width: 95
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4c6f867eb0ec9d00800000000000000
+      internalID: 980905927497444430
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YuriAnimationTest_11
+      rect:
+        serializedVersion: 2
+        x: 1710
+        y: 390
+        width: 95
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d9b968bc6a1142e0800000000000000
+      internalID: -2143402893398918703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YuriAnimationTest_12
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 70
+        width: 95
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3612e569c52833e10800000000000000
+      internalID: 2176226379121434979
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YuriAnimationTest_13
+      rect:
+        serializedVersion: 2
+        x: 430
+        y: 70
+        width: 95
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 254b96273d2666030800000000000000
+      internalID: 3487583621742179410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YuriAnimationTest_14
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 70
+        width: 95
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52840184c446ee2f0800000000000000
+      internalID: -941704993284536283
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YuriAnimationTest_15
+      rect:
+        serializedVersion: 2
+        x: 1065
+        y: 70
+        width: 95
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3529993afa73050a0800000000000000
+      internalID: -6894949802000674221
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YuriAnimationTest_16
+      rect:
+        serializedVersion: 2
+        x: 1390
+        y: 70
+        width: 95
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 724493022fc3ad8f0800000000000000
+      internalID: -515032196760124377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 6de351b0c0181bc468960bef6f34f60b
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      YuriAnimationTest_0: 6902954636593793633
+      YuriAnimationTest_1: -7131796977139286850
+      YuriAnimationTest_10: 980905927497444430
+      YuriAnimationTest_11: -2143402893398918703
+      YuriAnimationTest_12: 2176226379121434979
+      YuriAnimationTest_13: 3487583621742179410
+      YuriAnimationTest_14: -941704993284536283
+      YuriAnimationTest_15: -6894949802000674221
+      YuriAnimationTest_16: -515032196760124377
+      YuriAnimationTest_2: 4166414136869433541
+      YuriAnimationTest_3: -8444107347392502799
+      YuriAnimationTest_4: 3555828052547090788
+      YuriAnimationTest_5: -4054568657515045549
+      YuriAnimationTest_6: 9141154324625712655
+      YuriAnimationTest_7: -1316805915084234587
+      YuriAnimationTest_8: 2645330757582726350
+      YuriAnimationTest_9: -361806294497007082
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
