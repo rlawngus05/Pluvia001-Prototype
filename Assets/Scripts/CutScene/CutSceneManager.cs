@@ -10,8 +10,9 @@ public class CutSceneManager : MonoBehaviour
     [SerializeReference, SubclassSelector] private CutSceneLine _currentLine;
     [SerializeField] private GameObject _textBoxContainer;
 
-    private CharacterLineGuiManager characterLineGuiManager;
-    private SystemLineGuiManager systemLineGuiManager;
+    private CharacterLineGuiManager _characterLineGuiManager;
+    private SystemLineGuiManager _systemLineGuiManager;
+    private ActionLineManager _actionLineManager;
 
     private bool _isLineFinised;
 
@@ -28,8 +29,9 @@ public class CutSceneManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        characterLineGuiManager = GetComponent<CharacterLineGuiManager>();
-        systemLineGuiManager = GetComponent<SystemLineGuiManager>();
+        _characterLineGuiManager = GetComponent<CharacterLineGuiManager>();
+        _systemLineGuiManager = GetComponent<SystemLineGuiManager>();
+        _actionLineManager = GetComponent<ActionLineManager>();
     }
 
     public void SetScript(List<CutSceneLine> cutSceneScript) { _script = cutSceneScript.ToList(); }
@@ -58,17 +60,20 @@ public class CutSceneManager : MonoBehaviour
 
         _currentLine = _script[_currentLineIndex++];
 
-        if (_currentLine is ActionLine actionLine) { Debug.Log("ActionLine"); }
+        if (_currentLine is ActionLine actionLine)
+        {
+            _actionLineManager.Execute(actionLine, FinishCurrentLine);
+        }
         if (_currentLine is CharacterLine characterLine)
         {
             _textBoxContainer.SetActive(true);
-            characterLineGuiManager.Execute(characterLine, FinishCurrentLine);
+            _characterLineGuiManager.Execute(characterLine, FinishCurrentLine);
         }
         if (_currentLine is ChoiceLine choiceLine) { Debug.Log("ChoiceLine"); }
         if (_currentLine is SystemLine systemLine)
         {
             _textBoxContainer.SetActive(true);
-            systemLineGuiManager.Execute(systemLine, FinishCurrentLine);
+            _systemLineGuiManager.Execute(systemLine, FinishCurrentLine);
         }
 
         yield return new WaitUntil(() => _isLineFinised);

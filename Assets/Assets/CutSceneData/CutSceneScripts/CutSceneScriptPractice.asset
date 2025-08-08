@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lines:
   - rid: 7990673300134822065
+  - rid: 7990673413000134734
   - rid: 7990673300134822110
   - rid: 7990673300134822059
   - rid: 7990673300134822026
@@ -94,3 +95,8 @@ MonoBehaviour:
         _content: " \uC790\uB2E4 \uC544\uB2C8\uC9C0 \uD6FC\uBC29\uC5D0 \uAD34\uB86D\uB354\uB77C\uB3C4,
           \uB291\uB9C9\uC5FC\uC5D0\uC11C \uD06C\uC9C0\uB9CC \uAC04\uD639 \uADF8\uB140\uB85C
           \uC788\uC5B4 \uC774\uC0AC\uD558\uB294 \uB9CE\uB2E4. "
+    - rid: 7990673413000134734
+      type: {class: ActionLine, ns: , asm: Assembly-CSharp}
+      data:
+        _lineId: 
+        _timelinePrefab: {fileID: 3746025597967007858, guid: b3c6c2537370c684caa6b23d2eda0249, type: 3}
