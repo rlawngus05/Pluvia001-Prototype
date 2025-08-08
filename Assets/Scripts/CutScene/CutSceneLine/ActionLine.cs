@@ -7,4 +7,6 @@ public class ActionLine : CutSceneLine
 {
     [SerializeField] private GameObject _timelinePrefab;
     private PlayableDirector _playableDirector;
+
+    public GameObject TimeLinePrefab => _timelinePrefab;
 }
