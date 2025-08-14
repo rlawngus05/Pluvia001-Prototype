@@ -127,7 +127,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.92
+  m_Radius: 1.18
 --- !u!1 &6681805303420669409
 GameObject:
   m_ObjectHideFlags: 0
@@ -160,7 +160,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.989, y: 1.39, z: 0}
-  m_LocalScale: {x: 0.8015091, y: 0.8015091, z: 0.8015091}
+  m_LocalScale: {x: 1, y: 1.0000244, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6979944638466178963}
@@ -250,9 +250,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 5
-  _jumpForce: 6.5
+  _jumpForce: 7
   _earlyJumpDivder: 2
-  _unholdJumpGravityScale: 3
+  _decectSpeed: 4
+  _unholdJumpGravityScaleAdder: 1
+  _fallGravityScaleAdder: 0.5
   _maxFallVelocity: 20
   _currentState: 0
 --- !u!95 &4401927914715884581
@@ -302,7 +304,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!70 &1464196910140501246
 CapsuleCollider2D:
@@ -339,5 +341,5 @@ CapsuleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.95, y: 1.8}
+  m_Size: {x: 1.1875, y: 2.25}
   m_Direction: 0

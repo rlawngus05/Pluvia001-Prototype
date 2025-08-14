@@ -3423,6 +3423,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PasswordPuzzle
       objectReference: {fileID: 0}
+    - target: {fileID: 7149500790059400539, guid: 1131e9f00b7d215488de8490cf4364fa, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7546456954231141202, guid: 1131e9f00b7d215488de8490cf4364fa, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

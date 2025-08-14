@@ -69,11 +69,13 @@ public class InventoryViewerManager : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Escape))
                 {
+                    Debug.Log("tlqkf1");
                     Close();
                 }
 
                 if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
                 {
+                    Debug.Log("tlqkf2");
                     Close();
                 }
 
@@ -200,6 +202,12 @@ public class InventoryViewerManager : MonoBehaviour
 
     public void SetState(InventoryState inventoryState)
     {
+        StartCoroutine(SetStateCoroutine(inventoryState));
+    }
+
+    private IEnumerator SetStateCoroutine(InventoryState inventoryState)
+    {
+        yield return null;
         _currentState = inventoryState;
     }
 }
