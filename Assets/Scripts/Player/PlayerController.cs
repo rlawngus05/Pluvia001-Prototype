@@ -10,12 +10,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _jumpForce;
     [SerializeField] private float _earlyJumpDivder;
-    [SerializeField] private float _unholdJumpGravityScale;
+    [SerializeField] private float _decectSpeed;
+    [SerializeField] private float _unholdJumpGravityScaleAdder;
+    [SerializeField] private float _fallGravityScaleAdder;
     [SerializeField] private float _maxFallVelocity;
     [SerializeField] private PlayerState _currentState;
 
     private float _originGravityScale;
     private bool _isJump;
+    private bool _hasUnholdJump;
 
     private Animator _animator;
     private Rigidbody2D _rb;
@@ -38,6 +41,7 @@ public class PlayerController : MonoBehaviour
 
         _currentState = PlayerState.Idle;
         _isJump = false;
+        _hasUnholdJump = false;
         _originGravityScale = 1.0f;
     }
 
@@ -62,6 +66,12 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        //* 낙하 점프 낙하 할 때, 중력 속도 늘리기
+        if (_isJump && _rb.linearVelocityY < _decectSpeed)
+        {
+            _rb.gravityScale += _fallGravityScaleAdder;
+        }
+
         _rb.linearVelocityY = Mathf.Max(_rb.linearVelocityY, -_maxFallVelocity); //* 낙하 속도 최대치 설정
     }
 
@@ -78,17 +88,14 @@ public class PlayerController : MonoBehaviour
             }
 
             //* 점프키 놓았을 때, 중력 크기 키움
-            if (Input.GetKeyUp(KeyCode.Space) && _isJump)
+            if (Input.GetKeyUp(KeyCode.Space) && _isJump && !_hasUnholdJump)
             {
                 //* 일찍 때었을 경우, 상승 속도를 줄임
                 if (_rb.linearVelocityY > 0) { _rb.linearVelocityY /= _earlyJumpDivder; }
 
-                //* 점프 키를 땠을 때, 중력을 늘림
-                if (_rb.gravityScale != _unholdJumpGravityScale) //* 점프키 여러번 눌렀을 때, gravityScale이 _jumpKeyUnholdGravityScaler로 고정 되는 문제를 해결하는 조건
-                {
-                    _originGravityScale = _rb.gravityScale;
-                    _rb.gravityScale = _unholdJumpGravityScale;
-                }
+                _rb.gravityScale += _unholdJumpGravityScaleAdder;
+
+                _hasUnholdJump = true;
             }
 
             //* 점프 애니메이션 실행
@@ -120,6 +127,7 @@ public class PlayerController : MonoBehaviour
         if (_isJump && collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             _isJump = false;
+            _hasUnholdJump = false;
             _rb.gravityScale = _originGravityScale;
         }
     }
