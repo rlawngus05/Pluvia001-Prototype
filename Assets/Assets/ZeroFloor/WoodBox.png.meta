@@ -142,10 +142,10 @@ TextureImporter:
       name: WoodBox_0
       rect:
         serializedVersion: 2
-        x: 21
-        y: 21
-        width: 22
-        height: 22
+        x: 22
+        y: 22
+        width: 20
+        height: 20
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

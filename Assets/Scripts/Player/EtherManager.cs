@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class EtherManager : MonoBehaviour
@@ -8,7 +9,10 @@ public class EtherManager : MonoBehaviour
 
     [SerializeField] private int _damage;
     [SerializeField] private float _damagingTime; //* 단위는 '초'임
-    private float accumulatedTime; 
+    private float accumulatedTime;
+
+    private Action<int> _etherCountObersver;
+    public void SetEtherCountObserver (Action<int> evt) { _etherCountObersver = evt; }
 
     void Awake()
     {
@@ -24,7 +28,18 @@ public class EtherManager : MonoBehaviour
         accumulatedTime = 0;
     }
 
-    public void AddEtherCount(int value = 1) { _etherCount += value; }
+    public void AddEtherCount(int value = 1)
+    {
+        _etherCount += value;
+        _etherCountObersver(_etherCount);
+    }
+
+    //! Test
+    [ContextMenu(nameof(AddOneEther))]
+    public void AddOneEther()
+    {
+        AddEtherCount(1);
+    }
 
     void Update(){
         if (_etherCount >= 3)
