@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: f13875446a152d849baac1b41c327840
+guid: 11d16438398ca204995a14446e8b5188
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7452060249203165287
-    second: InventoryUI_0
+      213: 939877698072131771
+    second: InventoryUI 1_0
   - first:
-      213: -3117615785175638144
-    second: InventoryUI_1
+      213: -1518546935773550291
+    second: InventoryUI 1_1
   - first:
-      213: 6948362071339784702
-    second: InventoryUI_2
+      213: -1123041946751444691
+    second: InventoryUI 1_2
   - first:
-      213: 8722880559265117708
-    second: InventoryUI_3
+      213: -6207620775075999507
+    second: InventoryUI 1_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -148,7 +148,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: InventoryUI_LeftBorder
+      name: InventoryUI_LeftSide
       rect:
         serializedVersion: 2
         x: 16
@@ -163,14 +163,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 768409e50590b6760800000000000000
-      internalID: 7452060249203165287
+      spriteID: bb8b6e569cd1b0d00800000000000000
+      internalID: 939877698072131771
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: InventoryUI_RightBorder
+      name: InventoryU_RightSide
       rect:
         serializedVersion: 2
         x: 161
@@ -185,14 +185,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 08f947216f00cb4d0800000000000000
-      internalID: -3117615785175638144
+      spriteID: d29a5768b990deae0800000000000000
+      internalID: -1518546935773550291
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: InventoryUI_Slot
+      name: InventoryUI_IdleSlot
       rect:
         serializedVersion: 2
         x: 30
@@ -207,14 +207,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ef951096d7a8d6060800000000000000
-      internalID: 6948362071339784702
+      spriteID: d295400bc472a60f0800000000000000
+      internalID: -1123041946751444691
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: InventoryUI_SelectedSlot
+      name: InventoryUI_focusedSlot
       rect:
         serializedVersion: 2
         x: 52
@@ -229,8 +229,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c06782127a5ed0970800000000000000
-      internalID: 8722880559265117708
+      spriteID: de092416bc91ad9a0800000000000000
+      internalID: -6207620775075999507
       vertices: []
       indices: 
       edges: []
@@ -239,7 +239,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 90d262c41017fa9499a2e301839238f3
+    spriteID: 599635889e5f1ab46b5082d79be3e2d2
     internalID: 0
     vertices: []
     indices: 
@@ -249,10 +249,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      InventoryUI_LeftBorder: 7452060249203165287
-      InventoryUI_RightBorder: -3117615785175638144
-      InventoryUI_SelectedSlot: 8722880559265117708
-      InventoryUI_Slot: 6948362071339784702
+      InventoryUI_IdleSlot: -1123041946751444691
+      InventoryUI_LeftSide: 939877698072131771
+      InventoryUI_focusedSlot: -6207620775075999507
+      InventoryU_RightSide: -1518546935773550291
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

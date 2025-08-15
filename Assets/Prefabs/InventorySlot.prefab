@@ -67,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 6948362071339784702, guid: f13875446a152d849baac1b41c327840, type: 3}
+  m_Sprite: {fileID: -1123041946751444691, guid: 11d16438398ca204995a14446e8b5188, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -93,6 +93,8 @@ MonoBehaviour:
   _itemIcon: {fileID: 13721239162404525}
   _itemAmount: {fileID: 8695578588240296208}
   _border: {fileID: 7418182550053793426}
+  _focusedBorderImage: {fileID: -6207620775075999507, guid: 11d16438398ca204995a14446e8b5188, type: 3}
+  _idleBorderImage: {fileID: -1123041946751444691, guid: 11d16438398ca204995a14446e8b5188, type: 3}
 --- !u!1 &5229713800292571840
 GameObject:
   m_ObjectHideFlags: 0
