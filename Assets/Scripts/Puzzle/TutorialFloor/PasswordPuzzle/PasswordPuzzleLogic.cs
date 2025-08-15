@@ -9,7 +9,7 @@ public class PasswordPuzzleLogic : PuzzleLogic
     [SerializeField] private int[] _answerDigits;
     [SerializeField] private int[] _inputDigits;
     [SerializeField] private int _remainChance;
-    [SerializeField] private TextMeshProUGUI _answerCipherText;
+    // [SerializeField] private TextMeshProUGUI _answerCipherText;
 
     private List<Action<int>> _digitNumberChangeObervers;
     private List<Action<DigitState>> _digitStateChangeObservers;

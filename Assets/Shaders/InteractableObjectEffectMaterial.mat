@@ -45,7 +45,7 @@ Material:
     - _OutlineThickness: 0.0051
     - _isInline: 1
     m_Colors:
-    - _InlineColor: {r: 1, g: 0.30456942, b: 0, a: 1}
+    - _InlineColor: {r: 1, g: 1, b: 1, a: 1}
     - _OutlineColor: {r: 0, g: 4, b: 1.9877322, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
