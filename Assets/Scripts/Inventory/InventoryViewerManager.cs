@@ -22,6 +22,11 @@ public class InventoryViewerManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _itemContextText;
     [SerializeField] private TextMeshProUGUI _keyNotifier;
 
+    [Header("Sound Effects")]
+    [SerializeField] private AudioClip _openSoundEffect;
+    [SerializeField] private AudioClip _closeSoundEffect;
+    [SerializeField] private AudioClip _slotChangeSoundEffect;
+
     public static InventoryViewerManager Instance { get; private set; }
     private void Awake()
     {
@@ -53,6 +58,7 @@ public class InventoryViewerManager : MonoBehaviour
         ChangeFocusingSlot();
 
         SetState(InventoryState.Opened);
+        SoundManager.Instance.PlaySoundEffect(_openSoundEffect);
     }
 
     public void Close()
@@ -61,6 +67,7 @@ public class InventoryViewerManager : MonoBehaviour
         PlayerController.Instance.SetState(PlayerState.Idle);
         
         SetState(InventoryState.Closed);
+        SoundManager.Instance.PlaySoundEffect(_closeSoundEffect);
     }
 
     private void Update()
@@ -99,41 +106,33 @@ public class InventoryViewerManager : MonoBehaviour
                     }
                 }
             }
-
-            if (Input.GetKeyDown(KeyCode.UpArrow))
+            
+            if (_focusingSlotRow > 0 && Input.GetKeyDown(KeyCode.UpArrow))
             {
-                if (_focusingSlotRow > 0)
-                {
-                    _focusingSlotRow--;
-                    ChangeFocusingSlot();
-                }
+                _focusingSlotRow--;
+                ChangeFocusingSlot();
+                SoundManager.Instance.PlaySoundEffect(_slotChangeSoundEffect);
             }
 
-            if (Input.GetKeyDown(KeyCode.DownArrow))
+            if (_focusingSlotRow < 3 && Input.GetKeyDown(KeyCode.DownArrow))
             {
-                if (_focusingSlotRow < 3)
-                {
-                    _focusingSlotRow++;
-                    ChangeFocusingSlot();
-                }
+                _focusingSlotRow++;
+                ChangeFocusingSlot();
+                SoundManager.Instance.PlaySoundEffect(_slotChangeSoundEffect);
             }
 
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            if (_focusingSlotColumn > 0 && Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                if (_focusingSlotColumn > 0)
-                {
-                    _focusingSlotColumn--;
-                    ChangeFocusingSlot();
-                }
+                _focusingSlotColumn--;
+                ChangeFocusingSlot();
+                SoundManager.Instance.PlaySoundEffect(_slotChangeSoundEffect);
             }
 
-            if (Input.GetKeyDown(KeyCode.RightArrow))
+            if (_focusingSlotColumn < 3 && Input.GetKeyDown(KeyCode.RightArrow))
             {
-                if (_focusingSlotColumn < 3)
-                {
-                    _focusingSlotColumn++;
-                    ChangeFocusingSlot();
-                }
+                _focusingSlotColumn++;
+                ChangeFocusingSlot();
+                SoundManager.Instance.PlaySoundEffect(_slotChangeSoundEffect);
             }
         }
     }

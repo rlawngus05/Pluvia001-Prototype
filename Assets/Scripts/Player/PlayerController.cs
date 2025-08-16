@@ -1,7 +1,6 @@
 using System.Collections;
-using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -15,6 +14,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _fallGravityScaleAdder;
     [SerializeField] private float _maxFallVelocity;
     [SerializeField] private PlayerState _currentState;
+
+    [Header("Sound Effect")]
+    [SerializeField] private List<AudioClip> _walkSoundEffects;
+    [SerializeField] private AudioClip _jumpSoundEffect;
+    [SerializeField] private AudioClip _landingSoundEffect;
+    [SerializeField] private float _walkSoundEffectInterval;
+    private float _walkSoundEffectElapsed;
+    private bool _isWalking;
+    private int _walkSoundEffectSelector;
 
     private float _originGravityScale;
     private bool _isJump;
@@ -43,6 +51,9 @@ public class PlayerController : MonoBehaviour
         _isJump = false;
         _hasUnholdJump = false;
         _originGravityScale = 1.0f;
+        _isWalking = true;
+        _walkSoundEffectElapsed = .0f;
+        _walkSoundEffectSelector = 0;
     }
 
     private void FixedUpdate()
@@ -52,17 +63,35 @@ public class PlayerController : MonoBehaviour
         {
             float moveDirection = Input.GetAxisRaw("Horizontal");
             SetVelocityX(moveDirection, _moveSpeed);
-            
+
             //* 걷는 애니메이션 + 좌우 전환 로직
             if (moveDirection == 0.0f)
             {
                 _animator.SetBool("isWalking", false);
+                _isWalking = false;
             }
             else
             {
+                if (!_isWalking)
+                {
+                    _isWalking = true;
+                    _walkSoundEffectElapsed = _walkSoundEffectInterval;
+                    _walkSoundEffectSelector = 0;
+                }
+
                 _animator.SetBool("isWalking", true);
                 if (moveDirection == 1.0f) { _spriteRenderer.flipX = true; }
                 if (moveDirection == -1.0f) { _spriteRenderer.flipX = false; }
+
+                if (!_isJump && _walkSoundEffectElapsed >= _walkSoundEffectInterval)
+                {
+                    _walkSoundEffectSelector += 1;
+                    _walkSoundEffectSelector %= 2;
+
+                    SoundManager.Instance.PlaySoundEffectWithRandomPich(_walkSoundEffects[_walkSoundEffectSelector]);
+
+                    _walkSoundEffectElapsed = .0f;
+                }
             }
         }
 
@@ -77,6 +106,8 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        _walkSoundEffectElapsed += Time.deltaTime;
+
         if (_currentState == PlayerState.Idle)
         {
             //* 점프 관련 로직
@@ -85,6 +116,8 @@ public class PlayerController : MonoBehaviour
                 _rb.AddForceY(_jumpForce, ForceMode2D.Impulse);
 
                 _isJump = true;
+
+                SoundManager.Instance.PlaySoundEffect(_jumpSoundEffect);
             }
 
             //* 점프키 놓았을 때, 중력 크기 키움
@@ -118,7 +151,7 @@ public class PlayerController : MonoBehaviour
                     PlayerInteractor.Instance.SetState(PlayerState.OpenInventory);
                 }
             }
-            
+
         }
     }
 
@@ -129,6 +162,8 @@ public class PlayerController : MonoBehaviour
             _isJump = false;
             _hasUnholdJump = false;
             _rb.gravityScale = _originGravityScale;
+            
+            SoundManager.Instance.PlaySoundEffect(_landingSoundEffect);
         }
     }
 

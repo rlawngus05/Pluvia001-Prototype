@@ -48,9 +48,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bgmManager: {fileID: 1451916928576610693}
   _soundEffectManager: {fileID: 2470616698892148381}
-  _testBgm: {fileID: 8300000, guid: cb73141369cbd154b8944e95c3d1deb0, type: 3}
-  _testSoundEffect: {fileID: 8300000, guid: 7d1f0ea997f10a8448b2ec62e0f20f5e, type: 3}
-  _testSoundEffectWithRandomPitch: {fileID: 8300000, guid: 87b11b75905f88e459d16c54ff2cdcdc, type: 3}
 --- !u!1 &5071013042842806649
 GameObject:
   m_ObjectHideFlags: 0
@@ -96,7 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2d205c1c781d384c8a29a24f9e5f2fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pitchShakeRange: 0
+  _pitchShakeRange: 0.1
 --- !u!82 &328197354052791927
 AudioSource:
   m_ObjectHideFlags: 0

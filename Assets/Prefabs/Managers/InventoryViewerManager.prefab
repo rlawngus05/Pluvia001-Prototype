@@ -276,6 +276,9 @@ MonoBehaviour:
   _itemNameText: {fileID: 3305042120758227274}
   _itemContextText: {fileID: 6197627205510001021}
   _keyNotifier: {fileID: 4656649213086975297}
+  _openSoundEffect: {fileID: 8300000, guid: 405930af422457d489f543fb1c0847bc, type: 3}
+  _closeSoundEffect: {fileID: 8300000, guid: b7204a63f5c747247a5a6a097e19426a, type: 3}
+  _slotChangeSoundEffect: {fileID: 8300000, guid: 98a72ce046b284e429f162034ba73f25, type: 3}
 --- !u!1 &3720143931978897760
 GameObject:
   m_ObjectHideFlags: 0
