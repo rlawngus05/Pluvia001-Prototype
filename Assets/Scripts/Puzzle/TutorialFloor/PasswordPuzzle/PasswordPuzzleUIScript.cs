@@ -12,6 +12,8 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
     [SerializeField] private PasswordPuzzleLogic _puzzleLogic;
     [SerializeField] private GameObject _gui;
 
+    [SerializeField] private Image _panel;
+    [SerializeField] private List<Sprite> _panelSprites;
     [SerializeField] private List<Image> _digits;
     [SerializeField] private List<Sprite> _digitSprites;
     [SerializeField] private List<Image> _lights;
@@ -89,6 +91,7 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
     public void Initiate()
     {
         _currentIndex = 0;
+        ChangeSelectedDigitPanel(_currentIndex);
 
         foreach (Image light in _lights)
         {
@@ -106,7 +109,7 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
             {
                 if (_currentIndex > 0)
                 {
-                    ChangeSelectedDigitPanel(_currentIndex, --_currentIndex);
+                    ChangeSelectedDigitPanel(--_currentIndex);
                 }
             }
 
@@ -114,7 +117,7 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
             {
                 if (_currentIndex < 3)
                 {
-                    ChangeSelectedDigitPanel(_currentIndex, ++_currentIndex);
+                    ChangeSelectedDigitPanel(++_currentIndex);
                 }
             }
 
@@ -125,10 +128,9 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
         }
     }
 
-    private void ChangeSelectedDigitPanel(int previousIndex, int currentIndex)
+    private void ChangeSelectedDigitPanel(int currentIndex)
     {
-        //! Test
-        Debug.Log("from : " + previousIndex + ", to : " + currentIndex);
+        _panel.sprite = _panelSprites[currentIndex];
     }
 
     public void Open()
