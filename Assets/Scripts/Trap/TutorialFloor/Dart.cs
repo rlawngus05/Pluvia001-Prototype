@@ -31,7 +31,7 @@ public class Dart : MonoBehaviour
         _isFlip = isFlip;
         _dartDestroyer = dartDetroyer;
 
-        if (_isFlip) { _spriteRenderer.flipX = true; }
+        _spriteRenderer.flipX = isFlip;
         StartCoroutine(MoveCoroutine());
         SoundManager.Instance.PlaySoundEffectWithRandomPich(_shootSoundEffect);
     }

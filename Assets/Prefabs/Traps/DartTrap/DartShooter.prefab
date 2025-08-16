@@ -105,14 +105,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2289729291207255418}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 9.38, y: -1.855, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5857699557176249740}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1179531517858247214
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -230,4 +230,4 @@ MonoBehaviour:
   _dartPrefab: {fileID: 5627630263525595822, guid: 4df7414328f87af4d8755ff4195b18dc, type: 3}
   _dartDestoryer: {fileID: 829396609592795884}
   _shootInterval: 2
-  _isFlip: 1
+  _isFlip: 0

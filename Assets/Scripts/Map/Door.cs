@@ -5,12 +5,16 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public class Door : InteractableObject
 {
-    [SerializeField] private Transform destinationPoint;
-    [SerializeField] private CompositeCollider2D destinationCameraConfiner;
+    [SerializeField] private Transform _destinationPoint;
+    [SerializeField] private CompositeCollider2D _destinationCameraConfiner;
+    [SerializeField] private AudioClip _openSoundEffect;
 
     public override void Interact()
     {
         PlayerController.Instance.SetState(PlayerState.MoveArea);
+
+        SoundManager.Instance.PlaySoundEffect(_openSoundEffect);
+
         StartCoroutine(TransitionRoutine());
     }
 
@@ -18,8 +22,8 @@ public class Door : InteractableObject
     {
         yield return ScreenEffectManager.Instance.FadeIn(0.5f);
 
-        PlayerController.Instance.MoveCharacter(destinationPoint);
-        CameraManager.Instance.ChangeConfiner(destinationCameraConfiner);
+        PlayerController.Instance.MoveCharacter(_destinationPoint);
+        CameraManager.Instance.ChangeConfiner(_destinationCameraConfiner);
 
         yield return new WaitForSecondsRealtime(0.5f); //! 움직이지 못하는 시간이 하드 코딩 되어 있음
 
