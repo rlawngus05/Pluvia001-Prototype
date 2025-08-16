@@ -201,3 +201,5 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  _shootSoundEffect: {fileID: 8300000, guid: fa113174d54ed6740ae18b047187fa5e, type: 3}
+  _hitSoundEffect: {fileID: 8300000, guid: 7e1c2bafe63448c4d92c90ae91becac4, type: 3}

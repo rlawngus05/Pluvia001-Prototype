@@ -10,10 +10,17 @@ public class PasswordPuzzleLogic : PuzzleLogic
     [SerializeField] private int[] _inputDigits;
     [SerializeField] private int _remainChance;
 
+    [Header("Sound Effects")]
+    [SerializeField] private AudioClip _dialSoundEffect;
+    [SerializeField] private AudioClip _successSoundEffect;
+    [SerializeField] private AudioClip _wrongSoundEffect;
+    [SerializeField] private AudioClip _failSoundEffect;
+
     private List<Action<int>> _digitNumberChangeObervers;
     private List<Action<DigitState>> _digitStateChangeObservers;
     private Action<int> _remainChanceObserver;
     private Action _failObserver;
+
 
     protected override void Awake()
     {
@@ -91,6 +98,7 @@ public class PasswordPuzzleLogic : PuzzleLogic
         if (isCorrect)
         {
             Debug.Log("헤으응~♥ 가버렸..!!"); //! Test
+            SoundManager.Instance.PlaySoundEffect(_successSoundEffect);
             OnSolved();
         }
         else
@@ -99,11 +107,14 @@ public class PasswordPuzzleLogic : PuzzleLogic
             if (_remainChance == 0)
             {
                 Debug.Log("ㅋ 다시 처음 부터해"); //! Test
+                SoundManager.Instance.PlaySoundEffect(_failSoundEffect);
+
                 _failObserver();
                 Initiate();
             }
             else
             {
+                SoundManager.Instance.PlaySoundEffect(_wrongSoundEffect);
                 Debug.Log("허접~ 그것 밖에 안돼? ㅋ"); //! Test
             }
         }
@@ -113,12 +124,18 @@ public class PasswordPuzzleLogic : PuzzleLogic
 
     public void UpNumber(int index)
     {
-        if (_inputDigits[index] < 9) { _digitNumberChangeObervers[index](++_inputDigits[index]); }
+        if (_inputDigits[index] < 9) { 
+            _digitNumberChangeObervers[index](++_inputDigits[index]);
+            SoundManager.Instance.PlaySoundEffect(_dialSoundEffect);
+        }
     }
 
     public void DownNumber(int index)
     {
-        if (_inputDigits[index] > 0) { _digitNumberChangeObervers[index](--_inputDigits[index]); }
+        if (_inputDigits[index] > 0) { 
+            _digitNumberChangeObervers[index](--_inputDigits[index]);
+            SoundManager.Instance.PlaySoundEffect(_dialSoundEffect);
+        }
     }
 
     public void AddInputNumberChangeObserver(Action<int> observerEvent) { _digitNumberChangeObervers.Add(observerEvent); }

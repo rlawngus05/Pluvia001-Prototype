@@ -102,6 +102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 7
+  _hitSoundEffect: {fileID: 8300000, guid: 30928fe3524333a429151b9899b762ce, type: 3}
 --- !u!60 &6844075544306311816
 PolygonCollider2D:
   m_ObjectHideFlags: 0
