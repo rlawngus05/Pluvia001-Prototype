@@ -25,7 +25,6 @@ public class ScreenEffectManager : MonoBehaviour
     [SerializeField] private Material _deadScreenEffectMaterial;
     [SerializeField] private float _deadZoomTime;
 
-
     private void Awake()
     {
         if (Instance != null && Instance != this)
