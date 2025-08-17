@@ -19,7 +19,10 @@ public class SoundManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void PlayBgm(AudioClip audioClip) { _bgmManager.Play(audioClip); }
+    public void PlayBgm(AudioClip audioClip, bool isLoop = true) { _bgmManager.Play(audioClip, isLoop); }
+    public void StopBgm() { _bgmManager.Stop(); }
+    public void PauseBgm() { _bgmManager.Pause(); }
+
     public void PlaySoundEffect(AudioClip audioClip) { _soundEffectManager.Play(audioClip); }
     public void PlaySoundEffectWithRandomPich(AudioClip audioClip) { _soundEffectManager.PlayWithRandomPitch(audioClip); }
 
