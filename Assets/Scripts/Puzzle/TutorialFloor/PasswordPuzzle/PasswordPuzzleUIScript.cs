@@ -14,10 +14,18 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
 
     [SerializeField] private Image _panel;
     [SerializeField] private List<Sprite> _panelSprites;
-    [SerializeField] private List<Image> _digits;
+    [SerializeField] private List<GameObject> _slotScrolls;
+    [SerializeField] private float _slotHeight;
     [SerializeField] private List<Sprite> _digitSprites;
     [SerializeField] private List<Image> _lights;
     [SerializeField] private List<Sprite> _lightSprites;
+
+    [SerializeField] private float _slotScrollTime;
+    private bool _isScrolling;
+    
+    [SerializeField] private float _shakePower;
+    [SerializeField] private float _shakeTime;
+    private Coroutine _currentShakeEffectCoroutine; 
 
     private int _currentIndex;
 
@@ -39,6 +47,7 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
     private void Awake()
     {
         digitPanelStateDict = _digitPanelStateDictWrapper.ToDictionary();
+        _isScrolling = false;
     }
 
     public void Initialize()
@@ -50,21 +59,22 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
             int index = i;
 
             //* Logic 부분에서 입력 숫자값을 변경 했을 때, 변경된 사실을 받기 위해, Logic 객체에 Observer 함수를 추가함
-            _puzzleLogic.AddInputNumberChangeObserver((int value) =>
+            _puzzleLogic.AddInputNumberChangeObserver((int prev, int cur) =>
             {
-                Image digit = _digits[index];
-
-                digit.sprite = _digitSprites[value];
+                StartCoroutine(SlotNumberScrollingAnimation(prev, cur, index));
             });
 
             //* Logic 객체에서 번호판의 상태를 바꿨을 때, UI에 적용할 수 있도록 Observer 함수를 추가함
             _puzzleLogic.AddDigitStateChangeObserver((DigitState digitState) =>
             {
-                Image digit = _digits[index];
-
                 Color32 changedColor = digitPanelStateDict[digitState];
 
-                digit.color = changedColor;
+                GameObject slotScroll = _slotScrolls[index];
+                for (int i = 0; i < slotScroll.transform.childCount; i++)
+                {
+                    Image numberImage = slotScroll.transform.GetChild(i).GetChild(0).GetComponent<Image>();
+                    numberImage.color = changedColor;
+                }
             });
         }
 
@@ -79,6 +89,12 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
             {
                 _lights[i].sprite = _lightSprites[0];
             }
+        });
+
+        _puzzleLogic.SetWrongObserver(() =>
+        {
+            if (_currentShakeEffectCoroutine != null) { StopCoroutine(_currentShakeEffectCoroutine); }
+            _currentShakeEffectCoroutine = StartCoroutine(ShakeEffect());
         });
 
         _puzzleLogic.SetFailObserver(() =>
@@ -121,16 +137,66 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.UpArrow)) { _puzzleLogic.UpNumber(_currentIndex); }
-            if (Input.GetKeyDown(KeyCode.DownArrow)) { _puzzleLogic.DownNumber(_currentIndex); }
+            if (!_isScrolling)
+            {
+                if (Input.GetKeyDown(KeyCode.UpArrow)) { _puzzleLogic.UpNumber(_currentIndex); }
+                if (Input.GetKeyDown(KeyCode.DownArrow)) { _puzzleLogic.DownNumber(_currentIndex); }
+            }
 
             if (Input.GetKeyDown(KeyCode.Return)) { _puzzleLogic.CheckCorrection(); }
         }
+    }
+    
+    private IEnumerator SlotNumberScrollingAnimation(int prev, int cur, int index)
+    {
+        _isScrolling = true;
+
+        RectTransform rectTransform = _slotScrolls[index].GetComponent<RectTransform>();
+
+        float from = -(-_slotHeight * prev);
+        float to = -(-_slotHeight * cur);
+
+        float elapsed = .0f;
+
+        while (elapsed <= _slotScrollTime)
+        {
+            elapsed += Time.deltaTime;
+
+            float curOffsetMax = Mathf.Lerp(from, to, EasingFunctions.EaseOutQuint(elapsed / _slotScrollTime));
+
+            rectTransform.offsetMax = new Vector2(rectTransform.offsetMax.x, curOffsetMax);
+
+            yield return null;
+        }
+
+        _isScrolling = false;
     }
 
     private void ChangeSelectedDigitPanel(int currentIndex)
     {
         _panel.sprite = _panelSprites[currentIndex];
+    }
+
+    private IEnumerator ShakeEffect()
+    {
+        RectTransform rectTransform = _gui.GetComponent<RectTransform>();
+
+        Vector2 originalPos = rectTransform.position;
+
+        float elapsed = .0f;
+
+        while (elapsed <= _shakeTime)
+        {
+            elapsed += Time.deltaTime;
+
+            Vector2 shakingPos = new Vector2(UnityEngine.Random.Range(.0f, 1.0f), UnityEngine.Random.Range(.0f, 1.0f)) * _shakePower;
+
+            rectTransform.position = originalPos + shakingPos;
+
+            yield return null;
+        }
+
+        rectTransform.position = originalPos;
     }
 
     public void Open()
