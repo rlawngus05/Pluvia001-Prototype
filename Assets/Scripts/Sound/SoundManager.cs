@@ -26,6 +26,12 @@ public class SoundManager : MonoBehaviour
     public void PlaySoundEffect(AudioClip audioClip) { _soundEffectManager.Play(audioClip); }
     public void PlaySoundEffectWithRandomPich(AudioClip audioClip) { _soundEffectManager.PlayWithRandomPitch(audioClip); }
 
+    public void SetBgmVolume(float volume) { _bgmManager.SetVolume(volume); }
+    public void SetSoundEffectVolume(float volume) { _soundEffectManager.SetVolume(volume); }
+
+    public float GetBgmVolume() { return _bgmManager.GetVolume(); }
+    public float GetSoundEffectVolume() { return _soundEffectManager.GetVolume(); }
+
     //! Test
     // [SerializeField] private AudioClip _testBgm;
     // [SerializeField] private AudioClip _testSoundEffect;

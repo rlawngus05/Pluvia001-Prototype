@@ -14,7 +14,7 @@ public class StartMenuController : MonoBehaviour
     {
         if (Input.anyKeyDown)
         {
-            if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2)) { return; }
+            if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2) || Input.GetKeyDown(KeyCode.Escape)) { return; }
 
             SoundManager.Instance.PlaySoundEffect(_gameStartSoundEffect);
             SoundManager.Instance.StopBgm();

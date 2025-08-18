@@ -78,7 +78,7 @@ public class InventoryViewerManager : MonoBehaviour
         //* 그래서 기존의 인벤토리을 열면 플레이어를 봉쇄시키는 코드에서, 움직이면 그것이 해제 되게 만들게 해놂. 
         //* 근데 이 구조가 사실상 필요없음. ItemViewerManager 또한 이와 같은 구조가 있음
         {
-            if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.E)) //|| Input.GetKeyDown(KeyCode.Escape))
             {
                 Close();
             }

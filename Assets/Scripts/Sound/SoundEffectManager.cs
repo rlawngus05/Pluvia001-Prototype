@@ -26,4 +26,7 @@ public class SoundEffectManager : MonoBehaviour
         _audioSource.pitch = _originalPitch + pitchShakeValue;
         _audioSource.PlayOneShot(audioClip);
     }
+
+    public void SetVolume(float volume) { _audioSource.volume = volume; }
+    public float GetVolume() { return _audioSource.volume; }
 }

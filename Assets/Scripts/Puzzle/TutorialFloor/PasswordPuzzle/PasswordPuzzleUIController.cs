@@ -17,7 +17,7 @@ public class PasswordPuzzleUIController : InteractableObject
     {
         if (passwordPuzzleUIScript.GetState() == PuzzleUIState.Open)
         {
-            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D) || Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.F)) //|| Input.GetKeyDown(KeyCode.Escape))
             {
                 passwordPuzzleUIScript.Close();
             }
