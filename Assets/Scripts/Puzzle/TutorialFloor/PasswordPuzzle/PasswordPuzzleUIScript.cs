@@ -11,7 +11,9 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
 {
     [SerializeField] private PasswordPuzzleLogic _puzzleLogic;
     [SerializeField] private GameObject _gui;
-
+    private Vector2 originalPos;
+    RectTransform _rectTransform;
+    
     [SerializeField] private Image _panel;
     [SerializeField] private List<Sprite> _panelSprites;
     [SerializeField] private List<GameObject> _slotScrolls;
@@ -28,6 +30,7 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
     private Coroutine _currentShakeEffectCoroutine; 
 
     private int _currentIndex;
+    
 
     private PuzzleUIState _currentState;
     public PuzzleUIState GetState() { return _currentState; }
@@ -47,6 +50,9 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
     private void Awake()
     {
         digitPanelStateDict = _digitPanelStateDictWrapper.ToDictionary();
+        _rectTransform = _gui.GetComponent<RectTransform>();
+
+        originalPos = _rectTransform.position;
         _isScrolling = false;
     }
 
@@ -93,7 +99,11 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
 
         _puzzleLogic.SetWrongObserver(() =>
         {
-            if (_currentShakeEffectCoroutine != null) { StopCoroutine(_currentShakeEffectCoroutine); }
+            if (_currentShakeEffectCoroutine != null)
+            {
+                _rectTransform.position = originalPos;
+                StopCoroutine(_currentShakeEffectCoroutine);
+            }
             _currentShakeEffectCoroutine = StartCoroutine(ShakeEffect());
         });
 
@@ -101,6 +111,12 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
         {
             Close();
             Initiate();
+        });
+
+        _puzzleLogic.AddOnSolvedEvent(() =>
+        {
+            Debug.Log("성공 효과 실행");
+            Close();
         });
     }
 
@@ -119,7 +135,7 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
     {
         // digitPanelStateDict = digitPanelStateDictWrapper.ToDictionary(); //! Test : 에디터 상에서 실시간으로 색깔 조정가능하게 함.
 
-        if (_currentState == PuzzleUIState.Open)
+        if (_currentState == PuzzleUIState.Open && !_puzzleLogic.IsSolved)
         {
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
@@ -176,12 +192,9 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
     {
         _panel.sprite = _panelSprites[currentIndex];
     }
-
     private IEnumerator ShakeEffect()
     {
-        RectTransform rectTransform = _gui.GetComponent<RectTransform>();
-
-        Vector2 originalPos = rectTransform.position;
+        originalPos = _rectTransform.position;
 
         float elapsed = .0f;
 
@@ -191,12 +204,12 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
 
             Vector2 shakingPos = new Vector2(UnityEngine.Random.Range(.0f, 1.0f), UnityEngine.Random.Range(.0f, 1.0f)) * _shakePower;
 
-            rectTransform.position = originalPos + shakingPos;
+            _rectTransform.position = originalPos + shakingPos;
 
             yield return null;
         }
 
-        rectTransform.position = originalPos;
+        _rectTransform.position = originalPos;
     }
 
     public void Open()

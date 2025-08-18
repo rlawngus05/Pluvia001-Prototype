@@ -28,11 +28,6 @@ public class ItemViewerManager : MonoBehaviour
     private void Update() {
         if (_gui.activeSelf == true)
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                Close();
-            }
-
             if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
             {
                 Close();

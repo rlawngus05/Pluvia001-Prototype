@@ -98,7 +98,7 @@ public class PasswordPuzzleLogic : PuzzleLogic
         //* 정답이 틀리면, 기회를 1회 줄이고, 만약 기회 모두 소진 상황시, 퍼즐 초기화
         if (isCorrect)
         {
-            Debug.Log("헤으응~♥ 가버렸..!!"); //! Test
+            // Debug.Log("헤으응~♥ 가버렸..!!"); //! Test
             SoundManager.Instance.PlaySoundEffect(_successSoundEffect);
             OnSolved();
         }
@@ -107,7 +107,7 @@ public class PasswordPuzzleLogic : PuzzleLogic
             _remainChanceObserver(--_remainChance);
             if (_remainChance == 0)
             {
-                Debug.Log("ㅋ 다시 처음 부터해"); //! Test
+                // Debug.Log("ㅋ 다시 처음 부터해"); //! Test
                 SoundManager.Instance.PlaySoundEffect(_failSoundEffect);
 
                 _failObserver();
@@ -118,7 +118,7 @@ public class PasswordPuzzleLogic : PuzzleLogic
                 SoundManager.Instance.PlaySoundEffect(_wrongSoundEffect);
                 
                 _wrongObserver();
-                Debug.Log("허접~ 그것 밖에 안돼? ㅋ"); //! Test
+                // Debug.Log("허접~ 그것 밖에 안돼? ㅋ"); //! Test
             }
         }
 
