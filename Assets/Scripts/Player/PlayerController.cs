@@ -13,7 +13,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _unholdJumpGravityScaleAdder;
     [SerializeField] private float _fallGravityScaleAdder;
     [SerializeField] private float _maxFallVelocity;
-    [SerializeField] private PlayerState _currentState;
 
     [Header("Sound Effect")]
     [SerializeField] private List<AudioClip> _walkSoundEffects;
@@ -27,6 +26,9 @@ public class PlayerController : MonoBehaviour
     private float _originGravityScale;
     private bool _isJump;
     private bool _hasUnholdJump;
+
+    private bool _isMovable;
+    private bool _isHandlable;
 
     private Animator _animator;
     private Rigidbody2D _rb;
@@ -47,7 +49,9 @@ public class PlayerController : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
 
-        _currentState = PlayerState.Idle;
+        _isMovable = true;
+        _isHandlable = true;
+
         _isJump = false;
         _hasUnholdJump = false;
         _originGravityScale = 1.0f;
@@ -56,10 +60,26 @@ public class PlayerController : MonoBehaviour
         _walkSoundEffectSelector = 0;
     }
 
+    private void Start() {
+        PlayerStateManager.Instance.Subscribe((PlayerState currentState) =>
+        {
+            if ((currentState & PlayerState.Unhandlable) == PlayerState.Unhandlable)
+            {
+                _isHandlable = false;
+                _rb.linearVelocityX = .0f;
+                _animator.SetBool("isWalking", false);
+            }
+            else { _isHandlable = true; }
+
+            if ((currentState & PlayerState.Unmovable) == PlayerState.Unmovable) { _isMovable = false; }
+            else { _isMovable = true; }
+        });
+    }
+
     private void FixedUpdate()
     {
         //* 좌우 이동 로직
-        if (_currentState == PlayerState.Idle)
+        if (_isMovable)
         {
             float moveDirection = Input.GetAxisRaw("Horizontal");
             SetVelocityX(moveDirection, _moveSpeed);
@@ -108,7 +128,7 @@ public class PlayerController : MonoBehaviour
     {
         _walkSoundEffectElapsed += Time.deltaTime;
 
-        if (_currentState == PlayerState.Idle)
+        if (_isMovable)
         {
             //* 점프 관련 로직
             if (Input.GetKeyDown(KeyCode.Space) && !_isJump)
@@ -131,28 +151,19 @@ public class PlayerController : MonoBehaviour
                 _hasUnholdJump = true;
             }
 
-            //* 점프 애니메이션 실행
-            if (_isJump) { _animator.SetBool("isJumping", _isJump); }
-            if (_rb.linearVelocityY < 0 && _isJump) { _animator.SetBool("isFalling", true); }
-            if (!_isJump)
-            {
-                _animator.SetBool("isJumping", _isJump);
-                _animator.SetBool("isFalling", false);
-            }
-
             //* 인벤토리 열기 로직
-            if (Input.GetAxisRaw("Horizontal") == 0.0f && !_isJump)
+            if (_isHandlable && Input.GetAxisRaw("Horizontal") == 0.0f && !_isJump)
             {
                 if (Input.GetKeyDown(KeyCode.E))
                 {
                     InventoryViewerManager.Instance.Open();
-
-                    _currentState = PlayerState.OpenInventory;
-                    PlayerInteractor.Instance.SetState(PlayerState.OpenInventory);
                 }
             }
-
         }
+
+        //* 점프 애니메이션 실행
+        if (_isJump) { _animator.SetBool("isJumping", _isJump); }
+        if (_rb.linearVelocityY < 0 && _isJump) { _animator.SetBool("isFalling", true); }
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -162,6 +173,9 @@ public class PlayerController : MonoBehaviour
             _isJump = false;
             _hasUnholdJump = false;
             _rb.gravityScale = _originGravityScale;
+
+            _animator.SetBool("isJumping", _isJump);
+            _animator.SetBool("isFalling", false);
             
             SoundManager.Instance.PlaySoundEffect(_landingSoundEffect);
         }
@@ -173,29 +187,13 @@ public class PlayerController : MonoBehaviour
     {
         transform.position = destination.position;
     }
-
-    public void SetState(PlayerState playerState)
-    {
-        StartCoroutine(SetStateCoroutine(playerState));
-    }
-
-    //* 변경된 상태가, 현재 프레임 부터 적용되지 않고 다음 프레임 부터 적용되도록 하는 보조함수
-    private IEnumerator SetStateCoroutine(PlayerState playerState)
-    {
-        yield return null;
-
-        _currentState = playerState;
-        PlayerInteractor.Instance.SetState(playerState);
-        
-        if (playerState == PlayerState.MoveArea) { SetVelocityX(0.0f, 0.0f); }
-    }
 }
 
-public enum PlayerState
-{
-    Idle,
-    OpenInventory,
-    OpenPuzzle,
-    MoveArea,
-    Dead
-}
+// public enum PlayerState
+// {
+//     Idle,
+//     OpenInventory,
+//     OpenPuzzle,
+//     MoveArea,
+//     Dead
+// }

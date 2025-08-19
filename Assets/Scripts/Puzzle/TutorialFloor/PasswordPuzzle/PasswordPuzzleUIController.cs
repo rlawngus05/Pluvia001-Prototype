@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class PasswordPuzzleUIController : InteractableObject
 {
@@ -17,7 +16,7 @@ public class PasswordPuzzleUIController : InteractableObject
     {
         if (passwordPuzzleUIScript.GetState() == PuzzleUIState.Open)
         {
-            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) //|| Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.F))
             {
                 passwordPuzzleUIScript.Close();
             }

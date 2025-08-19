@@ -7,26 +7,33 @@ public class PlayerInteractor : MonoBehaviour
 
     private InteractableObject _interactObject;
     private List<Collider2D> _currentColliders = new List<Collider2D>();
-    private PlayerState _currentState;
+    private bool _isInteratable;
 
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
+            _isInteratable = true;
         }
         else
         {
             Destroy(gameObject);
             return;
         }
+    }
 
-        _currentState = PlayerState.Idle;
+    private void Start() {
+        PlayerStateManager.Instance.Subscribe((PlayerState currentState) =>
+        {
+            if ((currentState & PlayerState.Uninteractable) == PlayerState.Uninteractable) { _isInteratable = false; }
+            else { _isInteratable = true; }
+        });
     }
 
     private void Update()
     {
-        if (_currentState == PlayerState.Idle)
+        if (_isInteratable)
         {
             UpdateClosestInteractable();
 
@@ -91,6 +98,5 @@ public class PlayerInteractor : MonoBehaviour
         }
     }
     
-    public void SetState(PlayerState playerState) { _currentState = playerState; }
 }
 

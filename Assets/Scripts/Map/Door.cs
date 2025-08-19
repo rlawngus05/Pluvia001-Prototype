@@ -1,5 +1,4 @@
 using System.Collections;
-using Cinemachine;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
@@ -11,7 +10,7 @@ public class Door : InteractableObject
 
     public override void Interact()
     {
-        PlayerController.Instance.SetState(PlayerState.MoveArea);
+        PlayerStateManager.Instance.AddState(PlayerState.Uncontrolable);
 
         SoundManager.Instance.PlaySoundEffect(_openSoundEffect);
 
@@ -29,6 +28,6 @@ public class Door : InteractableObject
 
         ScreenEffectManager.Instance.FadeOut(0.5f);
 
-        PlayerController.Instance.SetState(PlayerState.Idle);
+        PlayerStateManager.Instance.SetState(PlayerState.Idle);
     }
 }

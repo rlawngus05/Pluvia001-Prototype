@@ -102,7 +102,7 @@ public class HealthManager : MonoBehaviour
     {
         SoundManager.Instance.PlaySoundEffect(_deadSoundEffect);
 
-        PlayerController.Instance.SetState(PlayerState.Dead);
+        PlayerStateManager.Instance.SetState(PlayerState.Uncontrolable);
         Debug.Log("사망 애니매이션 실행");
 
         CameraManager.Instance.ExecuteDeadEffect();

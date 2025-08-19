@@ -1,11 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-// using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.UI;
-// using UnityEngine.UIElements;
 
 public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
 {
@@ -216,7 +213,7 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
     {
         _gui.SetActive(true);
 
-        PlayerController.Instance.SetState(PlayerState.OpenPuzzle);
+        PlayerStateManager.Instance.SetState(PlayerState.Uncontrolable);
         SetState(PuzzleUIState.Open);
     }
 
@@ -224,7 +221,7 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
     {
         _gui.SetActive(false);
 
-        PlayerController.Instance.SetState(PlayerState.Idle);
+        PlayerStateManager.Instance.SetState(PlayerState.Idle);
         SetState(PuzzleUIState.Close);
     }
 }

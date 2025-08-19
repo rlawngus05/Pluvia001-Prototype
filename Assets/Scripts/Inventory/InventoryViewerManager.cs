@@ -49,8 +49,7 @@ public class InventoryViewerManager : MonoBehaviour
     public void Open()
     {
         _Gui.SetActive(true);
-        PlayerController.Instance.SetState(PlayerState.OpenInventory);
-        PlayerInteractor.Instance.SetState(PlayerState.OpenInventory);
+        PlayerStateManager.Instance.SetState(PlayerState.Uncontrolable);
 
         Renew(InventoryManager.Instance.GetInventory());
         _focusingSlotRow = 0;
@@ -64,7 +63,7 @@ public class InventoryViewerManager : MonoBehaviour
     public void Close()
     {
         _Gui.SetActive(false);
-        PlayerController.Instance.SetState(PlayerState.Idle);
+        PlayerStateManager.Instance.SetState(PlayerState.Idle);
         
         SetState(InventoryState.Closed);
         SoundManager.Instance.PlaySoundEffect(_closeSoundEffect);
