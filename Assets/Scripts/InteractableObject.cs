@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class InteractableObject : MonoBehaviour
 {
     [SerializeField] private Material _interactableEffectMaterial;
+    [SerializeField] private AudioClip _interactSoundEffect;
 
     private SpriteRenderer _spriteRenderer;
     private Material[] _originalMaterials;
@@ -13,8 +14,11 @@ public abstract class InteractableObject : MonoBehaviour
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
-    
-    public abstract void Interact();
+
+    public virtual void Interact()
+    {
+        if (_interactSoundEffect != null) { SoundManager.Instance.PlaySoundEffect(_interactSoundEffect); }
+    }
 
     public virtual void OnInteractable()
     {
@@ -28,4 +32,6 @@ public abstract class InteractableObject : MonoBehaviour
         _spriteRenderer.materials = _originalMaterials;
     }
     
+    public void SetInteractable() { gameObject.tag = "Interactable"; }
+    public void UnsetInteractable() { gameObject.tag = "Untagged"; }
 }   

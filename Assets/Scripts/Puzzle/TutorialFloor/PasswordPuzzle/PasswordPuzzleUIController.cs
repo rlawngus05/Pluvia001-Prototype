@@ -6,6 +6,8 @@ public class PasswordPuzzleUIController : InteractableObject
 
     public override void Interact()
     {
+        base.Interact();
+        
         if (passwordPuzzleUIScript.GetState() == PuzzleUIState.Close)
         {
             passwordPuzzleUIScript.Open();

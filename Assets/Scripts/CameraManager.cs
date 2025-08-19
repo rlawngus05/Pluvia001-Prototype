@@ -42,6 +42,16 @@ public class CameraManager : MonoBehaviour
         _cameraConfiner.m_BoundingShape2D = confiner;
     }
 
+    public void ShakeCamera(float amplitude)
+    {
+        _cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = amplitude;
+    }
+
+    public void StopShakeCamera()
+    {
+        _cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = .0f;
+    }
+
     //*                     
     //* 피격 효과 관련 코드
     //*
@@ -54,11 +64,11 @@ public class CameraManager : MonoBehaviour
     private IEnumerator ExectueHurtEffectCoroutine(float currentHealth, float maxHealth, float maxEffectStartHealth)
     {
         float amplitude = _minCameraShakeAmplitude + (_maxCameraShakeAmplitude - _minCameraShakeAmplitude) * ((maxHealth - Mathf.Clamp(currentHealth, maxEffectStartHealth, maxHealth)) / (maxHealth - maxEffectStartHealth));
-        _cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = amplitude;
+        ShakeCamera(amplitude);
 
         yield return new WaitForSeconds(_cameraShakeTime);
 
-        _cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = .0f;
+        StopShakeCamera();
     }
 
     //*                     

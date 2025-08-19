@@ -5,9 +5,9 @@ MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - _interactableEffectMaterial: {fileID: -876546973899608171, guid: 87756c94a92d6634c9af2afa72a51b7d, type: 3}
+  - _interactSoundEffect: {fileID: 8300000, guid: a37288c3e34469e4590dc2a7ee6952db, type: 3}
   - _destinationPoint: {instanceID: 0}
   - _destinationCameraConfiner: {instanceID: 0}
-  - _openSoundEffect: {fileID: 8300000, guid: a37288c3e34469e4590dc2a7ee6952db, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

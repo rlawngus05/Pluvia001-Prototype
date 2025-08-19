@@ -7,6 +7,8 @@ public class CaesarCipherPuzzleUIController : InteractableObject
 
     public override void Interact()
     {
+        base.Interact();
+        
         if (caesarCipherPuzzleUIScript.GetState() == PuzzleUIState.Close)
         {
             caesarCipherPuzzleUIScript.Open();

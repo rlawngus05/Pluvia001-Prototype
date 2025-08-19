@@ -639,6 +639,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interactableEffectMaterial: {fileID: 2100000, guid: 571b4625bcc76924cb345eb73e78aba3, type: 2}
+  _interactSoundEffect: {fileID: 0}
   itemData: {fileID: 11400000, guid: 83a28e4fe91eab64c949f6c1d4ff3dcd, type: 2}
 --- !u!1 &519420028
 GameObject:
@@ -922,9 +923,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interactableEffectMaterial: {fileID: -876546973899608171, guid: 87756c94a92d6634c9af2afa72a51b7d, type: 3}
+  _interactSoundEffect: {fileID: 8300000, guid: a37288c3e34469e4590dc2a7ee6952db, type: 3}
   _destinationPoint: {fileID: 1150826469}
   _destinationCameraConfiner: {fileID: 1048505358}
-  _openSoundEffect: {fileID: 8300000, guid: a37288c3e34469e4590dc2a7ee6952db, type: 3}
 --- !u!212 &585852185
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1088,6 +1089,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interactableEffectMaterial: {fileID: 2100000, guid: 571b4625bcc76924cb345eb73e78aba3, type: 2}
+  _interactSoundEffect: {fileID: 0}
   itemData: {fileID: 11400000, guid: da810c693f5d7e8488e7e814efeffc89, type: 2}
 --- !u!61 &590705154
 BoxCollider2D:
@@ -2368,6 +2370,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interactableEffectMaterial: {fileID: 2100000, guid: 571b4625bcc76924cb345eb73e78aba3, type: 2}
+  _interactSoundEffect: {fileID: 0}
   itemData: {fileID: 11400000, guid: 6af3d1d5a29ad8742b90a374c1d69318, type: 2}
 --- !u!61 &1957746204
 BoxCollider2D:
@@ -2773,9 +2776,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interactableEffectMaterial: {fileID: -876546973899608171, guid: 87756c94a92d6634c9af2afa72a51b7d, type: 3}
+  _interactSoundEffect: {fileID: 8300000, guid: a37288c3e34469e4590dc2a7ee6952db, type: 3}
   _destinationPoint: {fileID: 1296319827}
   _destinationCameraConfiner: {fileID: 665331648}
-  _openSoundEffect: {fileID: 8300000, guid: a37288c3e34469e4590dc2a7ee6952db, type: 3}
 --- !u!212 &2130807057
 SpriteRenderer:
   m_ObjectHideFlags: 0

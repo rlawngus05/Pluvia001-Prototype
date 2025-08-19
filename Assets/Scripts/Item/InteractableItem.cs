@@ -10,6 +10,8 @@ public class InteractableItem : InteractableObject
 
     public override void Interact()
     {
+        base.Interact();
+        
         InventoryManager.Instance.InsertItem(itemData);
 
         Destroy(gameObject);

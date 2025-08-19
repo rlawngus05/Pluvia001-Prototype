@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Timers;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +11,7 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
     [SerializeField] private GameObject _gui;
     private Vector2 originalPos;
     RectTransform _rectTransform;
-    
+
     [SerializeField] private Image _panel;
     [SerializeField] private List<Sprite> _panelSprites;
     [SerializeField] private List<GameObject> _slotScrolls;
@@ -21,13 +22,12 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
 
     [SerializeField] private float _slotScrollTime;
     private bool _isScrolling;
-    
+
     [SerializeField] private float _shakePower;
     [SerializeField] private float _shakeTime;
-    private Coroutine _currentShakeEffectCoroutine; 
+    private Coroutine _currentShakeEffectCoroutine;
 
     private int _currentIndex;
-    
 
     private PuzzleUIState _currentState;
     public PuzzleUIState GetState() { return _currentState; }
@@ -43,6 +43,15 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
 
     [SerializeField] private DigitPanelStateDictWrapper _digitPanelStateDictWrapper; //* 유니티 editor 상에서 보여지는 필드
     private Dictionary<DigitState, Color32> digitPanelStateDict; //* 스크립트 상에서, 사용되는 필드
+
+    [Header("Effects")]
+    [SerializeField] private GameObject _magicCircle;
+    [SerializeField] private float _spinTime;
+    [SerializeField] private float _spinSpeed;
+    [SerializeField] private float _accelerateRatio;
+    [SerializeField] private GameObject _etherContainer;
+    [SerializeField] private float _etherContainerHeight;
+    [SerializeField] private float _elevateTime;
 
     private void Awake()
     {
@@ -112,8 +121,7 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
 
         _puzzleLogic.AddOnSolvedEvent(() =>
         {
-            Debug.Log("성공 효과 실행");
-            Close();
+            StartCoroutine(ExecuteSolvedEvent());
         });
     }
 
@@ -159,7 +167,24 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
             if (Input.GetKeyDown(KeyCode.Return)) { _puzzleLogic.CheckCorrection(); }
         }
     }
-    
+
+    public void Open()
+    {
+        _gui.SetActive(true);
+
+        PlayerStateManager.Instance.SetState(PlayerState.Uncontrolable);
+        SetState(PuzzleUIState.Open);
+    }
+
+    public void Close()
+    {
+        _gui.SetActive(false);
+
+        PlayerStateManager.Instance.SetState(PlayerState.Idle);
+        SetState(PuzzleUIState.Close);
+    }
+
+    //* 시각적 효과 구현 코드
     private IEnumerator SlotNumberScrollingAnimation(int prev, int cur, int index)
     {
         _isScrolling = true;
@@ -189,6 +214,7 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
     {
         _panel.sprite = _panelSprites[currentIndex];
     }
+
     private IEnumerator ShakeEffect()
     {
         originalPos = _rectTransform.position;
@@ -209,20 +235,81 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
         _rectTransform.position = originalPos;
     }
 
-    public void Open()
+    private IEnumerator ExecuteSolvedEvent()
     {
-        _gui.SetActive(true);
-
-        PlayerStateManager.Instance.SetState(PlayerState.Uncontrolable);
-        SetState(PuzzleUIState.Open);
+        _panel.sprite = _panelSprites[4];
+        SetState(PuzzleUIState.Close);  
+        yield return StartCoroutine(SpinMagicCircle());
+        Close();
+        yield return StartCoroutine(ElevateEtherContainer());
     }
 
-    public void Close()
+    private IEnumerator SpinMagicCircle()
     {
-        _gui.SetActive(false);
+        RectTransform rectTransform = _magicCircle.GetComponent<RectTransform>();
+        CanvasGroup canvasGroup = _magicCircle.GetComponent<CanvasGroup>();
 
-        PlayerStateManager.Instance.SetState(PlayerState.Idle);
-        SetState(PuzzleUIState.Close);
+        float elapsed = 0f;
+        float accelerateTime = _spinTime * _accelerateRatio;
+        _magicCircle.SetActive(true);
+
+        Quaternion startRotation = rectTransform.rotation;
+
+        while (elapsed <= accelerateTime)
+        {
+            float t = elapsed / accelerateTime;
+
+            canvasGroup.alpha = Mathf.Lerp(0f, 1f, EasingFunctions.EaseInOutBounce(t));
+
+            float easedT = EasingFunctions.EaseInQuint(t);
+            float angle = _spinSpeed * easedT;
+
+            rectTransform.rotation = startRotation * Quaternion.Euler(0, 0, angle);
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        canvasGroup.alpha = 1.0f;
+
+        while (elapsed <= _spinTime)
+        {
+            rectTransform.rotation *= Quaternion.Euler(0, 0, _spinSpeed * Time.deltaTime);
+
+            yield return null;
+            elapsed += Time.deltaTime;
+        }
+        _magicCircle.SetActive(false);
+    }
+
+    [SerializeField] private float _shakeAmplitude;
+    [SerializeField] private AudioClip _elevateSoundEffect;
+    [SerializeField] private InteractableEther _interactableEther;
+    private IEnumerator ElevateEtherContainer()
+    {
+        Transform etherContainerTransform = _etherContainer.transform;
+        Vector3 initalPosition = etherContainerTransform.position;
+
+        float elapsed = .0f;
+
+        _etherContainer.SetActive(true);
+        CameraManager.Instance.ShakeCamera(_shakeAmplitude);
+        SoundManager.Instance.PlaySoundEffect(_elevateSoundEffect);
+        _interactableEther.UnsetInteractable();
+
+        while (elapsed < _elevateTime)
+        {
+            float easedT = EasingFunctions.EaseOutExpo(elapsed / _elevateTime);
+            Vector3 currentPosition = initalPosition + new Vector3(0, _etherContainerHeight * easedT, 0);
+
+            etherContainerTransform.position = currentPosition;
+
+            yield return null;
+            elapsed += Time.deltaTime;
+        }
+
+        _interactableEther.SetInteractable();
+        CameraManager.Instance.StopShakeCamera();
     }
 }
 

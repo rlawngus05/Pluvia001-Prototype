@@ -6,13 +6,11 @@ public class Door : InteractableObject
 {
     [SerializeField] private Transform _destinationPoint;
     [SerializeField] private CompositeCollider2D _destinationCameraConfiner;
-    [SerializeField] private AudioClip _openSoundEffect;
 
     public override void Interact()
     {
-        PlayerStateManager.Instance.AddState(PlayerState.Uncontrolable);
-
-        SoundManager.Instance.PlaySoundEffect(_openSoundEffect);
+        base.Interact();
+        PlayerStateManager.Instance.SetState(PlayerState.Uncontrolable);
 
         StartCoroutine(TransitionRoutine());
     }

@@ -66,12 +66,15 @@ public class PlayerController : MonoBehaviour
             if ((currentState & PlayerState.Unhandlable) == PlayerState.Unhandlable)
             {
                 _isHandlable = false;
-                _rb.linearVelocityX = .0f;
-                _animator.SetBool("isWalking", false);
             }
             else { _isHandlable = true; }
 
-            if ((currentState & PlayerState.Unmovable) == PlayerState.Unmovable) { _isMovable = false; }
+            if ((currentState & PlayerState.Unmovable) == PlayerState.Unmovable)
+            {
+                _isMovable = false;
+                _rb.linearVelocityX = .0f;
+                _animator.SetBool("isWalking", false);
+            }
             else { _isMovable = true; }
         });
     }

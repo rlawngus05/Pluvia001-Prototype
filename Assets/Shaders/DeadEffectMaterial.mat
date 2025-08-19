@@ -58,7 +58,7 @@ Material:
     - _BUILTIN_QueueOffset: 0
     - _Fast: 3.98
     - _Intensity: 13.64
-    - _OverallAlpha: 0.9999999
+    - _OverallAlpha: 0.99999934
     - _Power: 7.6
     - _VisibleGradient: 0.2
     - _VisibleRadius: 1.14
