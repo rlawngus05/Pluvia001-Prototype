@@ -92,7 +92,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2d205c1c781d384c8a29a24f9e5f2fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _poolSize: 10
+  _initialPoolSize: 10
   _pitchShakeRange: 0.1
 --- !u!1 &7738521608440142723
 GameObject:

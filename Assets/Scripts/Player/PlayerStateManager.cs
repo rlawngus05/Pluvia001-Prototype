@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -50,6 +51,13 @@ public class PlayerStateManager : MonoBehaviour
 
     private void OnStateChanged()
     {
+        StartCoroutine(OnStateChangedCoroutine());
+    }
+
+    private IEnumerator OnStateChangedCoroutine()
+    {
+        yield return null;
+
         foreach (Action<PlayerState> evt in _onStateChanged)
         {
             evt.Invoke(_currentState);

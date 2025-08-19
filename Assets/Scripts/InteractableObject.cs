@@ -17,6 +17,7 @@ public abstract class InteractableObject : MonoBehaviour
 
     public virtual void Interact()
     {
+        if (gameObject.tag != "Interactable") { return; }
         if (_interactSoundEffect != null) { SoundManager.Instance.PlaySoundEffect(_interactSoundEffect); }
     }
 

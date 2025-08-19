@@ -4,18 +4,21 @@ using System.Collections.Generic;
 public class SoundEffectManager : MonoBehaviour
 {
     // 미리 생성해 둘 AudioSource 개수
-    [SerializeField] private int _poolSize;
+    [SerializeField] private int _initialPoolSize;
     // AudioSource를 담아둘 리스트 (풀)
     private List<AudioSource> _audioSources;
 
     [SerializeField] private float _pitchShakeRange;
-    private float _originalPitch = 1.0f;
-    private float _volume = 1.0f;
+    private float _originalPitch;
+    private float _volume;
 
     private void Awake()
     {
         _audioSources = new List<AudioSource>();
-        for (int i = 0; i < _poolSize; i++)
+        _originalPitch = 1.0f;
+        _volume = 1.0f;
+
+        for (int i = 0; i < _initialPoolSize; i++)
         {
             // SoundEffectManager 게임 오브젝트에 AudioSource 컴포넌트를 필요한 만큼 추가
             AudioSource source = gameObject.AddComponent<AudioSource>();
@@ -26,22 +29,27 @@ public class SoundEffectManager : MonoBehaviour
 
     /// <summary>
     /// 현재 재생 중이지 않은 AudioSource를 풀에서 찾아 반환합니다.
+    /// 만약 모두 사용 중이면 새로 생성하여 풀에 추가하고 반환합니다.
     /// </summary>
     private AudioSource GetAvailableAudioSource()
     {
-        foreach (var source in _audioSources)
+        foreach (AudioSource source in _audioSources)
         {
-            // isPlaying이 false이면 사용 가능한 것으로 간주
             if (!source.isPlaying)
             {
                 return source;
             }
         }
 
-        // 만약 모든 AudioSource가 사용 중이라면,
-        // 경고를 출력하고 null을 반환하거나, 새로 하나 더 생성할 수도 있습니다.
-        Debug.LogWarning("사용 가능한 AudioSource가 없습니다. 풀 사이즈를 늘려주세요.");
-        return null;
+        // --- 여기부터가 추가된 부분 ---
+        // 사용 가능한 소스가 없다면 새로 하나 생성
+        Debug.Log("풀이 부족하여 새로운 AudioSource를 동적으로 추가합니다.");
+        AudioSource newSource = gameObject.AddComponent<AudioSource>();
+        newSource.playOnAwake = false;
+        newSource.volume = _volume; // 현재 볼륨 설정 적용
+        _audioSources.Add(newSource); // 생성된 소스를 풀에 추가
+        
+        return newSource; // 새로 생성된 소스를 즉시 반환
     }
 
     public void Play(AudioClip audioClip)
