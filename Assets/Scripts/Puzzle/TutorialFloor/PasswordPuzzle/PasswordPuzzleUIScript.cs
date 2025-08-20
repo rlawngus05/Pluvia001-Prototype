@@ -46,13 +46,20 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
 
     [Header("Effects")]
     [SerializeField] private GameObject _magicCircle;
+    [SerializeField] private GameObject _circle0;
+    [SerializeField] private GameObject _circle1;
     [SerializeField] private float _spinSpeed;
+    [SerializeField] private float _accelerateTime;
+    [SerializeField] private float _spinTime;
+    [SerializeField] private float _decelerateTime;
     [SerializeField] private GameObject _etherContainer;
     [SerializeField] private float _etherContainerHeight;
     [SerializeField] private float _elevateTime;
     [SerializeField] private float _shakeAmplitude;
     [SerializeField] private AudioClip _elevateSoundEffect;
     [SerializeField] private InteractableEther _interactableEther;
+    [SerializeField] private float _pushedPowerX;
+    [SerializeField] private float _pushedPowerY;
 
     private void Awake()
     {
@@ -116,8 +123,7 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
 
         _puzzleLogic.SetFailObserver(() =>
         {
-            Close();
-            Initiate();
+            StartCoroutine(ExecuteFailEvent());
         });
 
         _puzzleLogic.AddOnSolvedEvent(() =>
@@ -236,6 +242,10 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
         _rectTransform.position = originalPos;
     }
 
+    //*
+    //* 퍼즐 성공 효과 관련 함수들
+    //*
+    
     private IEnumerator ExecuteSolvedEvent()
     {
         _panel.sprite = _panelSprites[4];
@@ -251,17 +261,15 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
         _interactableEther.ExecuteFloating();
     }
 
-    [SerializeField] private float _accelerateTime;
-    [SerializeField] private float _spinTime;
-    [SerializeField] private float _decelerateTime;
     private IEnumerator SpinMagicCircle()
     {
-        RectTransform rectTransform = _magicCircle.GetComponent<RectTransform>();
+        RectTransform rectTransform0 = _circle0.GetComponent<RectTransform>();
+        RectTransform rectTransform1 = _circle1.GetComponent<RectTransform>();
         CanvasGroup canvasGroup = _magicCircle.GetComponent<CanvasGroup>();
 
         canvasGroup.alpha = 0f;
         _magicCircle.SetActive(true);
-        
+
         float elapsed = 0f;
         float currentAngularVelocity = 0f; // Track speed over time for smoother acceleration
 
@@ -275,9 +283,10 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
 
             // Smoothly increase rotation speed from 0 to _spinSpeed
             currentAngularVelocity = Mathf.Lerp(0f, _spinSpeed, EasingFunctions.EaseInQuint(t));
-            
+
             // Apply rotation based on the current speed
-            rectTransform.Rotate(0.0f, 0.0f, currentAngularVelocity * Time.deltaTime);
+            rectTransform0.Rotate(0.0f, 0.0f, currentAngularVelocity * Time.deltaTime);
+            rectTransform1.Rotate(0.0f, 0.0f, -currentAngularVelocity * Time.deltaTime);
 
             elapsed += Time.deltaTime;
             yield return null;
@@ -291,8 +300,9 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
         while (elapsed < _spinTime)
         {
             // Rotate by the constant max speed each frame
-            rectTransform.Rotate(0.0f, 0.0f, _spinSpeed * Time.deltaTime);
-            
+            rectTransform0.Rotate(0.0f, 0.0f, _spinSpeed * Time.deltaTime);
+            rectTransform1.Rotate(0.0f, 0.0f, -_spinSpeed * Time.deltaTime);
+
             elapsed += Time.deltaTime;
             yield return null;
         }
@@ -304,24 +314,25 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
         {
             // Use the correct duration for normalization
             float t = elapsed / _decelerateTime;
-            
+
             // Decrease speed from _spinSpeed to 0
             currentAngularVelocity = Mathf.Lerp(_spinSpeed, 0f, EasingFunctions.EaseInCubic(t));
-            
+
             // Apply the decreasing rotation
-            rectTransform.Rotate(0.0f, 0.0f, currentAngularVelocity * Time.deltaTime);
+            rectTransform0.Rotate(0.0f, 0.0f, currentAngularVelocity * Time.deltaTime);
+            rectTransform1.Rotate(0.0f, 0.0f, -currentAngularVelocity * Time.deltaTime);
 
             // Fade out smoothly
             // canvasGroup.alpha = Mathf.Lerp(1f, 0f, t);
-            
+
             elapsed += Time.deltaTime;
             yield return null;
         }
-        
+
         // Hide the object after the animation is complete
         _magicCircle.SetActive(false);
     }
-    
+
     private IEnumerator ElevateEtherContainer()
     {
         Transform etherContainerTransform = _etherContainer.transform;
@@ -367,6 +378,25 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
 
         currentColor.a = 1.0f;
         spriteRenderer.color = currentColor;
+    }
+
+    //*
+    //* 기회 모두 소진 효과 관련 함수들
+    //*
+
+    private IEnumerator ExecuteFailEvent()
+    {
+        Close();
+
+        Vector2 knockbackForce = new Vector2(-_pushedPowerX, _pushedPowerY);
+        
+        PlayerController.Instance.AddForce(knockbackForce, ForceMode2D.Impulse);
+
+        Debug.Log("Hit animation executing"); // 피격 애니매이션 실행
+
+        Initiate();
+
+        yield return null; 
     }
 }
 

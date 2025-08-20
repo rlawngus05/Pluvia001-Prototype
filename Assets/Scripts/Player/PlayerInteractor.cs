@@ -56,10 +56,12 @@ public class PlayerInteractor : MonoBehaviour
             if (col == null) continue;
 
             float distance = Vector2.Distance(transform.position, col.transform.position);
-            if (distance < shortestDistance)
+            InteractableObject interactableObject = col.GetComponent<InteractableObject>();
+
+            if (interactableObject.IsInteractable && distance < shortestDistance)
             {
                 shortestDistance = distance;
-                closest = col.GetComponent<InteractableObject>();
+                closest = interactableObject;
             }
         }
 

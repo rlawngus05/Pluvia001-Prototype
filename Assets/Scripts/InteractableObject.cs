@@ -7,6 +7,7 @@ public abstract class InteractableObject : MonoBehaviour
     [SerializeField] private Material _interactableEffectMaterial;
     [SerializeField] private AudioClip _interactSoundEffect;
     [SerializeField] private bool _isInteractable;
+    public bool IsInteractable => _isInteractable;
 
     private SpriteRenderer _spriteRenderer;
     private Material[] _originalMaterials;
@@ -37,7 +38,7 @@ public abstract class InteractableObject : MonoBehaviour
     {
         _spriteRenderer.materials = _originalMaterials;
     }
-    
+
     public void SetInteractable() { _isInteractable = true; }
     public void UnsetInteractable() { _isInteractable = false; }
 }   

@@ -60,7 +60,8 @@ public class PlayerController : MonoBehaviour
         _walkSoundEffectSelector = 0;
     }
 
-    private void Start() {
+    private void Start()
+    {
         PlayerStateManager.Instance.Subscribe((PlayerState currentState) =>
         {
             if ((currentState & PlayerState.Unhandlable) == PlayerState.Unhandlable)
@@ -85,7 +86,10 @@ public class PlayerController : MonoBehaviour
         if (_isMovable)
         {
             float moveDirection = Input.GetAxisRaw("Horizontal");
-            SetVelocityX(moveDirection, _moveSpeed);
+
+            //* 움직이지 않을 때에, X 속도를 0으로 고정 시키는 문제를 해결하는 코드
+            //! May cause Problem
+            if (moveDirection != .0f) { SetVelocityX(moveDirection, _moveSpeed); }
 
             //* 걷는 애니메이션 + 좌우 전환 로직
             if (moveDirection == 0.0f)
@@ -154,6 +158,10 @@ public class PlayerController : MonoBehaviour
                 _hasUnholdJump = true;
             }
 
+            //* 움직이는 키를 땠을 때, 슬라이딩 되는 문제를 해결하기 위한 코드
+            //! May cause Problem
+            if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D)) { SetVelocityX(.0f, _moveSpeed); }
+
             //* 인벤토리 열기 로직
             if (_isHandlable && Input.GetAxisRaw("Horizontal") == 0.0f && !_isJump)
             {
@@ -179,24 +187,24 @@ public class PlayerController : MonoBehaviour
 
             _animator.SetBool("isJumping", _isJump);
             _animator.SetBool("isFalling", false);
-            
+
             SoundManager.Instance.PlaySoundEffect(_landingSoundEffect);
         }
     }
 
-    private void SetVelocityX(float moveDirection, float moveSpeed) { _rb.linearVelocityX = _moveSpeed * moveDirection; }
+    private void SetVelocityX(float moveDirection, float moveSpeed) { _rb.linearVelocityX = moveSpeed * moveDirection; }
+    public void MoveCharacter(Transform destination) { transform.position = destination.position; }
 
-    public void MoveCharacter(Transform destination)
+    
+    /// <summary>함
+    ///  AddForce at LocalSpace
+    /// </summary>
+    //! 캐릭터가 90의 배수 만큼 돌아가져 있을 때만 작동함
+    public void AddForce(Vector2 force, ForceMode2D forceMode = ForceMode2D.Force)
     {
-        transform.position = destination.position;
+        if (_spriteRenderer.flipY) { force = new Vector2(force.x, -force.y); }
+        if (!_spriteRenderer.flipX) { force = new Vector2(-force.x, force.y); } //TODO : 이미지 정방향으로 오른쪽을 바꾸면 ! 연산자 빼기
+
+        _rb.AddRelativeForce(force, forceMode);
     }
 }
-
-// public enum PlayerState
-// {
-//     Idle,
-//     OpenInventory,
-//     OpenPuzzle,
-//     MoveArea,
-//     Dead
-// }
