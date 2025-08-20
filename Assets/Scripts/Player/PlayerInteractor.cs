@@ -5,7 +5,8 @@ public class PlayerInteractor : MonoBehaviour
 {
     public static PlayerInteractor Instance { get; private set; }
 
-    private InteractableObject _interactObject;
+    private GameObject _currentInteractableGameObject;
+    private InteractableObject[] _interactableObjects;
     private List<Collider2D> _currentColliders = new List<Collider2D>();
     private bool _isInteratable;
 
@@ -38,9 +39,12 @@ public class PlayerInteractor : MonoBehaviour
             UpdateClosestInteractable();
 
             //* 상호작용 키를 누르면, 플레이어와 가장 가까이 있는 상호작용 물체와 상호작용한다.
-            if (_interactObject != null && Input.GetKeyDown(KeyCode.F))
+            if (_interactableObjects != null && Input.GetKeyDown(KeyCode.F))
             {
-                _interactObject.Interact();
+                foreach (InteractableObject interactableObject in _interactableObjects)
+                {
+                    interactableObject.Interact();
+                }
             }
         }
     }
@@ -49,29 +53,53 @@ public class PlayerInteractor : MonoBehaviour
     private void UpdateClosestInteractable()
     {
         float shortestDistance = float.MaxValue;
-        InteractableObject closest = null;
+        GameObject closest = null;
 
         foreach (var col in _currentColliders)
         {
             if (col == null) continue;
 
             float distance = Vector2.Distance(transform.position, col.transform.position);
-            InteractableObject interactableObject = col.GetComponent<InteractableObject>();
 
-            if (interactableObject.IsInteractable && distance < shortestDistance)
+            if (distance < shortestDistance && col.GetComponent<InteractableObject>() != null)
             {
+                InteractableObject[] temp = col.GetComponents<InteractableObject>();
+
+                //* 만약 InteractableObject가 여러개 있다면, 모든 InteractableObject가 IsInteractable일 때, 상호작용 할 수 있음
+                bool hasUninteractable = false;
+                foreach (InteractableObject interactableObject in temp)
+                {
+                    if (!interactableObject.IsInteractable)
+                    {
+                        hasUninteractable = true;
+                        break;
+                    }
+                }
+                if (hasUninteractable) { continue; }
+
                 shortestDistance = distance;
-                closest = interactableObject;
+                closest = col.gameObject;
             }
         }
 
-        if (closest != _interactObject)
+        if (closest != _currentInteractableGameObject)
         {
-            _interactObject?.OffInteractable();
+            _currentInteractableGameObject = closest;
 
-            _interactObject = closest;
+            if (_interactableObjects != null)
+            {
+                foreach (InteractableObject interactableObject in _interactableObjects)
+                {
+                    interactableObject.OffInteractable();
+                }
+            }
 
-            _interactObject.OnInteractable();
+            _interactableObjects = _currentInteractableGameObject.GetComponents<InteractableObject>();
+
+            foreach (InteractableObject interactableObject in _interactableObjects)
+            {
+                interactableObject.OnInteractable();
+            }
         }
     }
 
@@ -92,10 +120,15 @@ public class PlayerInteractor : MonoBehaviour
         {
             _currentColliders.Remove(collision);
 
-            if (collision.GetComponent<InteractableObject>() == _interactObject)
+            if (collision.gameObject == _currentInteractableGameObject)
             {
-                _interactObject.OffInteractable();
-                _interactObject = null;
+                foreach (InteractableObject interactableObject in _interactableObjects)
+                {
+                    interactableObject.OffInteractable();
+                }
+
+                _currentInteractableGameObject = null;
+                _interactableObjects = null;
             }
         }
     }
