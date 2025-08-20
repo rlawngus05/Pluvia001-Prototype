@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using System;
 
 public class PlayerInteractor : MonoBehaviour
 {
@@ -39,8 +41,12 @@ public class PlayerInteractor : MonoBehaviour
             UpdateClosestInteractable();
 
             //* 상호작용 키를 누르면, 플레이어와 가장 가까이 있는 상호작용 물체와 상호작용한다.
+            //* 만약 해당 물체에 PlayerInteractor가 여럿 있으면, Priority가 가장 큰 것 부터 실행한다.
             if (_interactableObjects != null && Input.GetKeyDown(KeyCode.F))
             {
+                Array.Sort(_interactableObjects);
+                Array.Reverse(_interactableObjects);
+
                 foreach (InteractableObject interactableObject in _interactableObjects)
                 {
                     interactableObject.Interact();
