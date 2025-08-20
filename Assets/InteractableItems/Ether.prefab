@@ -104,7 +104,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interactableEffectMaterial: {fileID: 2100000, guid: 571b4625bcc76924cb345eb73e78aba3, type: 2}
   _interactSoundEffect: {fileID: 8300000, guid: e17d18b865725af41ada4455f0d2c6c1, type: 3}
+  _isInteractable: 0
   itemData: {fileID: 11400000, guid: 46d14a46da551224da17c86793d3e036, type: 2}
+  _floatTime: 1
+  _maxFloatingHeight: 0.1
 --- !u!58 &9097217009171501342
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -46,12 +46,13 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
 
     [Header("Effects")]
     [SerializeField] private GameObject _magicCircle;
-    [SerializeField] private float _spinTime;
     [SerializeField] private float _spinSpeed;
-    [SerializeField] private float _accelerateRatio;
     [SerializeField] private GameObject _etherContainer;
     [SerializeField] private float _etherContainerHeight;
     [SerializeField] private float _elevateTime;
+    [SerializeField] private float _shakeAmplitude;
+    [SerializeField] private AudioClip _elevateSoundEffect;
+    [SerializeField] private InteractableEther _interactableEther;
 
     private void Awake()
     {
@@ -238,53 +239,89 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
     private IEnumerator ExecuteSolvedEvent()
     {
         _panel.sprite = _panelSprites[4];
-        SetState(PuzzleUIState.Close);  
+        SetState(PuzzleUIState.Close);
+
+        _interactableEther.UnsetInteractable();
+        _interactableEther.StopFloating();
         yield return StartCoroutine(SpinMagicCircle());
         Close();
         yield return StartCoroutine(ElevateEtherContainer());
+        yield return StartCoroutine(ShowEther());
+        _interactableEther.SetInteractable();
+        _interactableEther.ExecuteFloating();
     }
 
+    [SerializeField] private float _accelerateTime;
+    [SerializeField] private float _spinTime;
+    [SerializeField] private float _decelerateTime;
     private IEnumerator SpinMagicCircle()
     {
         RectTransform rectTransform = _magicCircle.GetComponent<RectTransform>();
         CanvasGroup canvasGroup = _magicCircle.GetComponent<CanvasGroup>();
 
-        float elapsed = 0f;
-        float accelerateTime = _spinTime * _accelerateRatio;
+        canvasGroup.alpha = 0f;
         _magicCircle.SetActive(true);
+        
+        float elapsed = 0f;
+        float currentAngularVelocity = 0f; // Track speed over time for smoother acceleration
 
-        Quaternion startRotation = rectTransform.rotation;
-
-        while (elapsed <= accelerateTime)
+        // == Phase 1: Acceleration & Fade-In ==
+        while (elapsed < _accelerateTime)
         {
-            float t = elapsed / accelerateTime;
+            float t = elapsed / _accelerateTime;
 
+            // Fade in (using the original bounce for style)
             canvasGroup.alpha = Mathf.Lerp(0f, 1f, EasingFunctions.EaseInOutBounce(t));
 
-            float easedT = EasingFunctions.EaseInQuint(t);
-            float angle = _spinSpeed * easedT;
-
-            rectTransform.rotation = startRotation * Quaternion.Euler(0, 0, angle);
+            // Smoothly increase rotation speed from 0 to _spinSpeed
+            currentAngularVelocity = Mathf.Lerp(0f, _spinSpeed, EasingFunctions.EaseInQuint(t));
+            
+            // Apply rotation based on the current speed
+            rectTransform.Rotate(0.0f, 0.0f, currentAngularVelocity * Time.deltaTime);
 
             elapsed += Time.deltaTime;
             yield return null;
         }
 
+        // Ensure values are set correctly for the next phase
         canvasGroup.alpha = 1.0f;
+        elapsed = 0f;
 
-        while (elapsed <= _spinTime)
+        // == Phase 2: Constant Spin (Corrected) ==
+        while (elapsed < _spinTime)
         {
-            rectTransform.rotation *= Quaternion.Euler(0, 0, _spinSpeed * Time.deltaTime);
-
-            yield return null;
+            // Rotate by the constant max speed each frame
+            rectTransform.Rotate(0.0f, 0.0f, _spinSpeed * Time.deltaTime);
+            
             elapsed += Time.deltaTime;
+            yield return null;
         }
+
+        elapsed = 0f;
+
+        // == Phase 3: Deceleration & Fade-Out (Corrected) ==
+        while (elapsed < _decelerateTime)
+        {
+            // Use the correct duration for normalization
+            float t = elapsed / _decelerateTime;
+            
+            // Decrease speed from _spinSpeed to 0
+            currentAngularVelocity = Mathf.Lerp(_spinSpeed, 0f, EasingFunctions.EaseInCubic(t));
+            
+            // Apply the decreasing rotation
+            rectTransform.Rotate(0.0f, 0.0f, currentAngularVelocity * Time.deltaTime);
+
+            // Fade out smoothly
+            // canvasGroup.alpha = Mathf.Lerp(1f, 0f, t);
+            
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        
+        // Hide the object after the animation is complete
         _magicCircle.SetActive(false);
     }
-
-    [SerializeField] private float _shakeAmplitude;
-    [SerializeField] private AudioClip _elevateSoundEffect;
-    [SerializeField] private InteractableEther _interactableEther;
+    
     private IEnumerator ElevateEtherContainer()
     {
         Transform etherContainerTransform = _etherContainer.transform;
@@ -292,10 +329,8 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
 
         float elapsed = .0f;
 
-        _etherContainer.SetActive(true);
         CameraManager.Instance.ShakeCamera(_shakeAmplitude);
         SoundManager.Instance.PlaySoundEffect(_elevateSoundEffect);
-        _interactableEther.UnsetInteractable();
 
         while (elapsed < _elevateTime)
         {
@@ -308,8 +343,30 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
             elapsed += Time.deltaTime;
         }
 
-        _interactableEther.SetInteractable();
         CameraManager.Instance.StopShakeCamera();
+    }
+
+    [SerializeField] private float _etherShowTime;
+    private IEnumerator ShowEther()
+    {
+        SpriteRenderer spriteRenderer = _interactableEther.GetComponent<SpriteRenderer>();
+
+        float elapsed = .0f;
+        Color currentColor = spriteRenderer.color;
+
+        while (elapsed <= _etherShowTime)
+        {
+            float alpha = Mathf.Lerp(.0f, 1.0f, EasingFunctions.EaseInCirc(elapsed / _etherShowTime));
+
+            currentColor.a = alpha;
+            spriteRenderer.color = currentColor;
+
+            yield return null;
+            elapsed += Time.deltaTime;
+        }
+
+        currentColor.a = 1.0f;
+        spriteRenderer.color = currentColor;
     }
 }
 

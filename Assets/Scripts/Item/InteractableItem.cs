@@ -8,10 +8,8 @@ public class InteractableItem : InteractableObject
     public string GetName() { return itemData.Name; }
     public string GetContent() { return itemData.Content; }
 
-    public override void Interact()
+    protected override void OnInteract()
     {
-        base.Interact();
-        
         InventoryManager.Instance.InsertItem(itemData);
 
         Destroy(gameObject);

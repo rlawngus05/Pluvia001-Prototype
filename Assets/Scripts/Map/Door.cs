@@ -7,9 +7,8 @@ public class Door : InteractableObject
     [SerializeField] private Transform _destinationPoint;
     [SerializeField] private CompositeCollider2D _destinationCameraConfiner;
 
-    public override void Interact()
+    protected override void OnInteract()
     {
-        base.Interact();
         PlayerStateManager.Instance.SetState(PlayerState.Uncontrolable);
 
         StartCoroutine(TransitionRoutine());

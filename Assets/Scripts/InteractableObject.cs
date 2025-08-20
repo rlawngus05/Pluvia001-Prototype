@@ -6,20 +6,25 @@ public abstract class InteractableObject : MonoBehaviour
 {
     [SerializeField] private Material _interactableEffectMaterial;
     [SerializeField] private AudioClip _interactSoundEffect;
+    [SerializeField] private bool _isInteractable;
 
     private SpriteRenderer _spriteRenderer;
     private Material[] _originalMaterials;
 
-    private void Awake()
+    protected virtual void Awake()
     {
+        _isInteractable = true;
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    public virtual void Interact()
+    public void Interact()
     {
-        if (gameObject.tag != "Interactable") { return; }
+        if (!_isInteractable) { return; }
         if (_interactSoundEffect != null) { SoundManager.Instance.PlaySoundEffect(_interactSoundEffect); }
+        OnInteract();
     }
+
+    protected abstract void OnInteract();
 
     public virtual void OnInteractable()
     {
@@ -33,6 +38,6 @@ public abstract class InteractableObject : MonoBehaviour
         _spriteRenderer.materials = _originalMaterials;
     }
     
-    public void SetInteractable() { gameObject.tag = "Interactable"; }
-    public void UnsetInteractable() { gameObject.tag = "Untagged"; }
+    public void SetInteractable() { _isInteractable = true; }
+    public void UnsetInteractable() { _isInteractable = false; }
 }   

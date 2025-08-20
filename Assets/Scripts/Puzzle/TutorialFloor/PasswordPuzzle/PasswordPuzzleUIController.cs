@@ -4,10 +4,8 @@ public class PasswordPuzzleUIController : InteractableObject
 {
     [SerializeField] private PasswordPuzzleUIScript passwordPuzzleUIScript;
 
-    public override void Interact()
+    protected override void OnInteract()
     {
-        base.Interact();
-        
         if (passwordPuzzleUIScript.GetState() == PuzzleUIState.Close)
         {
             passwordPuzzleUIScript.Open();

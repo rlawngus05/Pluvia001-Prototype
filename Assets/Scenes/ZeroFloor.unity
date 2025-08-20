@@ -2390,17 +2390,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6797810441243966390, guid: ed63253715282b04c91dc820772a8ffd, type: 3}
   m_PrefabInstance: {fileID: 1799872652}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1935312201 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6133289952305224523, guid: 1131e9f00b7d215488de8490cf4364fa, type: 3}
-  m_PrefabInstance: {fileID: 4761896922649957945}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa353b5dd845fce4f9f7bce1acc77de8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2085483644
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4874,46 +4863,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 686224918225505599, guid: 1131e9f00b7d215488de8490cf4364fa, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.06
-      objectReference: {fileID: 0}
-    - target: {fileID: 686224918225505599, guid: 1131e9f00b7d215488de8490cf4364fa, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.1
-      objectReference: {fileID: 0}
     - target: {fileID: 2383740857248918564, guid: 1131e9f00b7d215488de8490cf4364fa, type: 3}
       propertyPath: m_Name
       value: PasswordPuzzle
       objectReference: {fileID: 0}
-    - target: {fileID: 4064978155739252765, guid: 1131e9f00b7d215488de8490cf4364fa, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.82
+    - target: {fileID: 5031483344953442093, guid: 1131e9f00b7d215488de8490cf4364fa, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4064978155739252765, guid: 1131e9f00b7d215488de8490cf4364fa, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -3.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 5493163868345873760, guid: 1131e9f00b7d215488de8490cf4364fa, type: 3}
-      propertyPath: _elevateTime
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5493163868345873760, guid: 1131e9f00b7d215488de8490cf4364fa, type: 3}
-      propertyPath: _shakeAmplitude
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5493163868345873760, guid: 1131e9f00b7d215488de8490cf4364fa, type: 3}
-      propertyPath: _interactableEther
-      value: 
-      objectReference: {fileID: 1935312201}
-    - target: {fileID: 5493163868345873760, guid: 1131e9f00b7d215488de8490cf4364fa, type: 3}
-      propertyPath: _elevateSoundEffect
-      value: 
-      objectReference: {fileID: 8300000, guid: 8fcec6e5a692959448c15dc9852ee9ac, type: 3}
     - target: {fileID: 5844614952965653492, guid: 1131e9f00b7d215488de8490cf4364fa, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8598210327864121393, guid: 1131e9f00b7d215488de8490cf4364fa, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.748
@@ -4954,8 +4915,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 999057867558248323, guid: 1131e9f00b7d215488de8490cf4364fa, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

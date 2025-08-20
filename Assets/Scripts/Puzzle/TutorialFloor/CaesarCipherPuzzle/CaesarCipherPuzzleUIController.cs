@@ -5,10 +5,8 @@ public class CaesarCipherPuzzleUIController : InteractableObject
 {
     [SerializeField] private CaesarCipherPuzzleUIScript caesarCipherPuzzleUIScript;
 
-    public override void Interact()
+    protected override void OnInteract()
     {
-        base.Interact();
-        
         if (caesarCipherPuzzleUIScript.GetState() == PuzzleUIState.Close)
         {
             caesarCipherPuzzleUIScript.Open();
