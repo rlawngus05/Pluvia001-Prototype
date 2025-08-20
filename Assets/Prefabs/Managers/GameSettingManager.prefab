@@ -136,7 +136,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 11
+  m_SortingOrder: 15
   m_TargetDisplay: 0
 --- !u!114 &5408386250558572800
 MonoBehaviour:
@@ -193,6 +193,8 @@ MonoBehaviour:
   _gui: {fileID: 7661559528146130902}
   _bgmVolumeController: {fileID: 8007631619991145741}
   _soundEffectVolumeController: {fileID: 3242030272707367014}
+  _openSoundEffect: {fileID: 8300000, guid: 9f9d3e9cbb322af46a974fbf238181e2, type: 3}
+  _closeSoundEffect: {fileID: 8300000, guid: 68003cc44b965b24caa0faab982b29ec, type: 3}
 --- !u!1 &892184891444833780
 GameObject:
   m_ObjectHideFlags: 0

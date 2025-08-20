@@ -40,6 +40,8 @@ public abstract class InteractableObject : MonoBehaviour, IComparable<Interactab
 
     public virtual void OnInteractable()
     {
+        if (_interactableEffectMaterial == null) { return; }
+
         _originalMaterials = _spriteRenderer.materials;
 
         _spriteRenderer.materials = _originalMaterials.Append(_interactableEffectMaterial).ToArray();
@@ -47,6 +49,8 @@ public abstract class InteractableObject : MonoBehaviour, IComparable<Interactab
 
     public virtual void OffInteractable()
     {
+        if (_interactableEffectMaterial == null) { return; }
+        
         _spriteRenderer.materials = _originalMaterials;
     }
 

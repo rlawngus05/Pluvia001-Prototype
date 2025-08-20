@@ -43,6 +43,7 @@ public class CutSceneManager : MonoBehaviour
 
     public void StartCutScene()
     {
+        PlayerStateManager.Instance.SetState(PlayerState.Uncontrolable);
         _currentLineIndex = 0;
 
         StartCoroutine(ExecuteNextLine());
@@ -83,6 +84,8 @@ public class CutSceneManager : MonoBehaviour
 
     private void EndCutScene()
     {
+        PlayerStateManager.Instance.SetState(PlayerState.Idle);
+
         _script.Clear();
     }
 }

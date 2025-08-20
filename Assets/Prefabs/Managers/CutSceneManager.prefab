@@ -924,7 +924,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8321833061127240858
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1158,7 +1158,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 11
   m_TargetDisplay: 0
 --- !u!114 &7869674986460826773
 MonoBehaviour:
@@ -1254,8 +1254,7 @@ MonoBehaviour:
   _gui: {fileID: 3396710884587751852}
   _contentText: {fileID: 8767496892165498198}
   _textLineEndGuider: {fileID: 831903859556213353}
-  _typeInterval: 0.1
-  _typeSoundEffect: {fileID: 8300000, guid: 87b11b75905f88e459d16c54ff2cdcdc, type: 3}
+  _typeInterval: 0.025
 --- !u!114 &2140123027692537037
 MonoBehaviour:
   m_ObjectHideFlags: 0
