@@ -30,7 +30,7 @@ public class InteractableEther : InteractableItem
 
     public void StopFloating()
     {
-        StopCoroutine(_currentCoroutine);
+        if (_currentCoroutine != null) { StopCoroutine(_currentCoroutine); }
         transform.localPosition = new Vector3(transform.localPosition.x, _initialY, transform.localPosition.z);
     }
 

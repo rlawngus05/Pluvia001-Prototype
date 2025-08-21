@@ -54,25 +54,22 @@ public class SoundEffectManager : MonoBehaviour
 
     public void Play(AudioClip audioClip)
     {
+        if (audioClip == null) { return; }
         // 풀에서 비어있는 AudioSource를 가져옴
         AudioSource source = GetAvailableAudioSource();
-        if (source != null)
-        {
-            // 해당 AudioSource의 pitch를 설정하고 재생
-            source.pitch = _originalPitch;
-            source.PlayOneShot(audioClip);
-        }
+        // 해당 AudioSource의 pitch를 설정하고 재생
+        source.pitch = _originalPitch;
+        source.PlayOneShot(audioClip);
     }
 
     public void PlayWithRandomPitch(AudioClip audioClip)
     {
+        if (audioClip == null) { return; }
+
         AudioSource source = GetAvailableAudioSource();
-        if (source != null)
-        {
-            float pitchShakeValue = Random.Range(-_pitchShakeRange, _pitchShakeRange);
-            source.pitch = _originalPitch + pitchShakeValue;
-            source.PlayOneShot(audioClip);
-        }
+        float pitchShakeValue = Random.Range(-_pitchShakeRange, _pitchShakeRange);
+        source.pitch = _originalPitch + pitchShakeValue;
+        source.PlayOneShot(audioClip);
     }
 
     // 볼륨 설정 시, 풀에 있는 모든 AudioSource의 볼륨을 조절해야 합니다.
