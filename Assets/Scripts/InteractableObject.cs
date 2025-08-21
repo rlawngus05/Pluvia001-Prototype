@@ -16,6 +16,12 @@ public abstract class InteractableObject : MonoBehaviour, IComparable<Interactab
     /// </summary>
     /// <seealso cref="InteractableObject"/>
     [SerializeField] private int _priority;
+    /// <summary>
+    /// Determines the execution order when multiple <see cref="InteractableObject"/> 
+    /// components are attached to the same <see cref="GameObject"/>.
+    /// A higher value means higher priority and earlier execution.
+    /// </summary>
+    /// <seealso cref="InteractableObject"/>
     private int Priority => _priority;
 
     public bool IsInteractable => _isInteractable;
@@ -50,7 +56,7 @@ public abstract class InteractableObject : MonoBehaviour, IComparable<Interactab
     public virtual void OffInteractable()
     {
         if (_interactableEffectMaterial == null) { return; }
-        
+
         _spriteRenderer.materials = _originalMaterials;
     }
 

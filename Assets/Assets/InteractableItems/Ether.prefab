@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2343894179720341826}
   - component: {fileID: 8655607247054317449}
-  - component: {fileID: 8943876235502321462}
   - component: {fileID: 9097217009171501342}
+  - component: {fileID: 8943876235502321462}
   - component: {fileID: 2656991210519018494}
   m_Layer: 0
   m_Name: Ether
@@ -90,24 +90,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8943876235502321462
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5581675649746612669}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa353b5dd845fce4f9f7bce1acc77de8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _interactableEffectMaterial: {fileID: 2100000, guid: 571b4625bcc76924cb345eb73e78aba3, type: 2}
-  _interactSoundEffect: {fileID: 8300000, guid: e17d18b865725af41ada4455f0d2c6c1, type: 3}
-  _isInteractable: 0
-  itemData: {fileID: 11400000, guid: 46d14a46da551224da17c86793d3e036, type: 2}
-  _floatTime: 1
-  _maxFloatingHeight: 0.1
 --- !u!58 &9097217009171501342
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -144,6 +126,25 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
+--- !u!114 &8943876235502321462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5581675649746612669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa353b5dd845fce4f9f7bce1acc77de8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interactableEffectMaterial: {fileID: 2100000, guid: 571b4625bcc76924cb345eb73e78aba3, type: 2}
+  _interactSoundEffect: {fileID: 8300000, guid: e17d18b865725af41ada4455f0d2c6c1, type: 3}
+  _isInteractable: 0
+  _priority: 0
+  itemData: {fileID: 11400000, guid: 46d14a46da551224da17c86793d3e036, type: 2}
+  _floatTime: 1
+  _maxFloatingHeight: 0.1
 --- !u!95 &2656991210519018494
 Animator:
   serializedVersion: 7
