@@ -254,7 +254,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 95219247
-  m_SortingLayer: 5
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: -7131796977139286850, guid: 95aa7c632ff2d144086091ee6b8bbe61, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -298,11 +298,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveSpeed: 5
   _jumpForce: 7
-  _earlyJumpDivder: 2
-  _decectSpeed: 4
-  _unholdJumpGravityScaleAdder: 1
-  _fallGravityScaleAdder: 0.5
-  _maxFallVelocity: 20
+  _earlyJumpDivder: 1
+  _decectSpeed: 3
+  _unholdJumpGravityScaleAdder: 4
+  _fallGravityScaleAdder: 0.2
+  _maxFallVelocity: 10
   _walkSoundEffects:
   - {fileID: 8300000, guid: 16eab7d998e639847b90425f7f1ebb95, type: 3}
   - {fileID: 8300000, guid: ee6b69049da82204d9a1db1b45b5813c, type: 3}
