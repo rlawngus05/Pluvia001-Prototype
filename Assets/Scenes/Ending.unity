@@ -1782,7 +1782,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Extranl Resource
+  m_text: External Resource
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 91805658cd3d28d499f6583f9ea82bb6, type: 2}
   m_sharedMaterial: {fileID: -8933506901404115255, guid: 91805658cd3d28d499f6583f9ea82bb6, type: 2}
