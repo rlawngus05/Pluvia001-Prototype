@@ -45,7 +45,6 @@ public class PlayerInteractor : MonoBehaviour
             if (_interactableObjects != null && Input.GetKeyDown(KeyCode.F))
             {
                 Array.Sort(_interactableObjects);
-                Array.Reverse(_interactableObjects);
 
                 foreach (InteractableObject interactableObject in _interactableObjects)
                 {

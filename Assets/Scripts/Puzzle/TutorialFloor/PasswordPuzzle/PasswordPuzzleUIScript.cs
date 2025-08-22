@@ -176,9 +176,10 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
         yield return _puzzleEffects.SpinMagicCircle();
         Close();
         yield return _puzzleEffects.ElevateEtherContainer();
+        
+        _interactableEther.ExecuteFloating();
         yield return _puzzleEffects.ShowEther();
         _interactableEther.SetInteractable();
-        _interactableEther.ExecuteFloating();
     }
 
     private void ExecuteFailEvent()

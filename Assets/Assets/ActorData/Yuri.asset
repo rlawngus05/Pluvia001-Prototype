@@ -22,4 +22,4 @@ MonoBehaviour:
     _sprite: {fileID: -1348440067, guid: 605189b18164b394a8a0a5542ab7e3ac, type: 3}
   - _type: 3
     _sprite: {fileID: -1917098337, guid: 605189b18164b394a8a0a5542ab7e3ac, type: 3}
-  _typeSoundEffect: {fileID: 0}
+  _typeSoundEffect: {fileID: 8300000, guid: 209a342efd335a04b9dc381b8bc33cd1, type: 3}
