@@ -3,11 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public delegate void PlayerStateHandler(PlayerState state);
+
 public class PlayerStateManager : MonoBehaviour
 {
     public static PlayerStateManager Instance { get; private set; }
     private PlayerState _currentState;
-    private List<Action<PlayerState>> _onStateChanged;
+    private event PlayerStateHandler _onStateChanged;
 
     private void Awake()
     {
@@ -17,7 +19,6 @@ public class PlayerStateManager : MonoBehaviour
             return;
         }
 
-        _onStateChanged = new List<Action<PlayerState>>();
         Instance = this;
     }
 
@@ -58,18 +59,11 @@ public class PlayerStateManager : MonoBehaviour
     {
         yield return null;
 
-        foreach (Action<PlayerState> evt in _onStateChanged)
-        {
-            evt.Invoke(_currentState);
-        }
+        _onStateChanged?.Invoke(_currentState);
     }
 
-    public void Subscribe(Action<PlayerState> evt)
-    {
-        _onStateChanged.Add(evt);
-    }
-    
-    // TODO : event 키워드 이용해서 UnSubscribe() 함수 구현하기
+    public void Subscribe(PlayerStateHandler handler) { _onStateChanged += handler; }
+    public void Unsubscribe(PlayerStateHandler handler) { _onStateChanged -= handler; }
 }
 
 [Flags]

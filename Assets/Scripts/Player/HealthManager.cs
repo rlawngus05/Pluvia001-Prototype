@@ -28,7 +28,6 @@ public class HealthManager : MonoBehaviour
         _healthChangeObserver(_health, MAX_HEALTH);
     }
 
-
     private void Awake()
     {
         if (Instance == null)
