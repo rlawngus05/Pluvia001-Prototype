@@ -283,6 +283,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbf7f9281abcdcf48924cfb733f08f96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cameraOrthoSize: 3.05
   doors:
   - {fileID: 2130807056}
 --- !u!1 &94363766
@@ -640,6 +641,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interactableEffectMaterial: {fileID: 2100000, guid: 571b4625bcc76924cb345eb73e78aba3, type: 2}
   _interactSoundEffect: {fileID: 0}
+  _isInteractable: 0
+  _priority: 0
   itemData: {fileID: 11400000, guid: 83a28e4fe91eab64c949f6c1d4ff3dcd, type: 2}
 --- !u!1 &519420028
 GameObject:
@@ -924,7 +927,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interactableEffectMaterial: {fileID: -876546973899608171, guid: 87756c94a92d6634c9af2afa72a51b7d, type: 3}
   _interactSoundEffect: {fileID: 8300000, guid: a37288c3e34469e4590dc2a7ee6952db, type: 3}
+  _isInteractable: 0
+  _priority: 0
   _destinationPoint: {fileID: 1150826469}
+  _destinationArea: {fileID: 71129579}
   _destinationCameraConfiner: {fileID: 1048505358}
 --- !u!212 &585852185
 SpriteRenderer:
@@ -1090,6 +1096,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interactableEffectMaterial: {fileID: 2100000, guid: 571b4625bcc76924cb345eb73e78aba3, type: 2}
   _interactSoundEffect: {fileID: 0}
+  _isInteractable: 0
+  _priority: 0
   itemData: {fileID: 11400000, guid: da810c693f5d7e8488e7e814efeffc89, type: 2}
 --- !u!61 &590705154
 BoxCollider2D:
@@ -1229,7 +1237,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 000000002feeac05
+  m_ApplyToSortingLayers: 000000002feeac05331dec93
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -1544,6 +1552,52 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!1 &843962482
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 843962484}
+  - component: {fileID: 843962483}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &843962483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843962482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a09afd5255271a94e8071dfe6d06719c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _originalText: "<EFFECT>\uB450\uB824\uC6C0\uC5D0 \uB5A8\uB9AC\uB294 \uBAA9\uC18C\uB9AC\uB85C...<wait>
+    </effect><effect><typeinterval>\uC774... \uC774\uAC8C.. \uC815\uB9D0.. \uB05D\uC77C\uAE4C?</typeinterval>"
+--- !u!4 &843962484
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843962482}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1048505357
 GameObject:
   m_ObjectHideFlags: 0
@@ -2371,6 +2425,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interactableEffectMaterial: {fileID: 2100000, guid: 571b4625bcc76924cb345eb73e78aba3, type: 2}
   _interactSoundEffect: {fileID: 0}
+  _isInteractable: 0
+  _priority: 0
   itemData: {fileID: 11400000, guid: 6af3d1d5a29ad8742b90a374c1d69318, type: 2}
 --- !u!61 &1957746204
 BoxCollider2D:
@@ -2459,8 +2515,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1813242573
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 4999170882276815587, guid: 7fcd452e0aa2c944cb1461c3b65f1a9c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2705,6 +2761,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbf7f9281abcdcf48924cfb733f08f96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cameraOrthoSize: 3.05
   doors:
   - {fileID: 585852184}
 --- !u!4 &2096157340
@@ -2777,7 +2834,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interactableEffectMaterial: {fileID: -876546973899608171, guid: 87756c94a92d6634c9af2afa72a51b7d, type: 3}
   _interactSoundEffect: {fileID: 8300000, guid: a37288c3e34469e4590dc2a7ee6952db, type: 3}
+  _isInteractable: 0
+  _priority: 0
   _destinationPoint: {fileID: 1296319827}
+  _destinationArea: {fileID: 2096157339}
   _destinationCameraConfiner: {fileID: 665331648}
 --- !u!212 &2130807057
 SpriteRenderer:
@@ -4419,3 +4479,4 @@ SceneRoots:
   - {fileID: 151967417}
   - {fileID: 627213243}
   - {fileID: 1429493092}
+  - {fileID: 843962484}
