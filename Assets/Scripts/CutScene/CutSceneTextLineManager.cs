@@ -1,217 +1,211 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
-
+using UnityEngineInternal;
 
 public class CutSceneTextLineManager : MonoBehaviour
 {
-    private static readonly string _commandPattern = @"(<[^>]+>|[^<]+)";
+    [SerializeField] private string _originalText;
+    [SerializeField] private TextMeshProUGUI _textMesh;
+
+    private List<Coroutine> _coroutines;
+    private CutSceneTextLineParser _parser;
 
     private string _plainText;
-    private List<Tag> _tags;
-    [SerializeField] private string _originalText;
+    private List<EffectTag> _effectTags;
+    private Queue<Tag> _remainNonEffectTags;
+    private Stack<Tag> _tagStack;
+
+    [SerializeField] private float jiterringPower;
+    [SerializeField] private float characterInterval = 0.2f; // 위상 차이
+    [SerializeField] private float maxHeight = 5f;          // 파도 높이
+    [SerializeField] private float defaultTypeInterval;
 
     private void Awake()
     {
-        _tags = new List<Tag>();
+        _parser = new CutSceneTextLineParser();
+        _coroutines = new List<Coroutine>(); // ✅ 초기화
+        _remainNonEffectTags = new Queue<Tag>();
+        _tagStack = new Stack<Tag>();
 
-        Execute(_originalText);
+        ExecuteLine(_originalText);
     }
 
-    public void Execute(string script)
-    {
-        _plainText = "";
-        _tags.Clear();
-
-        Parse(script);
-
-        Debug.Log(_plainText);
-        foreach (Tag tag in _tags)
-        {
-            if (tag is WaitTag waitTag)
-            {
-                Debug.LogFormat("WaitTag : {0}", waitTag.ExecuteIndex);
-            }
-            else if (tag is TypeIntervalTag typeIntervalTag)
-            {
-                Debug.LogFormat("TypeIntervalTag : {0}~{1}", typeIntervalTag.StartIndex, typeIntervalTag.EndIndex);
-            }
-            else if (tag is EffectTag effectTag)
-            {
-                Debug.LogFormat("EffectTag : {0}~{1}", effectTag.StartIndex, effectTag.EndIndex);
-            }
-            else
-            {
-                Debug.Log("시발 뭔데");
-            }
-        }
+    private void Update() {
+        _textMesh?.ForceMeshUpdate(); // 항상 최신화
     }
 
-    private void Parse(string script)
+    public void ExecuteLine(string script)
     {
-        Stack<Tag> tagStack = new Stack<Tag>();
-        int currentIndex = 0;
+        (string plainText, List<EffectTag> effectTags, List<Tag> nonEffectTags) parseResult = _parser.Parse(script);
 
-        MatchCollection matches = Regex.Matches(script, _commandPattern);
+        _plainText = parseResult.plainText;
+        _effectTags = parseResult.effectTags;
+        _remainNonEffectTags = new Queue<Tag>(parseResult.nonEffectTags);
 
-        foreach (Match match in matches)
-        {
-            string value = match.Value;
-            if (string.IsNullOrEmpty(value.Trim())) continue;
+        _textMesh.text = _plainText;
+        _textMesh.ForceMeshUpdate();
 
-            if (value.StartsWith("<") && value.EndsWith(">"))
-            {
-                // 태그 처리
-                ParseTag(value, tagStack, currentIndex);
-            }
-            else
-            {
-                // 일반 텍스트 처리
-                _plainText += value;
-                currentIndex += value.Length; // 텍스트 길이만큼 인덱스 증가
-            }
-        }
-        
-        if (tagStack.Count > 0)
-        {
-            Debug.LogWarning("Parsing finished but some effect tags were not closed. Automatically closing them.");
-            // 스택에 남은 태그들을 강제로 닫아줌
-            while(tagStack.Count > 0)
-            {
-                StateTag openTag = (StateTag)tagStack.Pop();
-                openTag.EndIndex = currentIndex;
-            }
-        }
+        TMP_TextInfo textInfo = _textMesh.textInfo;
+
+        _textMesh.maxVisibleCharacters = 0;
+
+        _textMesh.ForceMeshUpdate();
+
+        ApplyEffectTag();
+        StartCoroutine(ApplyTyping());
     }
 
-    private void ParseTag(string tag, Stack<Tag> tagStack, int currentIndex)
+    private Stack<TypeIntervalTag> typeIntervalTagStack = new Stack<TypeIntervalTag>();
+    private IEnumerator ApplyTyping()
     {
-        string tagContent = tag.Substring(1, tag.Length - 2).Trim();
-        bool isClosingTag = tagContent.StartsWith("/");
-        if (isClosingTag)
+        float currentTypeInterval = defaultTypeInterval;
+
+        for (int i = 0; i < _textMesh.text.Length; i++)
         {
-            tagContent = tagContent.Substring(1);
-        }
-
-        string[] splitedTag = tagContent.Split(' ');
-        string tagName = splitedTag[0].ToLower();
-
-
-        if (tagName == "wait")
-        {
-            if (isClosingTag)
+            if (_tagStack.Count != 0)
             {
-                throw new System.Exception("병신 포맷 안 맞음");
-            }
+                StateTag stateTag = (StateTag)_tagStack.Peek();
 
-            WaitTag waitTag = new WaitTag(currentIndex, 1.0f);
-            _tags.Add(waitTag);
-        }
-        else
-        {
-            switch (tagName)
-            {
-                case "typeinterval":
-                    if (isClosingTag)
+                if (stateTag.EndIndex - 1 == i)
+                {
+                    if (stateTag is TypeIntervalTag)
                     {
-                        Tag top = tagStack.Pop();
+                        if (typeIntervalTagStack.Count != 0)
+                        {
+                            typeIntervalTagStack.Pop();
 
-                        if (top is TypeIntervalTag typeIntervalTag)
-                        {
-                            typeIntervalTag.EndIndex = currentIndex;
-                        }
-                        else
-                        {
-                            throw new System.Exception("시발년아 포맷 안 맞아");
+                            currentTypeInterval = typeIntervalTagStack.Count == 0 ? defaultTypeInterval : typeIntervalTagStack.Peek().Interval;
                         }
                     }
-                    else
+
+                    _tagStack.Pop();
+                }
+            }
+
+            if (_remainNonEffectTags.Count != 0)
+            {
+                if (_remainNonEffectTags.Peek() is ActionTag actionTag)
+                {
+                    if (actionTag.ExecuteIndex == i)
                     {
-                        TypeIntervalTag typeIntervalTag = new TypeIntervalTag(currentIndex, 1.0f);
-                        _tags.Add(typeIntervalTag);
-                        tagStack.Push(typeIntervalTag);
+                        yield return StartCoroutine(ExecuteActionTag(actionTag));
+                        _remainNonEffectTags.Dequeue();
                     }
+                }
+
+                if (_remainNonEffectTags.Peek() is StateTag stateTag)
+                {
+                    if (stateTag.StartIndex == i)
+                    {
+                        if (stateTag is TypeIntervalTag typeIntervalTag)
+                        {
+                            currentTypeInterval = typeIntervalTag.Interval;
+
+                            _tagStack.Push(typeIntervalTag);
+                            typeIntervalTagStack.Push(typeIntervalTag);
+                        }
+                        _remainNonEffectTags.Dequeue();
+                    }
+                }
+            }
+
+            yield return new WaitForSeconds(currentTypeInterval);
+            _textMesh.maxVisibleCharacters = i + 1;
+        }
+    }
+
+    private IEnumerator ExecuteActionTag(ActionTag actionTag) {
+        if (actionTag is WaitTag waitTag)
+        {
+            yield return new WaitForSeconds(waitTag.Duration);
+        }
+    }
+
+    private void ApplyEffectTag()
+    {
+        foreach (EffectTag effectTag in _effectTags)
+        {
+            switch (effectTag.Type)
+            {
+                case EffectType.Jittering:
+                    _coroutines.Add(StartCoroutine(Jittering(effectTag.StartIndex, effectTag.EndIndex)));
                     break;
-
-                case "effect":
-                    if (isClosingTag)
-                    {
-                        Tag top = tagStack.Pop();
-
-                        if (top is EffectTag effectTag)
-                        {
-                            effectTag.EndIndex = currentIndex;
-                        }
-                        else
-                        {
-                            throw new System.Exception("시발년아 포맷 안 맞아");
-                        }
-                    }
-                    else
-                    {
-                        EffectTag typeIntervalTag = new EffectTag(currentIndex, EffectType.Waving);
-                        _tags.Add(typeIntervalTag);
-                        tagStack.Push(typeIntervalTag);
-                    }
+                case EffectType.Waving:
+                    _coroutines.Add(StartCoroutine(Waving(effectTag.StartIndex, effectTag.EndIndex)));
                     break;
             }
         }
     }
-}
 
-public abstract class Tag { }
-public abstract class ActionTag : Tag
-{
-    private int _executeIndex;
-    public int ExecuteIndex => _executeIndex;
-
-    public ActionTag(int executeIndex) { _executeIndex = executeIndex; }
-}
-public class WaitTag : ActionTag
-{
-    private float _duration;
-    public float Duration => _duration;
-
-    public WaitTag(int startIndex, float duration) : base(startIndex)
+    private IEnumerator Jittering(int startIndex, int endIndex)
     {
-        _duration = duration;
+        TMP_TextInfo textInfo = _textMesh.textInfo;
+
+        while (true)
+        {
+            Vector3[] vertices = textInfo.meshInfo[0].vertices;
+
+            for (int i = startIndex; i < endIndex; i++)
+            {
+                var charInfo = textInfo.characterInfo[i];
+                if (!charInfo.isVisible) continue;
+
+                int vertexIndex = charInfo.vertexIndex;
+                Vector2 jitterValue = SimpleJitter(jiterringPower);
+
+                for (int j = 0; j < 4; j++)
+                {
+                    vertices[vertexIndex + j] += (Vector3)jitterValue;
+                }
+            }
+
+            // ✅ 반드시 meshInfo[0].mesh에 반영
+            textInfo.meshInfo[0].mesh.vertices = vertices;
+            _textMesh.UpdateGeometry(textInfo.meshInfo[0].mesh, 0);
+
+            yield return null;
+        }
     }
-}
 
-public abstract class StateTag : Tag
-{
-    private int _startIndex;
-    public int StartIndex => _startIndex;
-    public int EndIndex { get; set; }
-
-    public StateTag(int startIndex) { _startIndex = startIndex; }
-}
-
-public class TypeIntervalTag : StateTag
-{
-    private float _interval;
-    public float Interval => _interval;
-
-    public TypeIntervalTag(int startIndex, float interval) : base(startIndex)
+    private IEnumerator Waving(int startIndex, int endIndex)
     {
-        _interval = interval;
+        TMP_TextInfo textInfo = _textMesh.textInfo;
+        float elapsed = 0f;
+
+        while (true)
+        {
+            Vector3[] vertices = textInfo.meshInfo[0].vertices;
+
+            for (int i = startIndex; i < endIndex; i++)
+            {
+                var charInfo = textInfo.characterInfo[i];
+                if (!charInfo.isVisible) continue;
+
+                int vertexIndex = charInfo.vertexIndex;
+                float yOffset = Mathf.Sin((elapsed + i * characterInterval) * 2f * Mathf.PI) * maxHeight;
+
+                for (int j = 0; j < 4; j++)
+                {
+                    vertices[vertexIndex + j].y += yOffset;
+                }
+            }
+
+            textInfo.meshInfo[0].mesh.vertices = vertices;
+            _textMesh.UpdateGeometry(textInfo.meshInfo[0].mesh, 0);
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
     }
-}
 
-public class EffectTag : StateTag
-{
-    private EffectType _type;
-    public EffectType Type => _type;
-
-    public EffectTag(int startIndex, EffectType type) : base(startIndex)
+    private Vector2 SimpleJitter(float intensity, System.Random rng = null)
     {
-        _type = type;
+        if (rng == null) rng = new System.Random();
+        float x = (float)(rng.NextDouble() * 2.0 - 1.0);
+        float y = (float)(rng.NextDouble() * 2.0 - 1.0);
+        return new Vector2(x, y) * intensity;
     }
-}
-
-public enum EffectType
-{
-    Waving,
-    Jittering
 }
