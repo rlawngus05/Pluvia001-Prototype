@@ -28,11 +28,6 @@ public class ItemViewerManager : MonoBehaviour
     private void Update() {
         if (_gui.activeSelf == true)
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                Close();
-            }
-
             if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
             {
                 Close();
@@ -58,6 +53,6 @@ public class ItemViewerManager : MonoBehaviour
     {
         _gui.SetActive(false);
         Destroy(_detailContent);
-        InventoryViewerManager.Instance.SetState(InventoryState.Idle); //* InventoryViewerManager와의 양방향 참조가 있음
+        InventoryViewerManager.Instance.SetState(InventoryState.Opened); //* InventoryViewerManager와의 양방향 참조가 있음
     }
 }

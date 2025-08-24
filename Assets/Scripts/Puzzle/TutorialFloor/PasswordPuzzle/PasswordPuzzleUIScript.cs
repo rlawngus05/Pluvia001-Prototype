@@ -1,73 +1,67 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
 {
+    [SerializeField] private GameObject _gui;
     [SerializeField] private PasswordPuzzleLogic _puzzleLogic;
+    private PasswordPuzzleEffects _puzzleEffects;
+    
+    [SerializeField] private Image _panel;
+    [SerializeField] private List<Sprite> _panelSprites;
+    [SerializeField] private List<Image> _lights;
+    [SerializeField] private List<Sprite> _lightSprites;
 
-    private VisualElement _root;
-    private List<VisualElement> _digitPanels;
+    [SerializeField] private InteractableEther _interactableEther;
+
+    private bool _isScrolling;
     private int _currentIndex;
-    private List<VisualElement> _chanceNotifiers;
 
     private PuzzleUIState _currentState;
     public PuzzleUIState GetState() { return _currentState; }
+    public void SetState(PuzzleUIState state) { StartCoroutine(SetStateCoroutine(state)); }
+    private IEnumerator SetStateCoroutine(PuzzleUIState state)
+    {
+        yield return null;
+        _currentState = state;
+    }
 
     [SerializeField] private DigitPanelStateDictWrapper _digitPanelStateDictWrapper; //* 유니티 editor 상에서 보여지는 필드
     private Dictionary<DigitState, Color32> digitPanelStateDict; //* 스크립트 상에서, 사용되는 필드
 
     private void Awake()
     {
-        _digitPanels = new List<VisualElement>();
-        _chanceNotifiers = new List<VisualElement>();
-
-        _root = GetComponent<UIDocument>().rootVisualElement;
-
-        for (int i = 0; i < 4; i++)
-        {
-            VisualElement digitPanel = _root.Query<VisualElement>("DigitPanel" + i.ToString());
-            _digitPanels.Add(digitPanel);
-        }
-
-        VisualElement chanceNotifierContainer = _root.Query<VisualElement>("ChanceNotifierContainer");
-        for (int i = 0; i < 6; i++)
-        {
-            VisualElement chanceNotifier = chanceNotifierContainer.Query<VisualElement>(i.ToString());
-            _chanceNotifiers.Add(chanceNotifier);
-        }
+        _interactableEther.UnsetInteractable();
 
         digitPanelStateDict = _digitPanelStateDictWrapper.ToDictionary();
+        _puzzleEffects = GetComponent<PasswordPuzzleEffects>();
+
+        _isScrolling = false;
     }
 
     public void Initialize()
     {
-        _root.style.display = DisplayStyle.None;
         _currentState = PuzzleUIState.Close;
 
         for (int i = 0; i < 4; i++)
         {
-            VisualElement digitPanel = _root.Query<VisualElement>("DigitPanel" + i.ToString());
-
             int index = i;
 
             //* Logic 부분에서 입력 숫자값을 변경 했을 때, 변경된 사실을 받기 위해, Logic 객체에 Observer 함수를 추가함
-            _puzzleLogic.AddInputNumberChangeObserver((int value) =>
+            _puzzleLogic.AddInputNumberChangeObserver((int prev, int cur) =>
             {
-                Label number = digitPanel.Query<Label>("Number");
-
-                number.text = value.ToString();
+                StartCoroutine(SlotNumberScrolling(prev, cur, index));
             });
-
 
             //* Logic 객체에서 번호판의 상태를 바꿨을 때, UI에 적용할 수 있도록 Observer 함수를 추가함
             _puzzleLogic.AddDigitStateChangeObserver((DigitState digitState) =>
             {
-                Label number = digitPanel.Query<Label>("Number");
-
                 Color32 changedColor = digitPanelStateDict[digitState];
-                number.style.color = new StyleColor(changedColor);
+
+                _puzzleEffects.SetScrollColor(index, changedColor);
             });
         }
 
@@ -75,34 +69,39 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
         {
             for (int i = 0; i < 6 - remainChance; i++)
             {
-                if (!_chanceNotifiers[i].ClassListContains("chance-fail")) { _chanceNotifiers[i].AddToClassList("chance-fail"); }
+                _lights[i].sprite = _lightSprites[1];
             }
 
             for (int i = 6 - remainChance; i < 6; i++)
             {
-                if (_chanceNotifiers[i].ClassListContains("chance-fail")) { _chanceNotifiers[i].RemoveFromClassList("chance-fail"); }
+                _lights[i].sprite = _lightSprites[0];
             }
+        });
+
+        _puzzleLogic.SetWrongObserver(() =>
+        {
+            _puzzleEffects.ShakeEffect();
         });
 
         _puzzleLogic.SetFailObserver(() =>
         {
-            _root.style.display = DisplayStyle.None;
-            Close();
-            Initiate();
+            ExecuteFailEvent();
+        });
+
+        _puzzleLogic.AddOnSolvedEvent(() =>
+        {
+            StartCoroutine(ExecuteSolvedEvent());
         });
     }
 
     public void Initiate()
     {
-        _digitPanels[_currentIndex].RemoveFromClassList("digit-panel-selected");
         _currentIndex = 0;
-        _digitPanels[_currentIndex].AddToClassList("digit-panel-selected");
+        ChangeSelectedDigitPanel(_currentIndex);
 
-        VisualElement chanceNotifierContainer = _root.Query<VisualElement>("ChanceNotifierContainer");
-        for (int i = 0; i < 6; i++)
+        foreach (Image light in _lights)
         {
-            VisualElement chanceNotifier = chanceNotifierContainer.Query<VisualElement>(i.ToString());
-            chanceNotifier.RemoveFromClassList("chance-fail");
+            light.sprite = _lightSprites[0];
         }
     }
 
@@ -110,13 +109,13 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
     {
         // digitPanelStateDict = digitPanelStateDictWrapper.ToDictionary(); //! Test : 에디터 상에서 실시간으로 색깔 조정가능하게 함.
 
-        if (_currentState == PuzzleUIState.Open)
+        if (_currentState == PuzzleUIState.Open && !_puzzleLogic.IsSolved)
         {
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
                 if (_currentIndex > 0)
                 {
-                    ChangeSelectedDigitPanel(_currentIndex, --_currentIndex);
+                    ChangeSelectedDigitPanel(--_currentIndex);
                 }
             }
 
@@ -124,37 +123,72 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
             {
                 if (_currentIndex < 3)
                 {
-                    ChangeSelectedDigitPanel(_currentIndex, ++_currentIndex);
+                    ChangeSelectedDigitPanel(++_currentIndex);
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.UpArrow)) { _puzzleLogic.UpNumber(_currentIndex); }
-            if (Input.GetKeyDown(KeyCode.DownArrow)) { _puzzleLogic.DownNumber(_currentIndex); }
+            if (!_isScrolling)
+            {
+                if (Input.GetKeyDown(KeyCode.UpArrow)) { _puzzleLogic.UpNumber(_currentIndex); }
+                if (Input.GetKeyDown(KeyCode.DownArrow)) { _puzzleLogic.DownNumber(_currentIndex); }
+            }
 
             if (Input.GetKeyDown(KeyCode.Return)) { _puzzleLogic.CheckCorrection(); }
         }
     }
 
-    private void ChangeSelectedDigitPanel(int previousIndex, int currentIndex)
-    {
-        _digitPanels[previousIndex].RemoveFromClassList("digit-panel-selected");
-        _digitPanels[currentIndex].AddToClassList("digit-panel-selected");
-    }
-
     public void Open()
     {
-        _root.style.display = DisplayStyle.Flex;
+        _gui.SetActive(true);
 
-        PlayerController.Instance.SetState(PlayerState.OpenPuzzle);
-        _currentState = PuzzleUIState.Open;
+        PlayerStateManager.Instance.SetState(PlayerState.Uncontrolable);
+        SetState(PuzzleUIState.Open);
     }
 
     public void Close()
     {
-        _root.style.display = DisplayStyle.None;
+        _gui.SetActive(false);
 
-        PlayerController.Instance.SetState(PlayerState.Idle);
-        _currentState = PuzzleUIState.Close;
+        PlayerStateManager.Instance.SetState(PlayerState.Idle);
+        SetState(PuzzleUIState.Close);
+    }
+
+    private IEnumerator SlotNumberScrolling(int prev, int cur, int index)
+    {
+        _isScrolling = true;
+
+        yield return _puzzleEffects.SlotNumberScrollingAnimation(prev, cur, index);
+
+        _isScrolling = false;
+    }
+
+    private void ChangeSelectedDigitPanel(int currentIndex)
+    {
+        _panel.sprite = _panelSprites[currentIndex];
+    }
+    
+    private IEnumerator ExecuteSolvedEvent()
+    {
+        _panel.sprite = _panelSprites[4];
+        SetState(PuzzleUIState.Close);
+
+        _interactableEther.StopFloating();
+        yield return _puzzleEffects.SpinMagicCircle();
+        Close();
+        yield return _puzzleEffects.ElevateEtherContainer();
+        
+        _interactableEther.ExecuteFloating();
+        yield return _puzzleEffects.ShowEther();
+        _interactableEther.SetInteractable();
+    }
+
+    private void ExecuteFailEvent()
+    {
+        Close();
+
+        _puzzleEffects.PlayFailSequence();
+
+        Initiate();
     }
 }
 

@@ -89,7 +89,7 @@ public class CaesarCipherPuzzleUIScript : MonoBehaviour, IPuzzleObject
         yield return null;
         _root.style.display = DisplayStyle.Flex;
 
-        PlayerController.Instance.SetState(PlayerState.OpenPuzzle);
+        PlayerStateManager.Instance.SetState(PlayerState.Uncontrolable);
         _currentState = PuzzleUIState.Open;
     }
 
@@ -97,7 +97,7 @@ public class CaesarCipherPuzzleUIScript : MonoBehaviour, IPuzzleObject
     {
         _root.style.display = DisplayStyle.None;
 
-        PlayerController.Instance.SetState(PlayerState.Idle);
+        PlayerStateManager.Instance.SetState(PlayerState.Idle);
         _currentState = PuzzleUIState.Close;
     }
 }

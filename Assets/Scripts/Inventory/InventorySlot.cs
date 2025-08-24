@@ -7,9 +7,17 @@ public class InventorySlot : MonoBehaviour
     [SerializeField] private ItemData _itemData;
     [SerializeField] private Image _itemIcon;
     [SerializeField] private TextMeshProUGUI _itemAmount;
+
     [SerializeField] private Image _border;
+    [SerializeField] private Sprite _focusedBorderImage;
+    [SerializeField] private Sprite _idleBorderImage;
+
     public void SetItemData(ItemData itemData)
     {
+        Color currentIconImageColor = _itemIcon.color;
+        currentIconImageColor.a = 1.0f;
+        _itemIcon.color = currentIconImageColor;
+
         _itemData = itemData;
 
         _itemIcon.sprite = _itemData.Icon;
@@ -18,10 +26,15 @@ public class InventorySlot : MonoBehaviour
 
     public void SetDefault()
     {
+        Color currentIconImageColor = _itemIcon.color;
+        currentIconImageColor.a = .0f;
+        _itemIcon.color = currentIconImageColor;
+
         _itemData = null;
         _itemIcon.sprite = null;
         _itemAmount.text = "";
     }
+
     public void SetAmount(int amount)
     {
         if (amount == 1)
@@ -36,11 +49,11 @@ public class InventorySlot : MonoBehaviour
 
     public void SetFocused()
     {
-        _border.color =  Color.red;
+        _border.sprite = _focusedBorderImage;
     }
 
     public void UnsetFocused()
     {
-        _border.color =  Color.gray;
+        _border.sprite = _idleBorderImage;
     }
 }

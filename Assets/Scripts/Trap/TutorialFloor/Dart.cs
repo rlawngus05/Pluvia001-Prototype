@@ -8,6 +8,10 @@ public class Dart : MonoBehaviour
     [SerializeField] private float _startTime;
     [SerializeField] private AnimationCurve _startVelocityCurve;
 
+    [Header("Sound Effects")]
+    [SerializeField] private AudioClip _shootSoundEffect;
+    [SerializeField] private AudioClip _hitSoundEffect;
+
     private Rigidbody2D _rb;
     private SpriteRenderer _spriteRenderer;
     private Action _playerHitEvent;
@@ -27,8 +31,9 @@ public class Dart : MonoBehaviour
         _isFlip = isFlip;
         _dartDestroyer = dartDetroyer;
 
-        if (_isFlip) { _spriteRenderer.flipX = true; }
+        _spriteRenderer.flipX = isFlip;
         StartCoroutine(MoveCoroutine());
+        SoundManager.Instance.PlaySoundEffectWithRandomPich(_shootSoundEffect);
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -37,6 +42,7 @@ public class Dart : MonoBehaviour
         {
             _playerHitEvent();
             Destroy(gameObject);
+            SoundManager.Instance.PlaySoundEffectWithRandomPich(_hitSoundEffect);
         }
 
         if (collision.gameObject == _dartDestroyer) { Destroy(gameObject); }

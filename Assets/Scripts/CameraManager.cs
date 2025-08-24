@@ -37,9 +37,24 @@ public class CameraManager : MonoBehaviour
         }
     }
 
+    public void SetCameraOrthoSize(float size)
+    {
+        _cinemachineVirtualCamera.m_Lens.OrthographicSize = size;
+    }
+
     public void ChangeConfiner(CompositeCollider2D confiner)
     {
         _cameraConfiner.m_BoundingShape2D = confiner;
+    }
+
+    public void ShakeCamera(float amplitude)
+    {
+        _cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = amplitude;
+    }
+
+    public void StopShakeCamera()
+    {
+        _cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = .0f;
     }
 
     //*                     
@@ -54,11 +69,11 @@ public class CameraManager : MonoBehaviour
     private IEnumerator ExectueHurtEffectCoroutine(float currentHealth, float maxHealth, float maxEffectStartHealth)
     {
         float amplitude = _minCameraShakeAmplitude + (_maxCameraShakeAmplitude - _minCameraShakeAmplitude) * ((maxHealth - Mathf.Clamp(currentHealth, maxEffectStartHealth, maxHealth)) / (maxHealth - maxEffectStartHealth));
-        _cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = amplitude;
+        ShakeCamera(amplitude);
 
         yield return new WaitForSeconds(_cameraShakeTime);
 
-        _cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = .0f;
+        StopShakeCamera();
     }
 
     //*                     
@@ -69,6 +84,8 @@ public class CameraManager : MonoBehaviour
 
     public IEnumerator ExecuteDeadEffectCoroutine()
     {
+        ChangeConfiner(null);
+        
         float originalOrthographicSize = _cinemachineVirtualCamera.m_Lens.OrthographicSize;
         float elapsed = .0f;
 

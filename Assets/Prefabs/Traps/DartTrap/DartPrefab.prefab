@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 27.1, y: 0.06, z: 0}
-  m_LocalScale: {x: 0.30038625, y: 0.28105003, z: 0.3212}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -76,15 +76,15 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1498954977
+  m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: -7831380645634570938, guid: c5fb7a16734dbdb47a4d5bd00e122e7d, type: 3}
+  m_Sprite: {fileID: 3185887201872873151, guid: fc175b2b7350d6d4fb350a0974bcd195, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 4.31, y: 1.87}
+  m_Size: {x: 0.16, y: 0.07}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -124,8 +124,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.03}
-  m_Size: {x: 4.31, y: 1.4899999}
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 1.06, y: 0.43749997}
   m_Direction: 1
 --- !u!50 &7276416058294993870
 Rigidbody2D:
@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _velocity: 3
-  _startTime: 1
+  _startTime: 4
   _startVelocityCurve:
     serializedVersion: 2
     m_Curve:
@@ -190,10 +190,10 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 1
     - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: -2.027186
-      outSlope: -2.027186
+      time: 0.06468201
+      value: 2.8885689
+      inSlope: -16.786947
+      outSlope: -16.786947
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -201,3 +201,5 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  _shootSoundEffect: {fileID: 8300000, guid: fa113174d54ed6740ae18b047187fa5e, type: 3}
+  _hitSoundEffect: {fileID: 8300000, guid: 7e1c2bafe63448c4d92c90ae91becac4, type: 3}

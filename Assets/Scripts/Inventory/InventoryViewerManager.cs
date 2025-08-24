@@ -22,6 +22,11 @@ public class InventoryViewerManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _itemContextText;
     [SerializeField] private TextMeshProUGUI _keyNotifier;
 
+    [Header("Sound Effects")]
+    [SerializeField] private AudioClip _openSoundEffect;
+    [SerializeField] private AudioClip _closeSoundEffect;
+    [SerializeField] private AudioClip _slotChangeSoundEffect;
+
     public static InventoryViewerManager Instance { get; private set; }
     private void Awake()
     {
@@ -32,106 +37,96 @@ public class InventoryViewerManager : MonoBehaviour
         }
 
         Instance = this;
-        _currentState = InventoryState.Idle;
+        _currentState = InventoryState.Closed;
 
         DontDestroyOnLoad(gameObject);
     }
 
+    private void Start() {
+        InventoryManager.Instance.SetInventoryGuiOberver(Renew);
+    }
+
     public void Open()
     {
-        InventoryManager.Instance.SetInventoryGuiOberver(Renew); //! InvetoryManager와의 초기화 순서 문제 때문에, 인벤토리를 킬 때마다, Obsever를 세팅함
-
         _Gui.SetActive(true);
-        PlayerController.Instance.SetState(PlayerState.OpenInventory);
-        PlayerInteractor.Instance.SetState(PlayerState.OpenInventory);
+        PlayerStateManager.Instance.SetState(PlayerState.Uncontrolable);
 
         Renew(InventoryManager.Instance.GetInventory());
         _focusingSlotRow = 0;
         _focusingSlotColumn = 0;
         ChangeFocusingSlot();
+
+        SetState(InventoryState.Opened);
+        SoundManager.Instance.PlaySoundEffect(_openSoundEffect);
     }
 
     public void Close()
     {
         _Gui.SetActive(false);
-        PlayerController.Instance.SetState(PlayerState.Idle);
+        PlayerStateManager.Instance.SetState(PlayerState.Idle);
+        
+        SetState(InventoryState.Closed);
+        SoundManager.Instance.PlaySoundEffect(_closeSoundEffect);
     }
 
     private void Update()
     {
-        if (_currentState == InventoryState.Idle)
+        if (_currentState == InventoryState.Opened)
         //* 이 코드는 혹같은 거임. 원래 의도는, 인벤토리 열었을 때 플레이어 못 움직이게 하는거였음. 
         //* 근데, 인벤토리 열였을 때, 움직이면 인벤토리 닫는 것으로 얘기가 나옴. 
         //* 그래서 기존의 인벤토리을 열면 플레이어를 봉쇄시키는 코드에서, 움직이면 그것이 해제 되게 만들게 해놂. 
         //* 근데 이 구조가 사실상 필요없음. ItemViewerManager 또한 이와 같은 구조가 있음
         {
-            if (_Gui.activeSelf == true)
+            if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.E))
             {
-                if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Escape))
-                {
-                    Close();
-                }
+                Close();
+            }
 
-                if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
-                {
-                    Close();
-                }
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                ItemData currentItemData = _currentSlot.GetItemData();
 
-                if (Input.GetKeyDown(KeyCode.F))
+                if (currentItemData != null)
                 {
-                    ItemData currentItemData = _currentSlot.GetItemData();
-
-                    if (currentItemData != null)
+                    if (currentItemData.IsUsable) //* 사용 가능한 아이템이면, 아이템 1회 소모함
                     {
-                        if (currentItemData.IsUsable) //* 사용 가능한 아이템이면, 아이템 1회 소모함
-                        {
-                            InventoryManager.Instance.DeleteItem(currentItemData);
-                            ChangeFocusingSlot();
-                        }
-
-                        if (currentItemData is ViewableItemData viewableItemData) //* 상세 보기 가능 아이템이면, 해당 아이템 상세 보기 엶
-                        {
-                            ItemViewerManager.Instance.Open(viewableItemData); //* ItemViewerManager와의 양방향 참조가 있음
-                        }
-                    }
-                }
-
-                if (Input.GetKeyDown(KeyCode.UpArrow))
-                {
-                    if (_focusingSlotRow > 0)
-                    {
-                        _focusingSlotRow--;
+                        InventoryManager.Instance.DeleteItem(currentItemData);
                         ChangeFocusingSlot();
                     }
-                }
 
-                if (Input.GetKeyDown(KeyCode.DownArrow))
-                {
-                    if (_focusingSlotRow < 3)
+                    if (currentItemData is ViewableItemData viewableItemData) //* 상세 보기 가능 아이템이면, 해당 아이템 상세 보기 엶
                     {
-                        _focusingSlotRow++;
-                        ChangeFocusingSlot();
+                        ItemViewerManager.Instance.Open(viewableItemData); //* ItemViewerManager와의 양방향 참조가 있음
                     }
                 }
+            }
+            
+            if (_focusingSlotRow > 0 && Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                _focusingSlotRow--;
+                ChangeFocusingSlot();
+                SoundManager.Instance.PlaySoundEffect(_slotChangeSoundEffect);
+            }
 
-                if (Input.GetKeyDown(KeyCode.LeftArrow))
-                {
-                    if (_focusingSlotColumn > 0)
-                    {
-                        _focusingSlotColumn--;
-                        ChangeFocusingSlot();
-                    }
-                }
+            if (_focusingSlotRow < 3 && Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                _focusingSlotRow++;
+                ChangeFocusingSlot();
+                SoundManager.Instance.PlaySoundEffect(_slotChangeSoundEffect);
+            }
 
-                if (Input.GetKeyDown(KeyCode.RightArrow))
-                {
-                    if (_focusingSlotColumn < 3)
-                    {
-                        _focusingSlotColumn++;
-                        ChangeFocusingSlot();
-                    }
-                }
+            if (_focusingSlotColumn > 0 && Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                _focusingSlotColumn--;
+                ChangeFocusingSlot();
+                SoundManager.Instance.PlaySoundEffect(_slotChangeSoundEffect);
+            }
 
+            if (_focusingSlotColumn < 3 && Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                _focusingSlotColumn++;
+                ChangeFocusingSlot();
+                SoundManager.Instance.PlaySoundEffect(_slotChangeSoundEffect);
             }
         }
     }
@@ -145,7 +140,19 @@ public class InventoryViewerManager : MonoBehaviour
 
         ItemData currentSlotItemData = _currentSlot.GetItemData();
 
-        _itemIcon.sprite = currentSlotItemData?.Icon;
+        Color itemIconColor = _itemIcon.color;
+        if (currentSlotItemData == null)
+        {
+            itemIconColor.a = .0f;
+            _itemIcon.color = itemIconColor;
+        }
+        else
+        {
+            itemIconColor.a = 1.0f;
+            _itemIcon.color = itemIconColor;
+            _itemIcon.sprite = currentSlotItemData?.Icon;
+        }
+
         _itemNameText.text = currentSlotItemData?.Name;
         _itemContextText.text = currentSlotItemData?.Content;
 
@@ -200,12 +207,19 @@ public class InventoryViewerManager : MonoBehaviour
 
     public void SetState(InventoryState inventoryState)
     {
+        StartCoroutine(SetStateCoroutine(inventoryState));
+    }
+
+    private IEnumerator SetStateCoroutine(InventoryState inventoryState)
+    {
+        yield return null;
         _currentState = inventoryState;
     }
 }
 
 public enum InventoryState
 {
-    Idle,
+    Closed,
+    Opened,
     OpenItemViewer
 }

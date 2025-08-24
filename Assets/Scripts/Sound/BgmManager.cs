@@ -2,18 +2,26 @@ using UnityEngine;
 
 public class BgmManager : MonoBehaviour
 {
-    private AudioSource audioSource;
+    private AudioSource _audioSource;
 
     private void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
-    public void Play(AudioClip audioClip)
+    public void Play(AudioClip audioClip, bool isLoop)
     {
-        audioSource.Stop();
+        _audioSource.loop = isLoop;
 
-        audioSource.clip = audioClip;
-        audioSource.Play();
+        _audioSource.Stop();
+
+        _audioSource.clip = audioClip;
+        _audioSource.Play();
     }
+
+    public void SetVolume(float volume) { _audioSource.volume = volume; }
+    public float GetVolume() { return _audioSource.volume; }
+
+    public void Stop() { _audioSource.Stop(); }
+    public void Pause() { _audioSource.Pause(); }
 }

@@ -19,27 +19,36 @@ public class SoundManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void PlayBgm(AudioClip audioClip) { _bgmManager.Play(audioClip); }
+    public void PlayBgm(AudioClip audioClip, bool isLoop = true) { _bgmManager.Play(audioClip, isLoop); }
+    public void StopBgm() { _bgmManager.Stop(); }
+    public void PauseBgm() { _bgmManager.Pause(); }
+
     public void PlaySoundEffect(AudioClip audioClip) { _soundEffectManager.Play(audioClip); }
     public void PlaySoundEffectWithRandomPich(AudioClip audioClip) { _soundEffectManager.PlayWithRandomPitch(audioClip); }
 
+    public void SetBgmVolume(float volume) { _bgmManager.SetVolume(volume); }
+    public void SetSoundEffectVolume(float volume) { _soundEffectManager.SetVolume(volume); }
+
+    public float GetBgmVolume() { return _bgmManager.GetVolume(); }
+    public float GetSoundEffectVolume() { return _soundEffectManager.GetVolume(); }
+
     //! Test
-    [SerializeField] private AudioClip _testBgm;
-    [SerializeField] private AudioClip _testSoundEffect;
-    [SerializeField] private AudioClip _testSoundEffectWithRandomPitch;
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            PlayBgm(_testBgm);
-        }
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            PlaySoundEffect(_testSoundEffect);
-        }
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            PlaySoundEffectWithRandomPich(_testSoundEffectWithRandomPitch);
-        }
-    }
+    // [SerializeField] private AudioClip _testBgm;
+    // [SerializeField] private AudioClip _testSoundEffect;
+    // [SerializeField] private AudioClip _testSoundEffectWithRandomPitch;
+    // public void Update()
+    // {
+    //     if (Input.GetKeyDown(KeyCode.Z))
+    //     {
+    //         PlayBgm(_testBgm);
+    //     }
+    //     if (Input.GetKeyDown(KeyCode.X))
+    //     {
+    //         PlaySoundEffect(_testSoundEffect);
+    //     }
+    //     if (Input.GetKeyDown(KeyCode.C))
+    //     {
+    //         PlaySoundEffectWithRandomPich(_testSoundEffectWithRandomPitch);
+    //     }
+    // }
 }

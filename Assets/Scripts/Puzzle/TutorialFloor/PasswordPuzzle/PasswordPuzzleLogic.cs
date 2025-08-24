@@ -9,12 +9,19 @@ public class PasswordPuzzleLogic : PuzzleLogic
     [SerializeField] private int[] _answerDigits;
     [SerializeField] private int[] _inputDigits;
     [SerializeField] private int _remainChance;
-    [SerializeField] private TextMeshProUGUI _answerCipherText;
 
-    private List<Action<int>> _digitNumberChangeObervers;
+    [Header("Sound Effects")]
+    [SerializeField] private AudioClip _dialSoundEffect;
+    [SerializeField] private AudioClip _successSoundEffect;
+    [SerializeField] private AudioClip _wrongSoundEffect;
+    [SerializeField] private AudioClip _failSoundEffect;
+
+    private List<Action<int, int>> _digitNumberChangeObervers;
     private List<Action<DigitState>> _digitStateChangeObservers;
     private Action<int> _remainChanceObserver;
+    private Action _wrongObserver;
     private Action _failObserver;
+
 
     protected override void Awake()
     {
@@ -23,7 +30,7 @@ public class PasswordPuzzleLogic : PuzzleLogic
         _answerDigits = new int[4];
         _inputDigits = new int[4];
 
-        _digitNumberChangeObervers = new List<Action<int>>();
+        _digitNumberChangeObervers = new List<Action<int, int>>();
         _digitStateChangeObservers = new List<Action<DigitState>>();
     }
 
@@ -37,7 +44,7 @@ public class PasswordPuzzleLogic : PuzzleLogic
         {
             _inputDigits[i] = 0;
 
-            _digitNumberChangeObervers[i](_inputDigits[i]);
+            _digitNumberChangeObervers[i](_inputDigits[i], _inputDigits[i]);
         }
 
         for (int i = 0; i < _answerDigits.Length; i++)
@@ -91,7 +98,8 @@ public class PasswordPuzzleLogic : PuzzleLogic
         //* 정답이 틀리면, 기회를 1회 줄이고, 만약 기회 모두 소진 상황시, 퍼즐 초기화
         if (isCorrect)
         {
-            Debug.Log("헤으응~♥ 가버렸..!!"); //! Test
+            // Debug.Log("헤으응~♥ 가버렸..!!"); //! Test
+            SoundManager.Instance.PlaySoundEffect(_successSoundEffect);
             OnSolved();
         }
         else
@@ -99,13 +107,18 @@ public class PasswordPuzzleLogic : PuzzleLogic
             _remainChanceObserver(--_remainChance);
             if (_remainChance == 0)
             {
-                Debug.Log("ㅋ 다시 처음 부터해"); //! Test
+                // Debug.Log("ㅋ 다시 처음 부터해"); //! Test
+                SoundManager.Instance.PlaySoundEffect(_failSoundEffect);
+
                 _failObserver();
                 Initiate();
             }
             else
             {
-                Debug.Log("허접~ 그것 밖에 안돼? ㅋ"); //! Test
+                SoundManager.Instance.PlaySoundEffect(_wrongSoundEffect);
+                
+                _wrongObserver();
+                // Debug.Log("허접~ 그것 밖에 안돼? ㅋ"); //! Test
             }
         }
 
@@ -114,17 +127,24 @@ public class PasswordPuzzleLogic : PuzzleLogic
 
     public void UpNumber(int index)
     {
-        if (_inputDigits[index] < 9) { _digitNumberChangeObervers[index](++_inputDigits[index]); }
+        if (_inputDigits[index] < 9) { 
+            _digitNumberChangeObervers[index](_inputDigits[index], ++_inputDigits[index]);
+            SoundManager.Instance.PlaySoundEffect(_dialSoundEffect);
+        }
     }
 
     public void DownNumber(int index)
     {
-        if (_inputDigits[index] > 0) { _digitNumberChangeObervers[index](--_inputDigits[index]); }
+        if (_inputDigits[index] > 0) { 
+            _digitNumberChangeObervers[index](_inputDigits[index], --_inputDigits[index]);
+            SoundManager.Instance.PlaySoundEffect(_dialSoundEffect);
+        }
     }
 
-    public void AddInputNumberChangeObserver(Action<int> observerEvent) { _digitNumberChangeObervers.Add(observerEvent); }
+    public void AddInputNumberChangeObserver(Action<int, int> observerEvent) { _digitNumberChangeObervers.Add(observerEvent); }
     public void AddDigitStateChangeObserver(Action<DigitState> observerEvent) { _digitStateChangeObservers.Add(observerEvent); }
     public void SetRemainChanceOberver(Action<int> oberverEvent) { _remainChanceObserver = oberverEvent; }
+    public void SetWrongObserver(Action observerEvent) { _wrongObserver = observerEvent; }
     public void SetFailObserver(Action observerEvent) { _failObserver = observerEvent; }
 }
 

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29211c3992c49ef43a9abbf4eefb4ef2, type: 3}
+  m_Name: Yuri
+  m_EditorClassIdentifier: 
+  _name: "\uC720\uB9AC"
+  _portraits:
+  - _type: 0
+    _sprite: {fileID: 4460481505745457952, guid: 605189b18164b394a8a0a5542ab7e3ac, type: 3}
+  - _type: 1
+    _sprite: {fileID: -1772722909, guid: 605189b18164b394a8a0a5542ab7e3ac, type: 3}
+  - _type: 2
+    _sprite: {fileID: -1348440067, guid: 605189b18164b394a8a0a5542ab7e3ac, type: 3}
+  - _type: 3
+    _sprite: {fileID: -1917098337, guid: 605189b18164b394a8a0a5542ab7e3ac, type: 3}
+  _typeSoundEffect: {fileID: 8300000, guid: 209a342efd335a04b9dc381b8bc33cd1, type: 3}

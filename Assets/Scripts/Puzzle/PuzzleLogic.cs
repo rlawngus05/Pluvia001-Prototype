@@ -24,8 +24,6 @@ abstract public class PuzzleLogic : MonoBehaviour, IPuzzleObject
         onSolvedEvents.Invoke();
 
         isSolved = true;
-
-        EtherManager.Instance.AddEtherCount();
     }
     
     public void AddOnSolvedEvent(UnityAction action){
