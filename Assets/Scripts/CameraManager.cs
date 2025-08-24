@@ -84,6 +84,8 @@ public class CameraManager : MonoBehaviour
 
     public IEnumerator ExecuteDeadEffectCoroutine()
     {
+        ChangeConfiner(null);
+        
         float originalOrthographicSize = _cinemachineVirtualCamera.m_Lens.OrthographicSize;
         float elapsed = .0f;
 
