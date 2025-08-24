@@ -1,16 +1,10 @@
 fileFormatVersion: 2
-guid: bffeeacf766a0664db8314f89848f16d
+guid: 1b0ed1327987313488d7f85357f572c5
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8717617191567071205
-    second: SliderSheet_0
-  - first:
-      213: -5709683646638982638
-    second: SliderSheet_1
-  - first:
-      213: 5811873334619770386
-    second: SliderSheet_2
+      213: 2868539044483428322
+    second: wall_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -57,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -102,110 +96,31 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: iOS
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SliderSheet_0
+      name: wall_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 44
-        width: 160
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: b186ec82a5dc40780800000000000000
-      internalID: -8717617191567071205
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SliderSheet_1
-      rect:
-        serializedVersion: 2
-        x: 1
-        y: 26
-        width: 158
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 21af93e79f023c0b0800000000000000
-      internalID: -5709683646638982638
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SliderSheet_2
-      rect:
-        serializedVersion: 2
-        x: 6
         y: 0
-        width: 9
-        height: 20
+        width: 16
+        height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
-      physicsShape: []
-      tessellationDetail: -1
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: 8, y: 8}
+        - {x: -8, y: 8}
+      tessellationDetail: 0
       bones: []
-      spriteID: 21e8395510ce7a050800000000000000
-      internalID: 5811873334619770386
+      spriteID: 2efe5c210191fc720800000000000000
+      internalID: 2868539044483428322
       vertices: []
       indices: 
       edges: []
@@ -214,7 +129,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 36cebea5db100ed429549384422525ad
     internalID: 0
     vertices: []
     indices: 
@@ -224,9 +139,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      SliderSheet_0: -8717617191567071205
-      SliderSheet_1: -5709683646638982638
-      SliderSheet_2: 5811873334619770386
+      wall_0: 2868539044483428322
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

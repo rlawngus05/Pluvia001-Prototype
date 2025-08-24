@@ -38,7 +38,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _CellDensity: 3.69
-    - _CoverSize: 1.77
+    - _CoverSize: 1.6642857
     - _Fullscreen_AlphaBlendOperation: 0
     - _Fullscreen_BlendMode: 1
     - _Fullscreen_ColorBlendOperation: 0
@@ -48,7 +48,7 @@ Material:
     - _Fullscreen_SrcAlphaBlend: 1
     - _Fullscreen_SrcColorBlend: 5
     - _GradientValue: 8
-    - _OverallAlpha: 0
+    - _OverallAlpha: 0.0031229854
     - _TransparentRadius: 1.86
     - _VisibleRadius: 1.63
     m_Colors:
