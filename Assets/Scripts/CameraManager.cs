@@ -37,6 +37,11 @@ public class CameraManager : MonoBehaviour
         }
     }
 
+    public void SetCameraOrthoSize(float size)
+    {
+        _cinemachineVirtualCamera.m_Lens.OrthographicSize = size;
+    }
+
     public void ChangeConfiner(CompositeCollider2D confiner)
     {
         _cameraConfiner.m_BoundingShape2D = confiner;
@@ -79,6 +84,8 @@ public class CameraManager : MonoBehaviour
 
     public IEnumerator ExecuteDeadEffectCoroutine()
     {
+        ChangeConfiner(null);
+        
         float originalOrthographicSize = _cinemachineVirtualCamera.m_Lens.OrthographicSize;
         float elapsed = .0f;
 
