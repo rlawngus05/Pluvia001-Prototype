@@ -23257,6 +23257,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Passage
       objectReference: {fileID: 0}
+    - target: {fileID: 7003549160521733603, guid: d9f161a95d1e32a46abe9bf07948c8ae, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: dd5d4ad83bf41db40831f3861d750af5, type: 2}
     - target: {fileID: 7475784570435026285, guid: d9f161a95d1e32a46abe9bf07948c8ae, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.43

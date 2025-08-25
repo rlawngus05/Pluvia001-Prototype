@@ -7,8 +7,7 @@ using UnityEngineInternal;
 
 public class CutSceneTextLineManager : MonoBehaviour
 {
-    [SerializeField] private string _originalText;
-    [SerializeField] private TextMeshProUGUI _textMesh;
+    private TextMeshProUGUI _textMesh;
 
     private List<Coroutine> _coroutines;
     private CutSceneTextLineParser _parser;
@@ -17,6 +16,9 @@ public class CutSceneTextLineManager : MonoBehaviour
     private List<EffectTag> _effectTags;
     private Queue<Tag> _remainNonEffectTags;
     private Stack<Tag> _tagStack;
+    private Stack<TypeIntervalTag> _typeIntervalTagStack;
+    private Coroutine _typeCoroutine;
+    private Action _onTypingEnd;
 
     [SerializeField] private float jiterringPower;
     [SerializeField] private float characterInterval = 0.2f; // 위상 차이
@@ -29,25 +31,35 @@ public class CutSceneTextLineManager : MonoBehaviour
         _coroutines = new List<Coroutine>(); // ✅ 초기화
         _remainNonEffectTags = new Queue<Tag>();
         _tagStack = new Stack<Tag>();
-
-        ExecuteLine(_originalText);
+        _typeIntervalTagStack = new Stack<TypeIntervalTag>();
     }
 
     private void Update() {
         _textMesh?.ForceMeshUpdate(); // 항상 최신화
     }
 
-    public void ExecuteLine(string script)
+    public Coroutine ExecuteLine(string script, TextMeshProUGUI textMeshPro, Action onTypingEnd)
     {
+        foreach (Coroutine coroutine in _coroutines)
+        {
+            StopCoroutine(coroutine);
+        }
+        _onTypingEnd = onTypingEnd;
+        _typeIntervalTagStack?.Clear();
+        _tagStack?.Clear();
+        _effectTags?.Clear();
+        _remainNonEffectTags?.Clear();
+
+        _textMesh = textMeshPro;
+
         (string plainText, List<EffectTag> effectTags, List<Tag> nonEffectTags) parseResult = _parser.Parse(script);
 
         _plainText = parseResult.plainText;
         _effectTags = parseResult.effectTags;
         _remainNonEffectTags = new Queue<Tag>(parseResult.nonEffectTags);
-
+        
         _textMesh.text = _plainText;
         _textMesh.ForceMeshUpdate();
-        Debug.Log(_textMesh.textInfo.characterCount);
 
         TMP_TextInfo textInfo = _textMesh.textInfo;
 
@@ -56,10 +68,9 @@ public class CutSceneTextLineManager : MonoBehaviour
         _textMesh.ForceMeshUpdate();
 
         ApplyEffectTag();
-        StartCoroutine(ApplyTyping());
+        return _typeCoroutine = StartCoroutine(ApplyTyping());
     }
 
-    private Stack<TypeIntervalTag> typeIntervalTagStack = new Stack<TypeIntervalTag>();
     private IEnumerator ApplyTyping()
     {
         float currentTypeInterval = defaultTypeInterval;
@@ -74,11 +85,11 @@ public class CutSceneTextLineManager : MonoBehaviour
                 {
                     if (stateTag is TypeIntervalTag)
                     {
-                        if (typeIntervalTagStack.Count != 0)
+                        if (_typeIntervalTagStack.Count != 0)
                         {
-                            typeIntervalTagStack.Pop();
+                            _typeIntervalTagStack.Pop();
 
-                            currentTypeInterval = typeIntervalTagStack.Count == 0 ? defaultTypeInterval : typeIntervalTagStack.Peek().Interval;
+                            currentTypeInterval = _typeIntervalTagStack.Count == 0 ? defaultTypeInterval : _typeIntervalTagStack.Peek().Interval;
                         }
                     }
 
@@ -106,7 +117,7 @@ public class CutSceneTextLineManager : MonoBehaviour
                             currentTypeInterval = typeIntervalTag.Interval;
 
                             _tagStack.Push(typeIntervalTag);
-                            typeIntervalTagStack.Push(typeIntervalTag);
+                            _typeIntervalTagStack.Push(typeIntervalTag);
                         }
                         _remainNonEffectTags.Dequeue();
                     }
@@ -116,9 +127,19 @@ public class CutSceneTextLineManager : MonoBehaviour
             yield return new WaitForSeconds(currentTypeInterval);
             _textMesh.maxVisibleCharacters = i + 1;
         }
+
+        _onTypingEnd();
     }
 
-    private IEnumerator ExecuteActionTag(ActionTag actionTag) {
+    public void SkipTyping()
+    {
+        StopCoroutine(_typeCoroutine);
+        _onTypingEnd();
+        _textMesh.maxVisibleCharacters = _textMesh.textInfo.characterCount;
+    }
+    
+    private IEnumerator ExecuteActionTag(ActionTag actionTag)
+    {
         if (actionTag is WaitTag waitTag)
         {
             yield return new WaitForSeconds(waitTag.Duration);
