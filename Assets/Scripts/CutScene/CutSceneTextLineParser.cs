@@ -104,15 +104,22 @@ public class CutSceneTextLineParser
         Dictionary<string, string> attributes = new Dictionary<string, string>();
         if (!isClosingTag)
         {
-            for (int i = 1; i < splitedTag.Length; i++)
+            try
             {
-                string attribute = splitedTag[i];
-                string[] splited = attribute.Split('=');
+                for (int i = 1; i < splitedTag.Length; i++)
+                {
+                    string attribute = splitedTag[i];
+                    string[] splited = attribute.Split('=');
 
-                string attributeName = splited[0].ToLower();
-                string attributeValue = splited[1];
+                    string attributeName = splited[0].ToLower();
+                    string attributeValue = splited[1];
 
-                attributes.Add(attributeName, attributeValue);
+                    attributes.Add(attributeName, attributeValue);
+                }
+            }
+            catch
+            {
+                throw new Exception("The format of the tag attributes is invalid. You should link the attribute name and value with an '=' sign, without any spaces.");
             }
         }
 
@@ -209,9 +216,9 @@ public class CutSceneTextLineParser
                     }
                     break;
 
-                default: //* 유효하지 않은 태그명이면 일반 텍스트로 삽입함
+                default: //* 유효하지 않은 태그명 TextMeshPro의 Tag로 처리함
                     _plainText += tag;
-                    currentIndex += tag.Length;
+                    // currentIndex += tag.Length;
                     break;
             }
         }

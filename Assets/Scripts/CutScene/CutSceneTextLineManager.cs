@@ -47,6 +47,7 @@ public class CutSceneTextLineManager : MonoBehaviour
 
         _textMesh.text = _plainText;
         _textMesh.ForceMeshUpdate();
+        Debug.Log(_textMesh.textInfo.characterCount);
 
         TMP_TextInfo textInfo = _textMesh.textInfo;
 
@@ -63,7 +64,7 @@ public class CutSceneTextLineManager : MonoBehaviour
     {
         float currentTypeInterval = defaultTypeInterval;
 
-        for (int i = 0; i < _textMesh.text.Length; i++)
+        for (int i = 0; i < _textMesh.textInfo.characterCount; i++)
         {
             if (_tagStack.Count != 0)
             {
