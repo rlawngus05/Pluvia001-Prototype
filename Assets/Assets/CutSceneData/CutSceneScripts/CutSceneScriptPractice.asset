@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lines:
   - rid: 7990673300134822065
+  - rid: 7990673849665716379
+  - rid: 7990673849665716382
   - rid: 7990673413000134734
   - rid: 7990673300134822110
   - rid: 7990673300134822059
@@ -102,3 +104,23 @@ MonoBehaviour:
       data:
         _lineId: 
         _timelinePrefab: {fileID: 3746025597967007858, guid: b3c6c2537370c684caa6b23d2eda0249, type: 3}
+    - rid: 7990673849665716379
+      type: {class: CharacterLine, ns: , asm: Assembly-CSharp}
+      data:
+        _lineId: 
+        _actor: {fileID: 11400000, guid: 256e5da497924934f91ce6a5e97ddd33, type: 2}
+        _emotion: 0
+        _content: "<Effect type=jittering><i>\uAE30\uBCF8\uAC12 \uD14C\uC2A4\uD2B8</i></Effect>
+          <Effect type=jittering power=7>\uAC15\uD55C \uD754\uB4E4\uB9BC</Effect>
+          <Effect type=jittering power=0.5>\uC57D\uD55C \uD754\uB4E4\uB9BC</Effect> "
+    - rid: 7990673849665716382
+      type: {class: CharacterLine, ns: , asm: Assembly-CSharp}
+      data:
+        _lineId: 
+        _actor: {fileID: 11400000, guid: 256e5da497924934f91ce6a5e97ddd33, type: 2}
+        _emotion: 0
+        _content: "<Effect type=waving>\uAE30\uBCF8\uAC12 \uD14C\uC2A4\uD2B8</Effect>
+          <Effect type=waving waveHeight=5>\uB192\uC740 \uBB3C\uACB0</Effect> <Effect
+          type=waving phaseOffset=0.25>\uC704\uC0C1\uCC28\uB9CC \uBCC0\uACBD</Effect>
+          <Effect type=waving waveHeight=10 phaseOffset=0.1>\uB450 \uC18D\uC131 \uBAA8\uB450
+          \uBCC0\uACBD</Effect> "

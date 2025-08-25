@@ -20,15 +20,15 @@ public class CutSceneTextLineManager : MonoBehaviour
     private Coroutine _typeCoroutine;
     private Action _onTypingEnd;
 
-    [SerializeField] private float jiterringPower;
-    [SerializeField] private float characterInterval = 0.2f; // 위상 차이
-    [SerializeField] private float maxHeight = 5f;          // 파도 높이
+    [SerializeField] private float defaultJiterringPower;
+    [SerializeField] private float defaultWavePhasOffset;
+    [SerializeField] private float defaultWaveHeight;
     [SerializeField] private float defaultTypeInterval;
 
     private void Awake()
     {
-        _parser = new CutSceneTextLineParser();
-        _coroutines = new List<Coroutine>(); // ✅ 초기화
+        _coroutines = new List<Coroutine>();
+        _parser = new CutSceneTextLineParser(defaultJiterringPower, defaultWaveHeight, defaultWavePhasOffset);
         _remainNonEffectTags = new Queue<Tag>();
         _tagStack = new Stack<Tag>();
         _typeIntervalTagStack = new Stack<TypeIntervalTag>();
@@ -42,8 +42,11 @@ public class CutSceneTextLineManager : MonoBehaviour
     {
         foreach (Coroutine coroutine in _coroutines)
         {
+            if (coroutine == null) { continue; }
             StopCoroutine(coroutine);
         }
+
+        _coroutines.Clear();
         _onTypingEnd = onTypingEnd;
         _typeIntervalTagStack?.Clear();
         _tagStack?.Clear();
@@ -53,11 +56,10 @@ public class CutSceneTextLineManager : MonoBehaviour
         _textMesh = textMeshPro;
 
         (string plainText, List<EffectTag> effectTags, List<Tag> nonEffectTags) parseResult = _parser.Parse(script);
-
         _plainText = parseResult.plainText;
         _effectTags = parseResult.effectTags;
         _remainNonEffectTags = new Queue<Tag>(parseResult.nonEffectTags);
-        
+
         _textMesh.text = _plainText;
         _textMesh.ForceMeshUpdate();
 
@@ -66,7 +68,6 @@ public class CutSceneTextLineManager : MonoBehaviour
         _textMesh.maxVisibleCharacters = 0;
 
         _textMesh.ForceMeshUpdate();
-
         ApplyEffectTag();
         return _typeCoroutine = StartCoroutine(ApplyTyping());
     }
@@ -153,18 +154,21 @@ public class CutSceneTextLineManager : MonoBehaviour
             switch (effectTag.Type)
             {
                 case EffectType.Jittering:
-                    _coroutines.Add(StartCoroutine(Jittering(effectTag.StartIndex, effectTag.EndIndex)));
+                    _coroutines.Add(StartCoroutine(Jittering((JitteringEffectTag)effectTag)));
                     break;
                 case EffectType.Waving:
-                    _coroutines.Add(StartCoroutine(Waving(effectTag.StartIndex, effectTag.EndIndex)));
+                    _coroutines.Add(StartCoroutine(Waving((WavingEffectTag)effectTag)));
                     break;
             }
         }
     }
 
-    private IEnumerator Jittering(int startIndex, int endIndex)
+    private IEnumerator Jittering(JitteringEffectTag tag)
     {
         TMP_TextInfo textInfo = _textMesh.textInfo;
+        int startIndex = tag.StartIndex;
+        int endIndex = tag.EndIndex;
+        float power = tag.Power;
 
         while (true)
         {
@@ -176,7 +180,7 @@ public class CutSceneTextLineManager : MonoBehaviour
                 if (!charInfo.isVisible) continue;
 
                 int vertexIndex = charInfo.vertexIndex;
-                Vector2 jitterValue = SimpleJitter(jiterringPower);
+                Vector2 jitterValue = SimpleJitter(power);
 
                 for (int j = 0; j < 4; j++)
                 {
@@ -192,9 +196,14 @@ public class CutSceneTextLineManager : MonoBehaviour
         }
     }
 
-    private IEnumerator Waving(int startIndex, int endIndex)
+    private IEnumerator Waving(WavingEffectTag tag)
     {
         TMP_TextInfo textInfo = _textMesh.textInfo;
+        int startIndex = tag.StartIndex;
+        int endIndex = tag.EndIndex;
+        float waveHeight = tag.WaveHeight;
+        float phaseOffset = tag.PhaseOffset;
+
         float elapsed = 0f;
 
         while (true)
@@ -207,7 +216,7 @@ public class CutSceneTextLineManager : MonoBehaviour
                 if (!charInfo.isVisible) continue;
 
                 int vertexIndex = charInfo.vertexIndex;
-                float yOffset = Mathf.Sin((elapsed + i * characterInterval) * 2f * Mathf.PI) * maxHeight;
+                float yOffset = Mathf.Sin((elapsed + i * phaseOffset) * 2f * Mathf.PI) * waveHeight;
 
                 for (int j = 0; j < 4; j++)
                 {

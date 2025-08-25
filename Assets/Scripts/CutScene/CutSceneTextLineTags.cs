@@ -40,7 +40,7 @@ public class TypeIntervalTag : StateTag
     }
 }
 
-public class EffectTag : StateTag
+public abstract class EffectTag : StateTag
 {
     private EffectType _type;
     public EffectType Type => _type;
@@ -48,6 +48,32 @@ public class EffectTag : StateTag
     public EffectTag(int startIndex, EffectType type) : base(startIndex)
     {
         _type = type;
+    }
+}
+
+public class JitteringEffectTag : EffectTag
+{
+    private float _power;
+    public float Power => _power;
+
+    public JitteringEffectTag(int startIndex, float power) : base(startIndex, EffectType.Jittering)
+    {
+        _power = power;
+    }
+}
+
+public class WavingEffectTag : EffectTag
+{
+    private float _waveHeight;
+    public float WaveHeight => _waveHeight;
+
+    private float _phaseOffset;
+    public float PhaseOffset => _phaseOffset;
+
+    public WavingEffectTag(int startIndex, float waveHeight, float phaseOffset) : base(startIndex, EffectType.Waving)
+    {
+        _waveHeight = waveHeight;
+        _phaseOffset = phaseOffset;
     }
 }
 

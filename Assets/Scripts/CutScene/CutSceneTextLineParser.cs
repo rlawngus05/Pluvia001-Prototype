@@ -11,8 +11,16 @@ public class CutSceneTextLineParser
     private List<EffectTag> _effectTags;
     private List<Tag> _nonEffectTags;
 
-    public CutSceneTextLineParser()
+    private float _defaultJitteringPower;
+    private float _defaultWavingHeight;
+    private float _defaultWavingPhaseOffset;
+
+    public CutSceneTextLineParser(float defaultJitteringPower, float defaultWavingHeight, float defaultWavingPhaseOffset)
     {
+        _defaultJitteringPower = defaultJitteringPower;
+        _defaultWavingHeight = defaultWavingHeight;
+        _defaultWavingPhaseOffset = defaultWavingPhaseOffset;
+
         _effectTags = new List<EffectTag>();
         _nonEffectTags = new List<Tag>();
     }
@@ -60,7 +68,7 @@ public class CutSceneTextLineParser
         foreach (Match match in matches)
         {
             string value = match.Value;
-            if (string.IsNullOrEmpty(value.Trim())) continue;
+            // if (string.IsNullOrEmpty(value.Trim())) continue;
 
             if (value.StartsWith("<") && value.EndsWith(">"))
             {
@@ -200,7 +208,25 @@ public class CutSceneTextLineParser
                         try
                         {
                             effectType = (EffectType)Enum.Parse(typeof(EffectType), attributes["type"], true);
-                            effectTag = new EffectTag(currentIndex, effectType);
+                            switch (effectType)
+                            {
+                                case EffectType.Waving:
+                                    float waveHeight = attributes.ContainsKey("waveheight") ? float.Parse(attributes["waveheight"]) : _defaultWavingHeight;
+                                    float phaseOffset = attributes.ContainsKey("phaseoffset") ? float.Parse(attributes["phaseoffset"]) : _defaultWavingPhaseOffset;
+                                    effectTag = new WavingEffectTag(currentIndex, waveHeight, phaseOffset);
+
+                                    _effectTags.Add(effectTag);
+                                    tagStack.Push(effectTag);
+                                    break;
+
+                                case EffectType.Jittering:
+                                    float power = attributes.ContainsKey("power") ? float.Parse(attributes["power"]) : _defaultJitteringPower;
+
+                                    effectTag = new JitteringEffectTag(currentIndex, power);
+                                    _effectTags.Add(effectTag);
+                                    tagStack.Push(effectTag);
+                                    break;
+                            }
                         }
                         catch (KeyNotFoundException)
                         {
@@ -210,9 +236,6 @@ public class CutSceneTextLineParser
                         {
                             throw new Exception($"There is no type for '{attributes["type"]}'");
                         }
-
-                        _effectTags.Add(effectTag);
-                        tagStack.Push(effectTag);
                     }
                     break;
 

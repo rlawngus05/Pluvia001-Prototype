@@ -9,8 +9,12 @@ public class CutSceneActivator : MonoBehaviour
     void Awake()
     {
         _hasActivated = false;
-        Activate(); //! Test
-    }
+    }  
+    
+    // private void Start()
+    // {
+    //     Activate(); //! Test
+    // }
 
     public void Activate()
     {
