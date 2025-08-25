@@ -930,7 +930,6 @@ MonoBehaviour:
   _isInteractable: 0
   _priority: 0
   _destinationPoint: {fileID: 1150826469}
-  _destinationArea: {fileID: 71129579}
   _destinationCameraConfiner: {fileID: 1048505358}
 --- !u!212 &585852185
 SpriteRenderer:
@@ -2381,7 +2380,7 @@ MonoBehaviour:
   _interactSoundEffect: {fileID: 0}
   _isInteractable: 0
   _priority: 0
-  itemData: {fileID: 11400000, guid: 6af3d1d5a29ad8742b90a374c1d69318, type: 2}
+  itemData: {fileID: 11400000, guid: a9faf7e0f123c464db5be0b518fa27c5, type: 2}
 --- !u!61 &1957746204
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2470,7 +2469,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1813242573
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 4999170882276815587, guid: 7fcd452e0aa2c944cb1461c3b65f1a9c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2768,9 +2767,9 @@ Transform:
   m_GameObject: {fileID: 2130807054}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.984, y: -0.737, z: 0}
-  m_LocalScale: {x: 4.6418576, y: 4.6418576, z: 4.6418576}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: -4.984, y: -0.937, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 71129578}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2791,7 +2790,6 @@ MonoBehaviour:
   _isInteractable: 0
   _priority: 0
   _destinationPoint: {fileID: 1296319827}
-  _destinationArea: {fileID: 2096157339}
   _destinationCameraConfiner: {fileID: 665331648}
 --- !u!212 &2130807057
 SpriteRenderer:
@@ -2886,13 +2884,13 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.421875, y: 0.725}
+    oldSize: {x: 1.6875, y: 2.9}
     newSize: {x: 1.22, y: 2.22}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.421875, y: 0.725}
+  m_Size: {x: 1.6875, y: 2.9}
   m_EdgeRadius: 0
 --- !u!1001 &357330712694555439
 PrefabInstance:

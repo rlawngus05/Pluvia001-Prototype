@@ -119,7 +119,7 @@ public class CutSceneTextLineParser
             }
             catch
             {
-                throw new Exception("The format of the tag attributes is invalid. You should link the attribute name and value with an '=' sign, without any spaces.");
+                throw new Exception("The format of the tag attributes is invalid. Maybe you should link the attribute name and value with an '=' sign, without any spaces.");
             }
         }
 

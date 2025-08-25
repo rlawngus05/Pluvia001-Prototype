@@ -88,9 +88,10 @@ public class InventoryViewerManager : MonoBehaviour
 
                 if (currentItemData != null)
                 {
-                    if (currentItemData.IsUsable) //* 사용 가능한 아이템이면, 아이템 1회 소모함
+                    if (currentItemData is UsableItemData usableItemData) //* 사용 가능한 아이템이면, 아이템 1회 소모함
                     {
-                        InventoryManager.Instance.DeleteItem(currentItemData);
+                        usableItemData.Use();
+                        InventoryManager.Instance.DeleteItem(usableItemData);
                         ChangeFocusingSlot();
                     }
 
@@ -159,7 +160,7 @@ public class InventoryViewerManager : MonoBehaviour
         _keyNotifier.gameObject.SetActive(true);
         if (currentSlotItemData != null)
         {
-            if (currentSlotItemData.IsUsable)
+            if (currentSlotItemData is UsableItemData)
             {
                 _keyNotifier.text = "F키를 눌러서 아이템 사용하기";
             }
