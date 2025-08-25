@@ -10245,6 +10245,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: TrapRoom
       objectReference: {fileID: 0}
+    - target: {fileID: 7003549160521733603, guid: d9f161a95d1e32a46abe9bf07948c8ae, type: 3}
+      propertyPath: m_BodyType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7003549160521733603, guid: d9f161a95d1e32a46abe9bf07948c8ae, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9200925775097895921, guid: d9f161a95d1e32a46abe9bf07948c8ae, type: 3}
       propertyPath: m_LocalPosition.x
       value: -16.43
@@ -11403,7 +11411,7 @@ Transform:
   m_GameObject: {fileID: 1309277552}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.07, y: -2.503, z: 0}
+  m_LocalPosition: {x: 2.05, y: -2.503, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
