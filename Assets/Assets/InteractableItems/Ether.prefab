@@ -77,7 +77,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -919633065
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 6d6cad4e28613394bb8e6de187abc583, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -138,7 +138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa353b5dd845fce4f9f7bce1acc77de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactableEffectMaterial: {fileID: 2100000, guid: 571b4625bcc76924cb345eb73e78aba3, type: 2}
+  _interactableEffectMaterial: {fileID: 2100000, guid: abc3e4b2f8898544aac2991f40593e4a, type: 2}
   _interactSoundEffect: {fileID: 8300000, guid: e17d18b865725af41ada4455f0d2c6c1, type: 3}
   _isInteractable: 0
   _priority: 0

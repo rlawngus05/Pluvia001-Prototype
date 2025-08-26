@@ -30,12 +30,13 @@ MonoBehaviour:
       type: {class: SystemLine, ns: , asm: Assembly-CSharp}
       data:
         _lineId: 
-        _content: "\uC5D0\uD14C\uB974\uB294 \uC720\uB9AC\uC758 \uBAB8\uC5D0 \uD761\uC218\uB418\uC5B4
-          \uC800\uC7A5\uB429\uB2C8\uB2E4."
+        _content: "<color=#E4FF6F><Effect type=waving phaseOffset=0.1 waveHeight=1>\uC5D0\uD14C\uB974</Effect></color>\uB294
+          \uC720\uB9AC\uC758 \uBAB8\uC5D0 \uD761\uC218\uB418\uC5B4 \uC800\uC7A5\uB429\uB2C8\uB2E4."
     - rid: 7990673733982355578
       type: {class: SystemLine, ns: , asm: Assembly-CSharp}
       data:
         _lineId: 
-        _content: "\uB2E8, \uC5D0\uD14C\uB974 3\uAC1C\uAC00 \uD761\uC218\uAC00 \uB418\uBA74
-          \uC720\uB9AC\uC758 \uBAB8\uC5D0 \uBD80\uB2F4\uC774 \uAC00\uAC8C\uB418\uC5B4
-          \uCCB4\uB825\uC774 \uC870\uAE08\uC529 \uC904\uC5B4\uB4ED\uB2C8\uB2E4."
+        _content: "\uB2E8, <color=#E4FF6F><Effect type=waving phaseOffset=0.1 waveHeight=1>\uC5D0\uD14C\uB974</Effect></color>
+          3\uAC1C\uAC00 \uD761\uC218\uAC00 \uB418\uBA74 \uC720\uB9AC\uC758 \uBAB8\uC5D0
+          \uBD80\uB2F4\uC774 \uAC00\uAC8C\uB418\uC5B4 \uCCB4\uB825\uC774 \uC870\uAE08\uC529
+          \uC904\uC5B4\uB4ED\uB2C8\uB2E4."

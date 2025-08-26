@@ -4,7 +4,10 @@ public class CutSceneActivator : MonoBehaviour
 {
     [SerializeField] private CutSceneScript _cutSceneScript;
     [SerializeField] private bool _isRepeatable;
+    public bool IsRepeatable => _isRepeatable;
+
     private bool _hasActivated;
+    public bool HasActivated => _hasActivated;
 
     void Awake()
     {

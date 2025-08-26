@@ -39,8 +39,9 @@ MonoBehaviour:
       data:
         _lineId: 
         _content: "\uD0C8\uCD9C\uD558\uAE30 \uC704\uD574\uC120 \uBC29\uB4E4\uC744
-          \uB3CC\uC544\uB2E4\uB2C8\uBA70 <b><Effect type=waving phaseOffset=0.1 waveHeight=1>\uC5D0\uD14C\uB974</effect></b>\uB77C\uB294
-          \uBB3C\uC9C8\uC744 3\uAC1C \uBAA8\uC544\uC57C \uD569\uB2C8\uB2E4."
+          \uB3CC\uC544\uB2E4\uB2C8\uBA70 <color=#E4FF6F><Effect type=waving phaseOffset=0.1
+          waveHeight=1>\uC5D0\uD14C\uB974</Effect></color>\uB77C\uB294 \uBB3C\uC9C8\uC744
+          3\uAC1C \uBAA8\uC544\uC57C \uD569\uB2C8\uB2E4."
     - rid: 7990673733982355564
       type: {class: SystemLine, ns: , asm: Assembly-CSharp}
       data:

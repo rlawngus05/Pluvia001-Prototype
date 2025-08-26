@@ -3,9 +3,11 @@ using UnityEngine;
 [RequireComponent(typeof(CutSceneActivator))]
 public class ZeroFloorSceneStarter : SceneStarter
 {
+    [SerializeField] private AudioClip _zeroFloorAmbientBgm;
     private CutSceneActivator _cutSceneActivator;
-
-    private void Awake() {
+    
+    private void Awake()
+    {
         _cutSceneActivator = GetComponent<CutSceneActivator>();
     }
 
@@ -14,5 +16,6 @@ public class ZeroFloorSceneStarter : SceneStarter
         base.Start();
 
         _cutSceneActivator.Activate();
+        SoundManager.Instance.PlayBgm(_zeroFloorAmbientBgm);
     }
 }
