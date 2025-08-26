@@ -38,7 +38,7 @@ public class CutSceneTextLineManager : MonoBehaviour
         _textMesh?.ForceMeshUpdate(); // 항상 최신화
     }
 
-    public Coroutine ExecuteLine(string script, TextMeshProUGUI textMeshPro, Action onTypingEnd)
+    public Coroutine ExecuteLine(string script,TextMeshProUGUI textMeshPro, Action onTypingEnd, AudioClip typeSoundEffect = null)
     {
         foreach (Coroutine coroutine in _coroutines)
         {
@@ -69,13 +69,14 @@ public class CutSceneTextLineManager : MonoBehaviour
 
         _textMesh.ForceMeshUpdate();
         ApplyEffectTag();
-        return _typeCoroutine = StartCoroutine(ApplyTyping());
+        return _typeCoroutine = StartCoroutine(ApplyTyping(typeSoundEffect));
     }
 
-    private IEnumerator ApplyTyping()
+    private IEnumerator ApplyTyping(AudioClip typeSoundEffect)
     {
         float currentTypeInterval = defaultTypeInterval;
-
+        int plainTextIndex = 0;
+        
         for (int i = 0; i < _textMesh.textInfo.characterCount; i++)
         {
             if (_tagStack.Count != 0)
@@ -125,8 +126,18 @@ public class CutSceneTextLineManager : MonoBehaviour
                 }
             }
 
-            yield return new WaitForSeconds(currentTypeInterval);
             _textMesh.maxVisibleCharacters = i + 1;
+
+            //* 공백 타이핑 무시
+            if (char.IsWhiteSpace(_textMesh.textInfo.characterInfo[i].character)) { continue; }
+
+            //* 공백 제외한 텍스트가 3의 배수일 때마다 대사 효과음 출력
+            if (plainTextIndex % 3 == 0 && typeSoundEffect != null)
+            {
+                SoundManager.Instance.PlaySoundEffectWithRandomPich(typeSoundEffect);
+            }
+            plainTextIndex++;
+            yield return new WaitForSeconds(currentTypeInterval);
         }
 
         _onTypingEnd();
@@ -209,14 +220,21 @@ public class CutSceneTextLineManager : MonoBehaviour
         while (true)
         {
             Vector3[] vertices = textInfo.meshInfo[0].vertices;
+            int effectSequence = startIndex;
 
             for (int i = startIndex; i < endIndex; i++)
             {
+                //* 공백에 효과 적용 무시
+                if (char.IsWhiteSpace(_textMesh.textInfo.characterInfo[i].character))
+                {
+                    continue;
+                }
+
                 var charInfo = textInfo.characterInfo[i];
                 if (!charInfo.isVisible) continue;
 
                 int vertexIndex = charInfo.vertexIndex;
-                float yOffset = Mathf.Sin((elapsed + i * phaseOffset) * 2f * Mathf.PI) * waveHeight;
+                float yOffset = Mathf.Sin((elapsed + effectSequence++ * phaseOffset) * 2f * Mathf.PI) * waveHeight;
 
                 for (int j = 0; j < 4; j++)
                 {

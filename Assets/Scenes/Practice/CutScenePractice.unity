@@ -470,7 +470,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2d205c1c781d384c8a29a24f9e5f2fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _initialPoolSize: 0
+  _initialPoolSize: 10
   _pitchShakeRange: 0.1
 --- !u!82 &532118143
 AudioSource:
