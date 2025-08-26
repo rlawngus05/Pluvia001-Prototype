@@ -6,7 +6,7 @@ public class CharacterLine : CutSceneLine
 {
     [SerializeField] private ActorData _actor;
     [SerializeField] private EmotionType _emotion;
-    [SerializeField] private string _content;
+    [SerializeField, TextArea(3, 10)] private string _content;
 
     public EmotionType Emotion => _emotion;
     public string Content => _content;

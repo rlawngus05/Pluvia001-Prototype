@@ -7,8 +7,7 @@ using UnityEngineInternal;
 
 public class CutSceneTextLineManager : MonoBehaviour
 {
-    [SerializeField] private string _originalText;
-    [SerializeField] private TextMeshProUGUI _textMesh;
+    private TextMeshProUGUI _textMesh;
 
     private List<Coroutine> _coroutines;
     private CutSceneTextLineParser _parser;
@@ -17,30 +16,46 @@ public class CutSceneTextLineManager : MonoBehaviour
     private List<EffectTag> _effectTags;
     private Queue<Tag> _remainNonEffectTags;
     private Stack<Tag> _tagStack;
+    private Stack<TypeIntervalTag> _typeIntervalTagStack;
+    private Coroutine _typeCoroutine;
+    private Action _onTypingEnd;
 
-    [SerializeField] private float jiterringPower;
-    [SerializeField] private float characterInterval = 0.2f; // 위상 차이
-    [SerializeField] private float maxHeight = 5f;          // 파도 높이
+    [SerializeField] private float defaultJiterringPower;
+    [SerializeField] private float defaultWavePhasOffset;
+    [SerializeField] private float defaultWaveHeight;
     [SerializeField] private float defaultTypeInterval;
 
     private void Awake()
     {
-        _parser = new CutSceneTextLineParser();
-        _coroutines = new List<Coroutine>(); // ✅ 초기화
+        _coroutines = new List<Coroutine>();
+        _parser = new CutSceneTextLineParser(defaultJiterringPower, defaultWaveHeight, defaultWavePhasOffset);
         _remainNonEffectTags = new Queue<Tag>();
         _tagStack = new Stack<Tag>();
-
-        ExecuteLine(_originalText);
+        _typeIntervalTagStack = new Stack<TypeIntervalTag>();
     }
 
     private void Update() {
         _textMesh?.ForceMeshUpdate(); // 항상 최신화
     }
 
-    public void ExecuteLine(string script)
+    public Coroutine ExecuteLine(string script,TextMeshProUGUI textMeshPro, Action onTypingEnd, AudioClip typeSoundEffect = null)
     {
-        (string plainText, List<EffectTag> effectTags, List<Tag> nonEffectTags) parseResult = _parser.Parse(script);
+        foreach (Coroutine coroutine in _coroutines)
+        {
+            if (coroutine == null) { continue; }
+            StopCoroutine(coroutine);
+        }
 
+        _coroutines.Clear();
+        _onTypingEnd = onTypingEnd;
+        _typeIntervalTagStack?.Clear();
+        _tagStack?.Clear();
+        _effectTags?.Clear();
+        _remainNonEffectTags?.Clear();
+
+        _textMesh = textMeshPro;
+
+        (string plainText, List<EffectTag> effectTags, List<Tag> nonEffectTags) parseResult = _parser.Parse(script);
         _plainText = parseResult.plainText;
         _effectTags = parseResult.effectTags;
         _remainNonEffectTags = new Queue<Tag>(parseResult.nonEffectTags);
@@ -53,17 +68,16 @@ public class CutSceneTextLineManager : MonoBehaviour
         _textMesh.maxVisibleCharacters = 0;
 
         _textMesh.ForceMeshUpdate();
-
         ApplyEffectTag();
-        StartCoroutine(ApplyTyping());
+        return _typeCoroutine = StartCoroutine(ApplyTyping(typeSoundEffect));
     }
 
-    private Stack<TypeIntervalTag> typeIntervalTagStack = new Stack<TypeIntervalTag>();
-    private IEnumerator ApplyTyping()
+    private IEnumerator ApplyTyping(AudioClip typeSoundEffect)
     {
         float currentTypeInterval = defaultTypeInterval;
-
-        for (int i = 0; i < _textMesh.text.Length; i++)
+        int plainTextIndex = 0;
+        
+        for (int i = 0; i < _textMesh.textInfo.characterCount; i++)
         {
             if (_tagStack.Count != 0)
             {
@@ -73,11 +87,11 @@ public class CutSceneTextLineManager : MonoBehaviour
                 {
                     if (stateTag is TypeIntervalTag)
                     {
-                        if (typeIntervalTagStack.Count != 0)
+                        if (_typeIntervalTagStack.Count != 0)
                         {
-                            typeIntervalTagStack.Pop();
+                            _typeIntervalTagStack.Pop();
 
-                            currentTypeInterval = typeIntervalTagStack.Count == 0 ? defaultTypeInterval : typeIntervalTagStack.Peek().Interval;
+                            currentTypeInterval = _typeIntervalTagStack.Count == 0 ? defaultTypeInterval : _typeIntervalTagStack.Peek().Interval;
                         }
                     }
 
@@ -105,19 +119,39 @@ public class CutSceneTextLineManager : MonoBehaviour
                             currentTypeInterval = typeIntervalTag.Interval;
 
                             _tagStack.Push(typeIntervalTag);
-                            typeIntervalTagStack.Push(typeIntervalTag);
+                            _typeIntervalTagStack.Push(typeIntervalTag);
                         }
                         _remainNonEffectTags.Dequeue();
                     }
                 }
             }
 
-            yield return new WaitForSeconds(currentTypeInterval);
             _textMesh.maxVisibleCharacters = i + 1;
+
+            //* 공백 타이핑 무시
+            if (char.IsWhiteSpace(_textMesh.textInfo.characterInfo[i].character)) { continue; }
+
+            //* 공백 제외한 텍스트가 3의 배수일 때마다 대사 효과음 출력
+            if (plainTextIndex % 3 == 0 && typeSoundEffect != null)
+            {
+                SoundManager.Instance.PlaySoundEffectWithRandomPich(typeSoundEffect);
+            }
+            plainTextIndex++;
+            yield return new WaitForSeconds(currentTypeInterval);
         }
+
+        _onTypingEnd();
     }
 
-    private IEnumerator ExecuteActionTag(ActionTag actionTag) {
+    public void SkipTyping()
+    {
+        StopCoroutine(_typeCoroutine);
+        _onTypingEnd();
+        _textMesh.maxVisibleCharacters = _textMesh.textInfo.characterCount;
+    }
+    
+    private IEnumerator ExecuteActionTag(ActionTag actionTag)
+    {
         if (actionTag is WaitTag waitTag)
         {
             yield return new WaitForSeconds(waitTag.Duration);
@@ -131,18 +165,21 @@ public class CutSceneTextLineManager : MonoBehaviour
             switch (effectTag.Type)
             {
                 case EffectType.Jittering:
-                    _coroutines.Add(StartCoroutine(Jittering(effectTag.StartIndex, effectTag.EndIndex)));
+                    _coroutines.Add(StartCoroutine(Jittering((JitteringEffectTag)effectTag)));
                     break;
                 case EffectType.Waving:
-                    _coroutines.Add(StartCoroutine(Waving(effectTag.StartIndex, effectTag.EndIndex)));
+                    _coroutines.Add(StartCoroutine(Waving((WavingEffectTag)effectTag)));
                     break;
             }
         }
     }
 
-    private IEnumerator Jittering(int startIndex, int endIndex)
+    private IEnumerator Jittering(JitteringEffectTag tag)
     {
         TMP_TextInfo textInfo = _textMesh.textInfo;
+        int startIndex = tag.StartIndex;
+        int endIndex = tag.EndIndex;
+        float power = tag.Power;
 
         while (true)
         {
@@ -154,7 +191,7 @@ public class CutSceneTextLineManager : MonoBehaviour
                 if (!charInfo.isVisible) continue;
 
                 int vertexIndex = charInfo.vertexIndex;
-                Vector2 jitterValue = SimpleJitter(jiterringPower);
+                Vector2 jitterValue = SimpleJitter(power);
 
                 for (int j = 0; j < 4; j++)
                 {
@@ -170,22 +207,34 @@ public class CutSceneTextLineManager : MonoBehaviour
         }
     }
 
-    private IEnumerator Waving(int startIndex, int endIndex)
+    private IEnumerator Waving(WavingEffectTag tag)
     {
         TMP_TextInfo textInfo = _textMesh.textInfo;
+        int startIndex = tag.StartIndex;
+        int endIndex = tag.EndIndex;
+        float waveHeight = tag.WaveHeight;
+        float phaseOffset = tag.PhaseOffset;
+
         float elapsed = 0f;
 
         while (true)
         {
             Vector3[] vertices = textInfo.meshInfo[0].vertices;
+            int effectSequence = startIndex;
 
             for (int i = startIndex; i < endIndex; i++)
             {
+                //* 공백에 효과 적용 무시
+                if (char.IsWhiteSpace(_textMesh.textInfo.characterInfo[i].character))
+                {
+                    continue;
+                }
+
                 var charInfo = textInfo.characterInfo[i];
                 if (!charInfo.isVisible) continue;
 
                 int vertexIndex = charInfo.vertexIndex;
-                float yOffset = Mathf.Sin((elapsed + i * characterInterval) * 2f * Mathf.PI) * maxHeight;
+                float yOffset = Mathf.Sin((elapsed + effectSequence++ * phaseOffset) * 2f * Mathf.PI) * waveHeight;
 
                 for (int j = 0; j < 4; j++)
                 {

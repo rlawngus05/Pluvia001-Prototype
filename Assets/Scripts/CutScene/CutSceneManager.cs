@@ -15,7 +15,6 @@ public class CutSceneManager : MonoBehaviour
     private ActionLineManager _actionLineManager;
 
     private bool _isLineFinised;
-
     private int _currentLineIndex;
 
     void Awake()

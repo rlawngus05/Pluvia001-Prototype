@@ -1,3 +1,4 @@
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class SoundManager : MonoBehaviour
@@ -19,12 +20,37 @@ public class SoundManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void PlayBgm(AudioClip audioClip, bool isLoop = true) { _bgmManager.Play(audioClip, isLoop); }
+    public void PlayBgm(AudioClip audioClip, bool isLoop = true)
+    {
+        if (audioClip == null)
+        {
+            Debug.LogError("AudioClip is Null");
+            return;
+        }
+        _bgmManager.Play(audioClip, isLoop);
+    }
     public void StopBgm() { _bgmManager.Stop(); }
     public void PauseBgm() { _bgmManager.Pause(); }
 
-    public void PlaySoundEffect(AudioClip audioClip) { _soundEffectManager.Play(audioClip); }
-    public void PlaySoundEffectWithRandomPich(AudioClip audioClip) { _soundEffectManager.PlayWithRandomPitch(audioClip); }
+    public void PlaySoundEffect(AudioClip audioClip)
+    {
+        if (audioClip == null)
+        {
+            Debug.LogError("AudioClip is Null");
+            return;
+        }
+        _soundEffectManager.Play(audioClip);
+    }
+    
+    public void PlaySoundEffectWithRandomPich(AudioClip audioClip)
+    {
+        if (audioClip == null)
+        {
+            Debug.LogError("AudioClip is Null");
+            return;
+        }
+        _soundEffectManager.PlayWithRandomPitch(audioClip);
+    }
 
     public void SetBgmVolume(float volume) { _bgmManager.SetVolume(volume); }
     public void SetSoundEffectVolume(float volume) { _soundEffectManager.SetVolume(volume); }

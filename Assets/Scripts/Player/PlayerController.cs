@@ -177,9 +177,25 @@ public class PlayerController : MonoBehaviour
         if (_rb.linearVelocityY < 0 && _isJump) { _animator.SetBool("isFalling", true); }
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    // void OnCollisionEnter2D(Collision2D collision)
+    // {
+    //     if (_isJump && collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+    //     {
+    //         _isJump = false;
+    //         _hasUnholdJump = false;
+    //         _rb.gravityScale = _originGravityScale;
+
+    //         _animator.SetBool("isJumping", _isJump);
+    //         _animator.SetBool("isFalling", false);
+
+    //         SoundManager.Instance.PlaySoundEffect(_landingSoundEffect);
+    //     }
+    // }
+
+    //TODO : PlayerGroundChecker에서 만 사용하는 Public 함수. 이 파트에 대해서 리펙토링 조지기
+    public void OnGroundAfterJump()
     {
-        if (_isJump && collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        if (_isJump)
         {
             _isJump = false;
             _hasUnholdJump = false;

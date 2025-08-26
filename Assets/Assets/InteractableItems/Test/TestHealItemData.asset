@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e36278d0f45114744be54cf9335c7e01, type: 3}
+  m_Name: TestHealItemData
+  m_EditorClassIdentifier: 
+  _icon: {fileID: 4999170882276815587, guid: 7fcd452e0aa2c944cb1461c3b65f1a9c, type: 3}
+  _itemName: "\uB864\uCF00\uC775"
+  _content: "\uC634\uB1F8\uB1F8"
+  _usedSoundEffect: {fileID: 0}
+  _healAmount: 5

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class CharacterLineGuiManager : MonoBehaviour
 {
+    private CutSceneTextLineManager _cutSceneTextLineManager;
     [SerializeField] private GameObject _gui;
     [SerializeField] private Image _portraitImage;
     [SerializeField] private TextMeshProUGUI _nameText;
@@ -21,6 +22,7 @@ public class CharacterLineGuiManager : MonoBehaviour
     private void Awake()
     {
         _readyToEnd = false;
+        _cutSceneTextLineManager = GetComponent<CutSceneTextLineManager>();
     }
 
     public void Execute(CharacterLine characterLine, Action finishLineObserver)
@@ -33,40 +35,19 @@ public class CharacterLineGuiManager : MonoBehaviour
         _gui.SetActive(true);
         _textLineEndGuider.SetActive(false);
 
-        _portraitImage.sprite = characterLine.Portrait;
-        _nameText.text = characterLine.ActorName;
-
         _isTyping = true;
-        _typingCoroutine = StartCoroutine(TypeContent(characterLine.Content, characterLine.ActorTypeSoundEffect));
+        _typingCoroutine = _cutSceneTextLineManager.ExecuteLine(characterLine.Content, _contentText, () => { _isTyping = false; }, characterLine.ActorTypeSoundEffect);
         yield return new WaitWhile(() => _isTyping);
         _textLineEndGuider.SetActive(true);
-        _contentText.text = characterLine.Content;
 
         _finishLineObserver = finishLineObserver;
         _readyToEnd = true;
     }
 
-    private IEnumerator TypeContent(string content, AudioClip typeSoundEffect)
-    {
-        _contentText.text = "";
-        int cnt = 0;
-        foreach (char c in content)
-        {
-            if (cnt++ % 2 == 0)
-            {
-                SoundManager.Instance.PlaySoundEffectWithRandomPich(typeSoundEffect);
-            }
-            _contentText.text += c;
-
-            yield return new WaitForSeconds(_typeInterval);
-        }
-
-        _isTyping = false;
-    }
-
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return)) {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
             if (_readyToEnd)
             {
                 _gui.SetActive(false);
@@ -74,16 +55,12 @@ public class CharacterLineGuiManager : MonoBehaviour
 
                 _textLineEndGuider.SetActive(false);
                 _readyToEnd = false;
-
-                return;
             }
 
             if (_isTyping)
             {
-                StopCoroutine(_typingCoroutine);
-                _isTyping = false;
+                _cutSceneTextLineManager.SkipTyping();
             }
         }
-
     }
 }

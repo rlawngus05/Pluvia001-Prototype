@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class SystemLineGuiManager : MonoBehaviour
 {
+    private CutSceneTextLineManager _cutSceneTextLineManager;
     [SerializeField] private GameObject _gui;
     [SerializeField] private TextMeshProUGUI _contentText;
     [SerializeField] private GameObject _textLineEndGuider;
@@ -15,11 +16,12 @@ public class SystemLineGuiManager : MonoBehaviour
     private bool _isTyping;
     private Coroutine _typingCoroutine;
     private Action _finishLineObserver;
-    
+
 
     private void Awake()
     {
         _readyToEnd = false;
+        _cutSceneTextLineManager = GetComponent<CutSceneTextLineManager>();
     }
 
     public void Execute(SystemLine systemLine, Action finishLineObserver)
@@ -33,28 +35,12 @@ public class SystemLineGuiManager : MonoBehaviour
         _textLineEndGuider.SetActive(false);
 
         _isTyping = true;
-        _typingCoroutine = StartCoroutine(TypeContent(systemLine.Content));
+        _typingCoroutine = _cutSceneTextLineManager.ExecuteLine(systemLine.Content, _contentText, () => { _isTyping = false; });
         yield return new WaitWhile(() => _isTyping);
         _textLineEndGuider.SetActive(true);
-        _contentText.text = systemLine.Content;
 
         _finishLineObserver = finishLineObserver;
         _readyToEnd = true;
-    }
-
-    private IEnumerator TypeContent(string content)
-    {
-        _contentText.text = "";
-
-        foreach (char c in content)
-        {
-            // SoundManager.Instance.PlaySoundEffectWithRandomPich(_typeSoundEffect);
-            _contentText.text += c;
-
-            yield return new WaitForSeconds(_typeInterval);
-        }
-
-        _isTyping = false;
     }
 
     private void Update()
@@ -72,8 +58,7 @@ public class SystemLineGuiManager : MonoBehaviour
 
             if (_isTyping)
             {
-                _isTyping = false;
-                StopCoroutine(_typingCoroutine);
+                _cutSceneTextLineManager.SkipTyping();
             }
         }
     }

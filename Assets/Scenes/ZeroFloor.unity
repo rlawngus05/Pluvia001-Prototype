@@ -833,7 +833,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e51505e533d740e469c70c367d1b842b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactableEffectMaterial: {fileID: -876546973899608171, guid: 87756c94a92d6634c9af2afa72a51b7d, type: 3}
+  _interactableEffectMaterial: {fileID: 2100000, guid: 571b4625bcc76924cb345eb73e78aba3, type: 2}
   _interactSoundEffect: {fileID: 8300000, guid: a37288c3e34469e4590dc2a7ee6952db, type: 3}
   _isInteractable: 0
   _priority: 0
@@ -4062,7 +4062,7 @@ MonoBehaviour:
   m_Intensity: 3.92
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 0000000029c60a32e13c585957832fc92feeac0589357894
+  m_ApplyToSortingLayers: 0000000029c60a3213801502e13c585957832fc92feeac05331dec9389357894
   m_LightCookieSprite: {fileID: 21300000, guid: 119f93d0bcbf1e743bf5fcf237507d39, type: 3}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -4202,7 +4202,7 @@ MonoBehaviour:
   m_Intensity: 3.92
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 0000000029c60a32e13c585957832fc92feeac0589357894
+  m_ApplyToSortingLayers: 0000000029c60a3213801502e13c585957832fc92feeac05331dec9389357894
   m_LightCookieSprite: {fileID: 21300000, guid: 119f93d0bcbf1e743bf5fcf237507d39, type: 3}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -4383,7 +4383,7 @@ MonoBehaviour:
   m_Intensity: 3.92
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 0000000029c60a32e13c585957832fc92feeac0589357894
+  m_ApplyToSortingLayers: 0000000029c60a3213801502e13c585957832fc92feeac05331dec9389357894
   m_LightCookieSprite: {fileID: 21300000, guid: 119f93d0bcbf1e743bf5fcf237507d39, type: 3}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -5303,7 +5303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e51505e533d740e469c70c367d1b842b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactableEffectMaterial: {fileID: -876546973899608171, guid: 87756c94a92d6634c9af2afa72a51b7d, type: 3}
+  _interactableEffectMaterial: {fileID: 2100000, guid: 571b4625bcc76924cb345eb73e78aba3, type: 2}
   _interactSoundEffect: {fileID: 8300000, guid: a37288c3e34469e4590dc2a7ee6952db, type: 3}
   _isInteractable: 0
   _priority: 0
@@ -6361,7 +6361,7 @@ Transform:
   m_GameObject: {fileID: 901650050}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.4, y: 0.13, z: -10}
+  m_LocalPosition: {x: -1.013, y: 1.393, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6450,7 +6450,7 @@ MonoBehaviour:
   m_Intensity: 3.92
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 0000000029c60a32e13c585957832fc92feeac0589357894
+  m_ApplyToSortingLayers: 0000000029c60a3213801502e13c585957832fc92feeac05331dec9389357894
   m_LightCookieSprite: {fileID: 21300000, guid: 119f93d0bcbf1e743bf5fcf237507d39, type: 3}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -9440,7 +9440,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e51505e533d740e469c70c367d1b842b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactableEffectMaterial: {fileID: -876546973899608171, guid: 87756c94a92d6634c9af2afa72a51b7d, type: 3}
+  _interactableEffectMaterial: {fileID: 2100000, guid: 571b4625bcc76924cb345eb73e78aba3, type: 2}
   _interactSoundEffect: {fileID: 8300000, guid: a37288c3e34469e4590dc2a7ee6952db, type: 3}
   _isInteractable: 0
   _priority: 0
@@ -13926,6 +13926,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: TrapRoom
       objectReference: {fileID: 0}
+    - target: {fileID: 7003549160521733603, guid: d9f161a95d1e32a46abe9bf07948c8ae, type: 3}
+      propertyPath: m_BodyType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7003549160521733603, guid: d9f161a95d1e32a46abe9bf07948c8ae, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9200925775097895921, guid: d9f161a95d1e32a46abe9bf07948c8ae, type: 3}
       propertyPath: m_LocalPosition.x
       value: -16.43
@@ -14205,7 +14213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e51505e533d740e469c70c367d1b842b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactableEffectMaterial: {fileID: -876546973899608171, guid: 87756c94a92d6634c9af2afa72a51b7d, type: 3}
+  _interactableEffectMaterial: {fileID: 2100000, guid: 571b4625bcc76924cb345eb73e78aba3, type: 2}
   _interactSoundEffect: {fileID: 8300000, guid: a37288c3e34469e4590dc2a7ee6952db, type: 3}
   _isInteractable: 0
   _priority: 0
@@ -14633,7 +14641,7 @@ Transform:
   m_GameObject: {fileID: 1191676460}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.39999998, y: 1.9947699, z: -10}
+  m_LocalPosition: {x: -1.0129855, y: 1.9947699, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -15084,7 +15092,7 @@ Transform:
   m_GameObject: {fileID: 1309277552}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.07, y: -2.503, z: 0}
+  m_LocalPosition: {x: 2.05, y: -2.503, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -15268,7 +15276,7 @@ MonoBehaviour:
   m_Intensity: 3.92
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 0000000029c60a32e13c585957832fc92feeac0589357894
+  m_ApplyToSortingLayers: 0000000029c60a3213801502e13c585957832fc92feeac05331dec9389357894
   m_LightCookieSprite: {fileID: 21300000, guid: 119f93d0bcbf1e743bf5fcf237507d39, type: 3}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -20051,7 +20059,7 @@ MonoBehaviour:
   m_Intensity: 3.92
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 0000000029c60a32e13c585957832fc92feeac0589357894
+  m_ApplyToSortingLayers: 0000000029c60a3213801502e13c585957832fc92feeac05331dec9389357894
   m_LightCookieSprite: {fileID: 21300000, guid: 119f93d0bcbf1e743bf5fcf237507d39, type: 3}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -20233,33 +20241,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1464196910140501246, guid: ed63253715282b04c91dc820772a8ffd, type: 3}
-      propertyPath: m_Size.x
-      value: 0.9374774
-      objectReference: {fileID: 0}
-    - target: {fileID: 1464196910140501246, guid: ed63253715282b04c91dc820772a8ffd, type: 3}
-      propertyPath: m_Size.y
-      value: 2.184904
-      objectReference: {fileID: 0}
-    - target: {fileID: 1464196910140501246, guid: ed63253715282b04c91dc820772a8ffd, type: 3}
-      propertyPath: m_Offset.x
-      value: -0.0028411448
-      objectReference: {fileID: 0}
-    - target: {fileID: 1464196910140501246, guid: ed63253715282b04c91dc820772a8ffd, type: 3}
-      propertyPath: m_Offset.y
-      value: -0.029726505
-      objectReference: {fileID: 0}
     - target: {fileID: 6681805303420669409, guid: ed63253715282b04c91dc820772a8ffd, type: 3}
       propertyPath: m_Name
       value: Yuri
       objectReference: {fileID: 0}
     - target: {fileID: 6797810441243966390, guid: ed63253715282b04c91dc820772a8ffd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.4
+      value: -1.013
       objectReference: {fileID: 0}
     - target: {fileID: 6797810441243966390, guid: ed63253715282b04c91dc820772a8ffd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.13
+      value: 1.393
       objectReference: {fileID: 0}
     - target: {fileID: 6797810441243966390, guid: ed63253715282b04c91dc820772a8ffd, type: 3}
       propertyPath: m_LocalPosition.z
@@ -20399,7 +20391,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e51505e533d740e469c70c367d1b842b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactableEffectMaterial: {fileID: -876546973899608171, guid: 87756c94a92d6634c9af2afa72a51b7d, type: 3}
+  _interactableEffectMaterial: {fileID: 2100000, guid: 571b4625bcc76924cb345eb73e78aba3, type: 2}
   _interactSoundEffect: {fileID: 8300000, guid: a37288c3e34469e4590dc2a7ee6952db, type: 3}
   _isInteractable: 0
   _priority: 0
@@ -21158,7 +21150,7 @@ MonoBehaviour:
   m_Intensity: 3.92
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 0000000029c60a32e13c585957832fc92feeac0589357894
+  m_ApplyToSortingLayers: 0000000029c60a3213801502e13c585957832fc92feeac05331dec9389357894
   m_LightCookieSprite: {fileID: 21300000, guid: 119f93d0bcbf1e743bf5fcf237507d39, type: 3}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -21599,7 +21591,7 @@ MonoBehaviour:
   m_Intensity: 3.92
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 0000000029c60a32e13c585957832fc92feeac0589357894
+  m_ApplyToSortingLayers: 0000000029c60a3213801502e13c585957832fc92feeac05331dec9389357894
   m_LightCookieSprite: {fileID: 21300000, guid: 119f93d0bcbf1e743bf5fcf237507d39, type: 3}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -27774,6 +27766,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Passage
       objectReference: {fileID: 0}
+    - target: {fileID: 7003549160521733603, guid: d9f161a95d1e32a46abe9bf07948c8ae, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: dd5d4ad83bf41db40831f3861d750af5, type: 2}
     - target: {fileID: 7475784570435026285, guid: d9f161a95d1e32a46abe9bf07948c8ae, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.43
@@ -28011,7 +28007,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e51505e533d740e469c70c367d1b842b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactableEffectMaterial: {fileID: -876546973899608171, guid: 87756c94a92d6634c9af2afa72a51b7d, type: 3}
+  _interactableEffectMaterial: {fileID: 2100000, guid: 571b4625bcc76924cb345eb73e78aba3, type: 2}
   _interactSoundEffect: {fileID: 8300000, guid: a37288c3e34469e4590dc2a7ee6952db, type: 3}
   _isInteractable: 0
   _priority: 0
@@ -28171,7 +28167,7 @@ MonoBehaviour:
   m_Intensity: 3.92
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 0000000029c60a32e13c585957832fc92feeac0589357894
+  m_ApplyToSortingLayers: 0000000029c60a3213801502e13c585957832fc92feeac05331dec9389357894
   m_LightCookieSprite: {fileID: 21300000, guid: 119f93d0bcbf1e743bf5fcf237507d39, type: 3}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -30305,6 +30301,10 @@ PrefabInstance:
       propertyPath: m_ColliderPaths.Array.data[0].m_ColliderPaths.Array.data[0].Array.data[5].Y
       value: -20000000
       objectReference: {fileID: 0}
+    - target: {fileID: 3026310422015518424, guid: d9f161a95d1e32a46abe9bf07948c8ae, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: a473be2e01ef22d4fb096f515aed6135, type: 2}
     - target: {fileID: 3151864876017943329, guid: d9f161a95d1e32a46abe9bf07948c8ae, type: 3}
       propertyPath: m_Size.x
       value: 15
