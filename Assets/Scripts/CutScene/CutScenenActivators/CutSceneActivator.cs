@@ -11,10 +11,10 @@ public class CutSceneActivator : MonoBehaviour
         _hasActivated = false;
     }  
     
-    private void Start()
-    {
-        Activate(); //! Test
-    }
+    // private void Start()
+    // {
+    //     Activate(); //! Test
+    // }
 
     public void Activate()
     {

@@ -1110,6 +1110,7 @@ GameObject:
   - component: {fileID: 6478260166026613124}
   - component: {fileID: 2039933494339889972}
   - component: {fileID: 2140123027692537037}
+  - component: {fileID: 1179759686700758448}
   m_Layer: 5
   m_Name: CutSceneManager
   m_TagString: Untagged
@@ -1267,3 +1268,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29e0fc45d76016f4fa16e86d0d404786, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1179759686700758448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9187510356710953010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a09afd5255271a94e8071dfe6d06719c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultJiterringPower: 3
+  defaultWavePhasOffset: 0.1
+  defaultWaveHeight: 3
+  defaultTypeInterval: 0.03
