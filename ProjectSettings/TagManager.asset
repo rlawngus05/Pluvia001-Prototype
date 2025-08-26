@@ -57,11 +57,11 @@ TagManager:
   - name: Player
     uniqueID: 95219247
     locked: 0
-  - name: InteractableForeground
-    uniqueID: 2481724723
-    locked: 0
   - name: Border
     uniqueID: 2490905993
+    locked: 0
+  - name: InteractableForeground
+    uniqueID: 2481724723
     locked: 0
   m_RenderingLayers:
   - Default

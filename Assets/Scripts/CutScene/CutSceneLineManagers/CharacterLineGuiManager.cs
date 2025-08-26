@@ -36,7 +36,7 @@ public class CharacterLineGuiManager : MonoBehaviour
         _textLineEndGuider.SetActive(false);
 
         _isTyping = true;
-        _typingCoroutine = _cutSceneTextLineManager.ExecuteLine(characterLine.Content, _contentText, () => { _isTyping = false; });
+        _typingCoroutine = _cutSceneTextLineManager.ExecuteLine(characterLine.Content, _contentText, () => { _isTyping = false; }, characterLine.ActorTypeSoundEffect);
         yield return new WaitWhile(() => _isTyping);
         _textLineEndGuider.SetActive(true);
 
