@@ -99,11 +99,18 @@ public class PlayerInteractor : MonoBehaviour
                 }
             }
 
-            _interactableObjects = _currentInteractableGameObject.GetComponents<InteractableObject>();
-
-            foreach (InteractableObject interactableObject in _interactableObjects)
+            if (_currentInteractableGameObject == null) //* 현재 있던 _currentInteractablGameObject가 Destroy 되지 않고, IsInteractable이 false가 된 경우를 처리하는 코드
             {
-                interactableObject.OnInteractable();
+                _interactableObjects = null;
+            }
+            else
+            {
+                _interactableObjects = _currentInteractableGameObject.GetComponents<InteractableObject>();
+
+                foreach (InteractableObject interactableObject in _interactableObjects)
+                {
+                    interactableObject.OnInteractable();
+                }
             }
         }
     }
