@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class CutSceneManager : MonoBehaviour
 {
@@ -32,6 +33,8 @@ public class CutSceneManager : MonoBehaviour
         _systemLineGuiManager = GetComponent<SystemLineGuiManager>();
         _actionLineManager = GetComponent<ActionLineManager>();
     }
+
+    public void SetCurrentScenePlayableDirectors(List<PlayableDirector> playableDirectors) { _actionLineManager.CurrentScenePlayableDirectors = playableDirectors; }
 
     public void SetScript(List<CutSceneLine> cutSceneScript) { _script = cutSceneScript.ToList(); }
     public void FinishCurrentLine()

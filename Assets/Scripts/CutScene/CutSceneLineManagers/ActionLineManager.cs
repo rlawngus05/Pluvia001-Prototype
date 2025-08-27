@@ -1,19 +1,42 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 
 public class ActionLineManager : MonoBehaviour
 {
+    private List<PlayableDirector> _currentScenePlayableDirectors;
+    public List<PlayableDirector> CurrentScenePlayableDirectors
+    {
+        set
+        {
+            _currentScenePlayableDirectors = value;
+        }
+    }
+
     public void Execute(ActionLine actionLine, Action finishLineObserver)
     {
-        GameObject timeLinePrefab = actionLine.TimeLinePrefab;
+        string playableDirectorId = actionLine.PlayableDirectorId;
 
-        GameObject timeLineGameObject = Instantiate(timeLinePrefab);
-        timeLineGameObject.transform.SetParent(transform);
+        PlayableDirector playableDirector = _currentScenePlayableDirectors.Find((PlayableDirector current) =>
+        {
+            return current.gameObject.name.ToLower() == playableDirectorId.ToLower();
+        });
 
-        PlayableDirector actionDirector = timeLineGameObject.GetComponent<PlayableDirector>();
-        timeLineGameObject.GetComponent<ActionLineFinisher>().SetFinishLineObserver(finishLineObserver);
+        if (playableDirector == null)
+        {
+            throw new Exception($"No PlayableDirector found in this scene for ID \"{playableDirectorId}\"");
+        }
 
-        actionDirector.Play();
+        try
+        {
+            playableDirector.GetComponent<ActionLineFinisher>().SetFinishLineObserver(finishLineObserver);
+        }
+        catch
+        {
+            throw new Exception($"Gameobject \"{playableDirectorId}\" doesn't have an \"ActionLineFinsher\" component");
+        }
+
+        playableDirector.Play();
     }
 }
