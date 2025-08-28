@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      YuriProfileIdle_0: 2459052345862272244
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -139,7 +139,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: YuriProfileIdle_0
+      name: YuriProfile_Idle
       rect:
         serializedVersion: 2
         x: 0
@@ -174,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      YuriProfileIdle_0: 2459052345862272244
+      YuriProfile_Idle: 2459052345862272244
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -131,8 +131,8 @@ public class CutSceneTextLineManager : MonoBehaviour
             //* 공백 타이핑 무시
             if (char.IsWhiteSpace(_textMesh.textInfo.characterInfo[i].character)) { continue; }
 
-            //* 공백 제외한 텍스트가 3의 배수일 때마다 대사 효과음 출력
-            if (plainTextIndex % 3 == 0 && typeSoundEffect != null)
+            //* 공백 제외한 텍스트가 1 + 3의 배수일 때마다 대사 효과음 출력
+            if ((plainTextIndex - 1)% 3 == 0 && typeSoundEffect != null)
             {
                 SoundManager.Instance.PlaySoundEffectWithRandomPich(typeSoundEffect);
             }

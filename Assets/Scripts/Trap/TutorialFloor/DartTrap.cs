@@ -10,26 +10,28 @@ public class DartTrap : TrapLogic
     [SerializeField] private float _shootInterval;
     [SerializeField] private bool _isFlip;
 
-    private bool _isPlayerIn;
+    private Coroutine _currentShootCoroutine;
     
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
-            _isPlayerIn = true;
-            StartCoroutine(ShootCoroutine());
+            _currentShootCoroutine = StartCoroutine(ShootCoroutine());
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player") { _isPlayerIn = false; }
+        if (collision.gameObject.tag == "Player")
+        {
+            if ( _currentShootCoroutine != null) { StopCoroutine(_currentShootCoroutine); }
+        }
         
     }
 
     private IEnumerator ShootCoroutine()
     {
-        while (_isPlayerIn)
+        while (true)
         {
             GameObject dart = Instantiate(_dartPrefab, transform.position, Quaternion.identity);
             dart.transform.SetParent(gameObject.transform);
