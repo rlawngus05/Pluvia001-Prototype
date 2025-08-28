@@ -20021,6 +20021,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2671442619417220599, guid: ed63253715282b04c91dc820772a8ffd, type: 3}
+      propertyPath: _health
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 6681805303420669409, guid: ed63253715282b04c91dc820772a8ffd, type: 3}
       propertyPath: m_Name
       value: Yuri
