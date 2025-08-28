@@ -16,6 +16,7 @@ MonoBehaviour:
   - rid: 7990673914648330371
   - rid: 7990673914648330372
   - rid: 7990673914648330373
+  - rid: 7990673914648330412
   references:
     version: 2
     RefIds:
@@ -35,6 +36,11 @@ MonoBehaviour:
       type: {class: SystemLine, ns: , asm: Assembly-CSharp}
       data:
         _lineId: 
-        _content: "\uCCB4\uB825\uC774 0\uC774 \uB418\uBA74 \uC0AC\uB9DD\uD558\uAC8C\uB418\uB2C8
-          \uC870\uC2EC \uD569\uC2DC\uB2E4.\r\n\uD29C\uD1A0\uB9AC\uC5BC: \uB208\uC55E\uC758
-          \uD568\uC815\uC744 \uD53C\uD574\uBD05\uC2DC\uB2E4."
+        _content: "\uCCB4\uB825\uC774 0\uC774 \uB418\uBA74 <Effect type=jittering
+          power=0.5><color=#d92334>\uC0AC\uB9DD</color></Effect>\uD558\uAC8C\uB418\uB2C8
+          \uC870\uC2EC \uD569\uC2DC\uB2E4.\r"
+    - rid: 7990673914648330412
+      type: {class: SystemLine, ns: , asm: Assembly-CSharp}
+      data:
+        _lineId: 
+        _content: "\uB208\uC55E\uC758 \uD568\uC815\uC744 \uD53C\uD574\uBD05\uC2DC\uB2E4."

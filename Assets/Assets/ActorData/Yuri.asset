@@ -15,11 +15,11 @@ MonoBehaviour:
   _name: "\uC720\uB9AC"
   _portraits:
   - _type: 0
-    _sprite: {fileID: 4460481505745457952, guid: 605189b18164b394a8a0a5542ab7e3ac, type: 3}
+    _sprite: {fileID: 2459052345862272244, guid: 61d542c54c7f7fc47a398693012d8329, type: 3}
   - _type: 1
-    _sprite: {fileID: -1772722909, guid: 605189b18164b394a8a0a5542ab7e3ac, type: 3}
+    _sprite: {fileID: 2459052345862272244, guid: 61d542c54c7f7fc47a398693012d8329, type: 3}
   - _type: 2
-    _sprite: {fileID: -1348440067, guid: 605189b18164b394a8a0a5542ab7e3ac, type: 3}
+    _sprite: {fileID: 2459052345862272244, guid: 61d542c54c7f7fc47a398693012d8329, type: 3}
   - _type: 3
-    _sprite: {fileID: -1917098337, guid: 605189b18164b394a8a0a5542ab7e3ac, type: 3}
+    _sprite: {fileID: 2459052345862272244, guid: 61d542c54c7f7fc47a398693012d8329, type: 3}
   _typeSoundEffect: {fileID: 8300000, guid: 209a342efd335a04b9dc381b8bc33cd1, type: 3}
