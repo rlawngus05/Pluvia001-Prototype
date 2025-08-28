@@ -15,7 +15,7 @@ public class Door : InteractableObject
         StartCoroutine(TransitionRoutine());
     }
 
-    private IEnumerator TransitionRoutine()
+    protected IEnumerator TransitionRoutine(bool isFullWait = false)
     {
         yield return ScreenEffectManager.Instance.FadeIn(0.5f);
 
@@ -25,7 +25,8 @@ public class Door : InteractableObject
 
         yield return new WaitForSecondsRealtime(0.5f); //! 움직이지 못하는 시간이 하드 코딩 되어 있음
 
-        ScreenEffectManager.Instance.FadeOut(0.5f);
+        if (isFullWait) { yield return ScreenEffectManager.Instance.FadeOut(0.5f); }
+        else { ScreenEffectManager.Instance.FadeOut(0.5f); }
 
         PlayerStateManager.Instance.SetState(PlayerState.Idle);
     }

@@ -1,12 +1,12 @@
 using System;
 using UnityEngine;
-using UnityEngine.Playables;
 
 [Serializable]
 public class ActionLine : CutSceneLine
 {
-    [SerializeField] private GameObject _timelinePrefab;
-    private PlayableDirector _playableDirector;
+    [SerializeField] private bool _isSetter;
+    public bool IsSetter => _isSetter;
 
-    public GameObject TimeLinePrefab => _timelinePrefab;
+    [SerializeField] private string _playableDirectorId;
+    public string PlayableDirectorId => _playableDirectorId;
 }

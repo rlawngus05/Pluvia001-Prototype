@@ -13,43 +13,43 @@ MonoBehaviour:
   m_Name: MoveTutorial
   m_EditorClassIdentifier: 
   _lines:
-  - rid: 7990673731545202769
-  - rid: 7990673731545202770
-  - rid: 7990673731545202772
-  - rid: 7990673731545202773
-  - rid: 7990673731545202775
+  - rid: 7990673914648330343
+  - rid: 7990673914648330344
+  - rid: 7990673914648330345
+  - rid: 7990673914648330346
+  - rid: 7990673914648330347
   references:
     version: 2
     RefIds:
-    - rid: 7990673731545202769
+    - rid: 7990673914648330343
       type: {class: CharacterLine, ns: , asm: Assembly-CSharp}
       data:
         _lineId: 
         _actor: {fileID: 11400000, guid: 12b8c49358f41de478362c9dcd1c7576, type: 2}
         _emotion: 0
-        _content: "\uC73C\uC73C\u2026..\uBA38\uB9AC"
-    - rid: 7990673731545202770
+        _content: "\uC73C\uC73C\u2026..\uBA38\uB9AC\uC57C\u2026."
+    - rid: 7990673914648330344
       type: {class: CharacterLine, ns: , asm: Assembly-CSharp}
       data:
         _lineId: 
         _actor: {fileID: 11400000, guid: 12b8c49358f41de478362c9dcd1c7576, type: 2}
         _emotion: 0
         _content: "\uC5B4\uB5BB\uAC8C \uB41C\uAC70\uC9C0\u2026."
-    - rid: 7990673731545202772
+    - rid: 7990673914648330345
       type: {class: SystemLine, ns: , asm: Assembly-CSharp}
       data:
         _lineId: 
-        _content: "A\uC640 D\uB97C \uB20C\uB7EC \uC88C\uC6B0\uB85C \uC6C0\uC9C1\uC77C
-          \uC218 \uC788\uC2B5\uB2C8\uB2E4"
-    - rid: 7990673731545202773
+        _content: "A \uC640 D \uB97C \uB20C\uB7EC \uC88C\uC6B0\uB85C \uC6C0\uC9C1\uC77C
+          \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+    - rid: 7990673914648330346
       type: {class: SystemLine, ns: , asm: Assembly-CSharp}
       data:
         _lineId: 
-        _content: "Space\uB97C \uB20C\uB7EC \uC704\uB85C \uC6C0\uC9C1\uC77C \uC218
-          \uC788\uC2B5\uB2C8\uB2E4"
-    - rid: 7990673731545202775
+        _content: "space \uB97C \uB20C\uB7EC \uC704\uB85C \uC6C0\uC9C1\uC77C \uC218
+          \uC788\uC2B5\uB2C8\uB2E4."
+    - rid: 7990673914648330347
       type: {class: SystemLine, ns: , asm: Assembly-CSharp}
       data:
         _lineId: 
-        _content: "Space\uB97C \uB204\uB978 \uC2DC\uAC04\uC5D0 \uBE44\uB840\uD574
-          \uC62C\uB77C\uAC00\uB294 \uC815\uB3C4\uAC00 \uB2EC\uB77C\uC9D1\uB2C8\uB2E4"
+        _content: "space \uB97C \uB204\uB978 \uC2DC\uAC04\uC5D0 \uBE44\uB840\uD574
+          \uC62C\uB77C\uAC00\uB294 \uC815\uB3C4\uAC00 \uB2EC\uB77C\uC9D1\uB2C8\uB2E4."

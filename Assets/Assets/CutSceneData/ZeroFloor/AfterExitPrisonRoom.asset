@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: AfterExitPrisonRoom
   m_EditorClassIdentifier: 
   _lines:
-  - rid: 7990673733982355561
-  - rid: 7990673733982355562
-  - rid: 7990673733982355563
-  - rid: 7990673733982355564
+  - rid: 7990673914648330340
+  - rid: 7990673914648330351
+  - rid: 7990673914648330384
+  - rid: 7990673914648330352
   references:
     version: 2
     RefIds:
-    - rid: 7990673733982355561
+    - rid: 7990673914648330340
       type: {class: CharacterLine, ns: , asm: Assembly-CSharp}
       data:
         _lineId: 
@@ -28,21 +28,21 @@ MonoBehaviour:
         _emotion: 0
         _content: "\uC774\uC0C1\uD558\uB9AC\uB9CC\uCE58 \uBC16\uC5D0 \uC544\uBB34\uB3C4
           \uC5C6\uC5B4\u2026"
-    - rid: 7990673733982355562
+    - rid: 7990673914648330351
       type: {class: SystemLine, ns: , asm: Assembly-CSharp}
       data:
         _lineId: 
         _content: "\uD1B5\uB85C\uC5D0\uB294 \uC5EC\uB7EC \uBC29\uB4E4\uC774 \uC5F0\uACB0\uB418\uC5B4
-          \uC788\uC2B5\uB2C8\uB2E4."
-    - rid: 7990673733982355563
-      type: {class: SystemLine, ns: , asm: Assembly-CSharp}
-      data:
-        _lineId: 
-        _content: "\uD0C8\uCD9C\uD558\uAE30 \uC704\uD574\uC120 \uBC29\uB4E4\uC744
-          \uB3CC\uC544\uB2E4\uB2C8\uBA70 \u2018\uC5D0\uD14C\uB974\u2019\uB77C\uB294
-          \uBB3C\uC9C8\uC744 3\uAC1C \uBAA8\uC544\uC57C\uD569\uB2C8\uB2E4."
-    - rid: 7990673733982355564
+          \uC788\uC2B5\uB2C8\uB2E4.\r\n"
+    - rid: 7990673914648330352
       type: {class: SystemLine, ns: , asm: Assembly-CSharp}
       data:
         _lineId: 
         _content: "\uB2E4\uB978 \uBC29\uB4E4\uC744 \uB3CC\uC544\uB2E4\uB140\uBD05\uC2DC\uB2E4."
+    - rid: 7990673914648330384
+      type: {class: SystemLine, ns: , asm: Assembly-CSharp}
+      data:
+        _lineId: 
+        _content: "\uD0C8\uCD9C\uD558\uAE30 \uC704\uD574\uC120 \uBC29\uB4E4\uC744
+          \uB3CC\uC544\uB2E4\uB2C8\uBA70 <Effect type=waving waveHeight=0.4><color=#DBEB78>\uC5D0\uD14C\uB974</color></Effect>\uB77C\uB294
+          \uBB3C\uC9C8\uC744 3\uAC1C \uBAA8\uC544\uC57C\uD569\uB2C8\uB2E4."

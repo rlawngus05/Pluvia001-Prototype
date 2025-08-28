@@ -35,5 +35,5 @@ MonoBehaviour:
       type: {class: SystemLine, ns: , asm: Assembly-CSharp}
       data:
         _lineId: 
-        _content: "\uC778\uBCA4\uD1A0\uB9AC\uB294 esc, e \uB97C \uB204\uB974\uAC70\uB098
+        _content: "\uC778\uBCA4\uD1A0\uB9AC\uB294 e \uB97C \uB204\uB974\uAC70\uB098
           \uC720\uB9AC\uB97C \uC6C0\uC9C1\uC774\uAC8C \uD560 \uACBD\uC6B0 \uB2EB\uC544\uC9D1\uB2C8\uB2E4."

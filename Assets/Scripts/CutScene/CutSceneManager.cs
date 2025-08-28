@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class CutSceneManager : MonoBehaviour
 {
     public static CutSceneManager Instance { get; private set; }
-    [SerializeReference, SubclassSelector] private List<CutSceneLine> _script;
+
+    private Queue<CutSceneScript> _scriptQueue;
+    [SerializeReference, SubclassSelector] private List<CutSceneLine> _currentScript;
     [SerializeReference, SubclassSelector] private CutSceneLine _currentLine;
     [SerializeField] private GameObject _textBoxContainer;
 
@@ -14,6 +17,7 @@ public class CutSceneManager : MonoBehaviour
     private SystemLineGuiManager _systemLineGuiManager;
     private ActionLineManager _actionLineManager;
 
+    private bool _isCutscenePlaying;
     private bool _isLineFinised;
     private int _currentLineIndex;
 
@@ -28,37 +32,51 @@ public class CutSceneManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
+        _isCutscenePlaying = false;
+        _scriptQueue = new Queue<CutSceneScript>();
         _characterLineGuiManager = GetComponent<CharacterLineGuiManager>();
         _systemLineGuiManager = GetComponent<SystemLineGuiManager>();
         _actionLineManager = GetComponent<ActionLineManager>();
     }
 
-    public void SetScript(List<CutSceneLine> cutSceneScript) { _script = cutSceneScript.ToList(); }
+    public void SetCurrentScenePlayableDirectors(List<PlayableDirector> playableDirectors) { _actionLineManager.CurrentScenePlayableDirectors = playableDirectors; }
+
     public void FinishCurrentLine()
     {
         _isLineFinised = true;
         _textBoxContainer.SetActive(false);
     }
 
-    public void StartCutScene()
+    public void EnqueueScript(CutSceneScript script)
     {
-        PlayerStateManager.Instance.SetState(PlayerState.Uncontrolable);
-        _currentLineIndex = 0;
+        if (_isCutscenePlaying)
+        {
+            _scriptQueue.Enqueue(script);
+            return;
+        }
 
+        PlayerStateManager.Instance.SetState(PlayerState.Uncontrolable);
+        _isCutscenePlaying = true;
+        StartCutScene(script);
+    }
+
+    private void StartCutScene(CutSceneScript script)
+    {
+        _currentScript = script.Lines;
+        _currentLineIndex = 0;
         StartCoroutine(ExecuteNextLine());
     }
 
     private IEnumerator ExecuteNextLine()
     {
-        if (_currentLineIndex >= _script.Count)
+        if (_currentLineIndex >= _currentScript.Count)
         {
             EndCutScene();
             yield break;
         }
-
         _isLineFinised = false;
 
-        _currentLine = _script[_currentLineIndex++];
+        _currentLine = _currentScript[_currentLineIndex++];
 
         if (_currentLine is ActionLine actionLine)
         {
@@ -83,8 +101,13 @@ public class CutSceneManager : MonoBehaviour
 
     private void EndCutScene()
     {
-        PlayerStateManager.Instance.SetState(PlayerState.Idle);
+        if (_scriptQueue.Count() != 0)
+        {
+            StartCutScene(_scriptQueue.Dequeue());
+            return;
+        }
 
-        _script.Clear();
+        _isCutscenePlaying = false;
+        PlayerStateManager.Instance.SetState(PlayerState.Idle);
     }
 }

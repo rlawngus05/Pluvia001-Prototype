@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using System;
+using System.Linq;
 
 public class PlayerInteractor : MonoBehaviour
 {
@@ -49,64 +50,96 @@ public class PlayerInteractor : MonoBehaviour
                 foreach (InteractableObject interactableObject in _interactableObjects)
                 {
                     interactableObject.Interact();
+
+                    //* 아이템 종류의 InteractableObject와 상호작용 했을 때, 인벤토리 열기 튜토리얼 발동시킴
+                    if (interactableObject is InteractableItem && !TutorialManager.Instance.HasState(TutorialState.InventoryOpen))
+                    {
+                        TutorialManager.Instance.ActivateTutorial(TutorialState.InventoryOpen);
+                    }
                 }
             }
         }
     }
 
-    //* 상호작용 범위 내에 있는 상호작용 가능 물체 중에서, 플레이어와 가장 가까운 물체가 무엇인지 업데이트 하는 함수이다.
+    /// <summary>
+    /// 상호작용 범위 내의 상호작용 가능 오브젝트 중, 
+    /// 플레이어와 가장 가까운 오브젝트를 갱신하는 함수
+    /// </summary>
+    //! 시발 이거 왜 되는지 몰라
     private void UpdateClosestInteractable()
     {
         float shortestDistance = float.MaxValue;
-        GameObject closest = null;
+        GameObject closest = _currentInteractableGameObject;
+        List<InteractableObject> temp = null;
 
         foreach (var col in _currentColliders)
         {
             if (col == null) continue;
 
             float distance = Vector2.Distance(transform.position, col.transform.position);
+            var interactables = col.GetComponents<InteractableObject>();
 
-            if (distance < shortestDistance && col.GetComponent<InteractableObject>() != null)
+            // 상호작용 가능한 객체가 하나라도 있는지 확인
+            int interactableCount = interactables.Count(io => io.IsInteractable);
+
+            if (interactableCount == 0)
             {
-                InteractableObject[] temp = col.GetComponents<InteractableObject>();
-
-                //* 만약 InteractableObject가 여러개 있다면, 모든 InteractableObject가 IsInteractable일 때, 상호작용 할 수 있음
-                bool hasUninteractable = false;
-                foreach (InteractableObject interactableObject in temp)
+                // 이전까지 interactable이었는데 이제는 불가능한 경우
+                if (col.gameObject == _currentInteractableGameObject)
                 {
-                    if (!interactableObject.IsInteractable)
-                    {
-                        hasUninteractable = true;
-                        break;
-                    }
-                }
-                if (hasUninteractable) { continue; }
+                    foreach (var io in _interactableObjects)
+                        io.OffInteractable();
 
+                    _currentInteractableGameObject = null;
+                    _interactableObjects = null;
+                }
+                continue;
+            }
+
+            if (distance < shortestDistance)
+            {
                 shortestDistance = distance;
                 closest = col.gameObject;
+                temp = interactables.Where(io => io.IsInteractable).ToList();
             }
         }
 
-        if (closest != _currentInteractableGameObject)
+        // 가까운 오브젝트가 바뀐 경우
+        if (closest != _currentInteractableGameObject && temp != null)
         {
-            _currentInteractableGameObject = closest;
-
+            // 기존 이펙트 해제
             if (_interactableObjects != null)
             {
-                foreach (InteractableObject interactableObject in _interactableObjects)
-                {
-                    interactableObject.OffInteractable();
-                }
+                foreach (var io in _interactableObjects)
+                    io.OffInteractable();
             }
 
-            _interactableObjects = _currentInteractableGameObject.GetComponents<InteractableObject>();
+            _currentInteractableGameObject = closest;
+            _interactableObjects = temp.ToArray();
 
-            foreach (InteractableObject interactableObject in _interactableObjects)
+            // 새 오브젝트 이펙트 켜기
+            if (_interactableObjects != null)
             {
-                interactableObject.OnInteractable();
+                foreach (var io in _interactableObjects)
+                    io.OnInteractable();
             }
         }
+        // 같은 오브젝트지만 interactable 구성 변동이 생긴 경우
+        else if (temp != null && closest != null)
+        {
+            var newer = temp.Except(_interactableObjects).ToList();   // 새로 가능해진 것
+            var deleter = _interactableObjects.Except(temp).ToList(); // 불가능해진 것
+
+            foreach (var io in newer)
+                io.OnInteractable();
+
+            foreach (var io in deleter)
+                io.OffInteractable();
+
+            _interactableObjects = temp.ToArray();
+        }
     }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
