@@ -18,9 +18,7 @@ public class CutSceneActivator : MonoBehaviour
     {
         if (_isRepeatable || !_hasActivated)
         {
-            CutSceneManager.Instance.SetScript(_cutSceneScript.Lines);
-
-            CutSceneManager.Instance.StartCutScene();
+            CutSceneManager.Instance.EnqueueScript(_cutSceneScript);
             _hasActivated = true;
         }
     }

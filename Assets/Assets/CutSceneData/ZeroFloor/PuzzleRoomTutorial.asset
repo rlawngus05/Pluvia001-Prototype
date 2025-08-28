@@ -13,28 +13,20 @@ MonoBehaviour:
   m_Name: PuzzleRoomTutorial
   m_EditorClassIdentifier: 
   _lines:
-  - rid: 7990673867230412986
-  - rid: 7990673867230412987
-  - rid: 7990673867230412988
+  - rid: 7990673914648330369
+  - rid: 7990673914648330370
   references:
     version: 2
     RefIds:
-    - rid: 7990673867230412986
+    - rid: 7990673914648330369
       type: {class: SystemLine, ns: , asm: Assembly-CSharp}
       data:
         _lineId: 
-        _content: "\uC5EC\uAE34 <color=#E4FF6F><Effect type=waving phaseOffset=0.1
-          waveHeight=1>\uC5D0\uD14C\uB974</Effect></color>\uAC00 \uC228\uACA8\uC9C4
-          \uBC29\uC785\uB2C8\uB2E4."
-    - rid: 7990673867230412987
+        _content: "\uC5EC\uAE34 \uC5D0\uD14C\uB974\uAC00 \uC228\uACA8\uC9C4 \uBC29\uC785\uB2C8\uB2E4."
+    - rid: 7990673914648330370
       type: {class: SystemLine, ns: , asm: Assembly-CSharp}
       data:
         _lineId: 
-        _content: "<color=#E4FF6F><Effect type=waving phaseOffset=0.1 waveHeight=1>\uC5D0\uD14C\uB974</Effect></color>\uB294
-          \uAC01\uC885 \uD37C\uC990\uB85C \uAC10\uCD94\uC5B4\uC838 \uC788\uC2B5\uB2C8\uB2E4."
-    - rid: 7990673867230412988
-      type: {class: SystemLine, ns: , asm: Assembly-CSharp}
-      data:
-        _lineId: 
-        _content: "<color=#E4FF6F><Effect type=waving phaseOffset=0.1 waveHeight=1>\uC5D0\uD14C\uB974</Effect></color>\uB97C
+        _content: "\uC5D0\uD14C\uB974\uB294 \uAC01\uC885 \uD37C\uC990\uB85C \uAC10\uCD94\uC5B4\uC838
+          \uC788\uC2B5\uB2C8\uB2E4.\r\n\uD29C\uD1A0\uB9AC\uC5BC: \uC5D0\uD14C\uB974\uB97C
           \uC5BB\uAE30\uC704\uD574\uC120 \uD37C\uC990\uC744 \uD480\uC5B4\uC57C \uD569\uB2C8\uB2E4."

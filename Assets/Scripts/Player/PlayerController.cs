@@ -34,6 +34,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D _rb;
     private SpriteRenderer _spriteRenderer;
 
+    private bool _isInventoryTutorialActivated;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -58,6 +60,8 @@ public class PlayerController : MonoBehaviour
         _isWalking = true;
         _walkSoundEffectElapsed = .0f;
         _walkSoundEffectSelector = 0;
+
+        _isInventoryTutorialActivated = false;
     }
 
     private void Start()
@@ -78,6 +82,12 @@ public class PlayerController : MonoBehaviour
             }
             else { _isMovable = true; }
         });
+
+        TutorialManager.Instance.Subscribe((TutorialState currentState, TutorialState changedState) =>
+        {
+            if (changedState == TutorialState.InventoryOpen) { _isInventoryTutorialActivated = true; }
+        });
+
     }
 
     private void FixedUpdate()
@@ -168,6 +178,11 @@ public class PlayerController : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.E))
                 {
                     InventoryViewerManager.Instance.Open();
+                    if (_isInventoryTutorialActivated)
+                    {
+                        TutorialManager.Instance.ActivateTutorial(TutorialState.InventoryUse);
+                        _isInventoryTutorialActivated = false;
+                    }
                 }
             }
         }

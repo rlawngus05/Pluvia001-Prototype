@@ -3,12 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public delegate void TutorialHandler(TutorialState currentState, TutorialState changedState);
+
 public class TutorialManager : MonoBehaviour
 {
     [SerializeField] private List<CutSceneActivator> _cutSceneActivators;
     public static TutorialManager Instance { get; private set; }
     private TutorialState _currentState;
-    private event Action<TutorialState> _onStateChanged;
+    private event TutorialHandler _onStateChanged;
 
     private void Awake()
     {
@@ -29,25 +31,25 @@ public class TutorialManager : MonoBehaviour
     private void AddState(TutorialState state)
     {
         _currentState |= state;
-        OnStateChanged();
+        OnStateChanged(state);
     }
 
     private void DeleteState(TutorialState state)
     {
         _currentState &= ~state;
-        OnStateChanged();
+        OnStateChanged(state);
     }
 
-    private void OnStateChanged()
+    private void OnStateChanged(TutorialState changedState)
     {
-        StartCoroutine(OnStateChangedCoroutine());
+        StartCoroutine(OnStateChangedCoroutine(changedState));
     }
 
-    private IEnumerator OnStateChangedCoroutine()
+    private IEnumerator OnStateChangedCoroutine(TutorialState changedState)
     {
         yield return null;
 
-        _onStateChanged?.Invoke(_currentState);
+        _onStateChanged?.Invoke(_currentState, changedState);
     }
 
     public void ActivateTutorial(TutorialState type)
@@ -58,8 +60,8 @@ public class TutorialManager : MonoBehaviour
         AddState(type);
     }
 
-    public void Subscribe(Action<TutorialState> handler) { _onStateChanged += handler; }
-    public void Unsubscribe(Action<TutorialState> handler) { _onStateChanged -= handler; }
+    public void Subscribe(TutorialHandler handler) { _onStateChanged += handler; }
+    public void Unsubscribe(TutorialHandler handler) { _onStateChanged -= handler; }
 }
 
 [Flags]

@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: GetItemTutorial
   m_EditorClassIdentifier: 
   _lines:
-  - rid: 7990673733982355569
+  - rid: 7990673914648330368
   references:
     version: 2
     RefIds:
-    - rid: 7990673733982355569
+    - rid: 7990673914648330368
       type: {class: SystemLine, ns: , asm: Assembly-CSharp}
       data:
         _lineId: 
         _content: "\uC544\uC774\uD15C\uC744 \uD68D\uB4DD \uD558\uC168\uC2B5\uB2C8\uB2E4.
-          e\uB97C \uB20C\uB7EC \uD655\uC778 \uD574\uBCF4\uC138\uC694."
+          e\uB97C \uB20C\uB7EC \uD655\uC778 \uD574\uBCF4\uC138\uC694.\r"

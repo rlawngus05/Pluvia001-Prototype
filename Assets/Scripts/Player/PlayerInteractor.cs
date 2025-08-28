@@ -50,6 +50,12 @@ public class PlayerInteractor : MonoBehaviour
                 foreach (InteractableObject interactableObject in _interactableObjects)
                 {
                     interactableObject.Interact();
+
+                    //* 아이템 종류의 InteractableObject와 상호작용 했을 때, 인벤토리 열기 튜토리얼 발동시킴
+                    if (interactableObject is InteractableItem && !TutorialManager.Instance.HasState(TutorialState.InventoryOpen))
+                    {
+                        TutorialManager.Instance.ActivateTutorial(TutorialState.InventoryOpen);
+                    }
                 }
             }
         }

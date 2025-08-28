@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: ElectricChairInteract0
   m_EditorClassIdentifier: 
   _lines:
-  - rid: 7990673733982355580
+  - rid: 7990673914648330353
   references:
     version: 2
     RefIds:
-    - rid: 7990673733982355580
+    - rid: 7990673914648330353
       type: {class: CharacterLine, ns: , asm: Assembly-CSharp}
       data:
         _lineId: 
