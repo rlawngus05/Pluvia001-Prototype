@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
@@ -28,15 +29,36 @@ public class ActionLineManager : MonoBehaviour
             throw new Exception($"No PlayableDirector found in this scene for ID \"{playableDirectorId}\"");
         }
 
-        try
+        if (actionLine.IsSetter)
         {
-            playableDirector.GetComponent<ActionLineFinisher>().SetFinishLineObserver(finishLineObserver);
+            StartCoroutine(ExecuteSetter(playableDirector, finishLineObserver));
         }
-        catch
+        else
         {
-            throw new Exception($"Gameobject \"{playableDirectorId}\" doesn't have an \"ActionLineFinsher\" component");
-        }
+            try
+            {
+                playableDirector.GetComponent<ActionLineFinisher>().SetFinishLineObserver(finishLineObserver);
+            }
+            catch
+            {
+                throw new Exception($"Gameobject \"{playableDirectorId}\" doesn't have an \"ActionLineFinsher\" component");
+            }
 
+            playableDirector.Play();
+        }
+    }
+
+    private IEnumerator ExecuteSetter(PlayableDirector playableDirector, Action finishLineObserver)
+    {
+        bool isSet = false;
+
+        yield return ScreenEffectManager.Instance.FadeIn(0.5f);
+        playableDirector.stopped += (playableDirector) => { isSet = true; };
         playableDirector.Play();
+
+        yield return new WaitUntil(() => isSet);
+        yield return ScreenEffectManager.Instance.FadeOut(0.5f);
+
+        finishLineObserver();
     }
 }

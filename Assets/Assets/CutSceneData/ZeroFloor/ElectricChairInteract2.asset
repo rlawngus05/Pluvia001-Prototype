@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: ElectricChairInteract2
   m_EditorClassIdentifier: 
   _lines:
+  - rid: 7990673912044191821
   - rid: 7990673733982355582
   - rid: 7990673733982355583
   - rid: 7990673733982355584
@@ -53,4 +54,11 @@ MonoBehaviour:
       type: {class: ActionLine, ns: , asm: Assembly-CSharp}
       data:
         _lineId: 
+        _isSetter: 0
         _playableDirectorId: YuriOut
+    - rid: 7990673912044191821
+      type: {class: ActionLine, ns: , asm: Assembly-CSharp}
+      data:
+        _lineId: 
+        _isSetter: 1
+        _playableDirectorId: YuriOutSetter
