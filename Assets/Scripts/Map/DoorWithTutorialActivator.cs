@@ -1,15 +1,15 @@
 using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(CutSceneActivator))]
-public class DoorWithCutsceneActivator : Door
+[RequireComponent(typeof(TutorialActivator))]
+public class DoorWithTutorialActivator : Door
 {
-    private CutSceneActivator _cutSceneActivator;
+    private TutorialActivator _tutorialActivator;
 
     protected override void Awake()
     {
         base.Awake();
-        _cutSceneActivator = GetComponent<CutSceneActivator>();
+        _tutorialActivator = GetComponent<TutorialActivator>();
     }
 
     protected override void OnInteract()
@@ -21,15 +21,15 @@ public class DoorWithCutsceneActivator : Door
 
     private IEnumerator TransitionRoutineWithCutSceneActivate()
     {
-        if (_cutSceneActivator.HasActivated || _cutSceneActivator.IsRepeatable)
+        if (TutorialManager.Instance.HasState(_tutorialActivator.TutorialType))
         {
             yield return StartCoroutine(TransitionRoutine());
-            _cutSceneActivator.Activate();
+            _tutorialActivator.Activate();
         }
         else
         {
             yield return StartCoroutine(TransitionRoutine(true));
-            _cutSceneActivator.Activate();
+            _tutorialActivator.Activate();
         }
     }
 }
