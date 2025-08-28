@@ -20,6 +20,9 @@ public class HealthManager : MonoBehaviour
     [SerializeField] private AudioClip _deadSoundEffect;
 
     private Action<int, int> _healthChangeObserver;
+
+    private Animator _animator;
+
     public void SetHealthChangeObserver(Action<int, int> observer)
     {
         _healthChangeObserver = observer;
@@ -33,6 +36,7 @@ public class HealthManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            _animator = GetComponent<Animator>();
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -84,14 +88,17 @@ public class HealthManager : MonoBehaviour
     private IEnumerator GetInvincible()
     {
         _isInvincible = true;
+        _animator.SetBool("isInvincible", true);
 
         yield return new WaitForSeconds(_invincibleTime);
 
         _isInvincible = false;
+        _animator.SetBool("isInvincible", false);
     }
 
     private void OnHurt()
-    {
+    {   
+        _animator.SetTrigger("onHurt");
         SoundManager.Instance.PlaySoundEffectWithRandomPich(_hurtSoundEffect);
         CameraManager.Instance.ExectueHurtEffect(_health, MAX_HEALTH, 30);
         ScreenEffectManager.Instance.ExecuteHurtEffect(_health, MAX_HEALTH, 30, _invincibleTime);
@@ -102,7 +109,7 @@ public class HealthManager : MonoBehaviour
         SoundManager.Instance.PlaySoundEffect(_deadSoundEffect);
 
         PlayerStateManager.Instance.SetState(PlayerState.Uncontrolable);
-        Debug.Log("사망 애니매이션 실행");
+        _animator.SetTrigger("death");
 
         CameraManager.Instance.ExecuteDeadEffect();
         ScreenEffectManager.Instance.ExecuteDeadEffect();
