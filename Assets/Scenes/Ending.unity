@@ -396,7 +396,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -97.036, y: -76.53801}
+  m_AnchoredPosition: {x: -97.036, y: -79.2}
   m_SizeDelta: {x: 260, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &252576527
@@ -936,7 +936,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -97.036, y: 101.4}
+  m_AnchoredPosition: {x: -97.036, y: 106.40001}
   m_SizeDelta: {x: 260, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &845955155
@@ -1720,6 +1720,42 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameSettingManager
       objectReference: {fileID: 0}
+    - target: {fileID: 2416802974636567997, guid: 62263fabbdb1e4f4f922a5111a695a85, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416802974636567997, guid: 62263fabbdb1e4f4f922a5111a695a85, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4114395838232446654, guid: 62263fabbdb1e4f4f922a5111a695a85, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4114395838232446654, guid: 62263fabbdb1e4f4f922a5111a695a85, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7661559528146130902, guid: 62263fabbdb1e4f4f922a5111a695a85, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7708046024565446418, guid: 62263fabbdb1e4f4f922a5111a695a85, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7708046024565446418, guid: 62263fabbdb1e4f4f922a5111a695a85, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7708046024565446418, guid: 62263fabbdb1e4f4f922a5111a695a85, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9114294264478637993, guid: 62263fabbdb1e4f4f922a5111a695a85, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2228,6 +2264,8 @@ MonoBehaviour:
     A Placeholder
 
     Atelier Magicae || Ririsaurus/Riri Hinasaki
+
+    freesound_community
 
 '
   m_isRightToLeft: 0
