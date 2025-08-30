@@ -5,6 +5,9 @@
     "m_Properties": [
         {
             "m_Id": "d13895b3fe9e490db8c3a70f2702d356"
+        },
+        {
+            "m_Id": "304c9cf447434e89a9ec84739432c9ef"
         }
     ],
     "m_Keywords": [],
@@ -59,6 +62,9 @@
         },
         {
             "m_Id": "61643b4b83b0481c8dd8a7930a018a12"
+        },
+        {
+            "m_Id": "50a2be1f5d774bffaab687e1c99895ac"
         }
     ],
     "m_GroupDatas": [],
@@ -90,6 +96,20 @@
                     "m_Id": "dee7d4ad63854c649dd86d07b9140671"
                 },
                 "m_SlotId": 0
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "50a2be1f5d774bffaab687e1c99895ac"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "671ea563a764493bbfce8fda13cd0de0"
+                },
+                "m_SlotId": 1
             }
         },
         {
@@ -596,6 +616,36 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Texture2DShaderProperty",
+    "m_ObjectId": "304c9cf447434e89a9ec84739432c9ef",
+    "m_Guid": {
+        "m_GuidSerialized": "b5ffee1c-2021-4111-ac09-de7d6c21cf51"
+    },
+    "m_Name": "_MainTex",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "_MainTex",
+    "m_DefaultReferenceName": "_MainTex",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": {
+        "m_SerializedTexture": "{\"texture\":{\"fileID\":2800000,\"guid\":\"6d6cad4e28613394bb8e6de187abc583\",\"type\":3}}",
+        "m_Guid": ""
+    },
+    "isMainTexture": false,
+    "useTilingAndOffset": false,
+    "m_Modifiable": true,
+    "m_DefaultType": 0
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "3491d8f6e8bf46c9a0868bca3072584c",
     "m_Id": 0,
@@ -814,6 +864,42 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "50a2be1f5d774bffaab687e1c99895ac",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": -724.0,
+            "y": 239.00001525878907,
+            "width": 133.0,
+            "height": 33.99998474121094
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "ba6b20089418453b9298ea3aeda1d8b3"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "304c9cf447434e89a9ec84739432c9ef"
+    }
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.TimeNode",
     "m_ObjectId": "592a8cae7dc04f65984f61bb1edaf82e",
     "m_Group": {
@@ -991,6 +1077,9 @@
     "m_ChildObjectList": [
         {
             "m_Id": "d13895b3fe9e490db8c3a70f2702d356"
+        },
+        {
+            "m_Id": "304c9cf447434e89a9ec84739432c9ef"
         }
     ]
 }
@@ -1324,6 +1413,19 @@
         "y": 0.0
     },
     "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Texture2DMaterialSlot",
+    "m_ObjectId": "ba6b20089418453b9298ea3aeda1d8b3",
+    "m_Id": 0,
+    "m_DisplayName": "_MainTex",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_BareResource": false
 }
 
 {

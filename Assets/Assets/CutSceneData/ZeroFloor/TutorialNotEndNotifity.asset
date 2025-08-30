@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 135cf940e76d7534cbfa598ad0205340, type: 3}
+  m_Name: TutorialNotEndNotifity
+  m_EditorClassIdentifier: 
+  _lines:
+  - rid: 7990673960274755703
+  references:
+    version: 2
+    RefIds:
+    - rid: 7990673960274755703
+      type: {class: SystemLine, ns: , asm: Assembly-CSharp}
+      data:
+        _lineId: 
+        _content: "\uC774 \uAD6C\uAC04\uC744 \uC9C0\uB098\uAC08\uB824\uBA74 \uBAA8\uB4E0
+          \uD29C\uD1A0\uB9AC\uC5BC\uC744 \uC644\uB8CC\uD574\uC57C \uD569\uB2C8\uB2E4"

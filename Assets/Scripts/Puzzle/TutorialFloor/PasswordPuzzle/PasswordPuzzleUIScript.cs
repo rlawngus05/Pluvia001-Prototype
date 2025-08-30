@@ -16,6 +16,7 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
     [SerializeField] private List<Sprite> _lightSprites;
 
     [SerializeField] private InteractableEther _interactableEther;
+    [SerializeField] private InteractableTutorialActivator _interactableTutorialActivator;
 
     private bool _isScrolling;
     private int _currentIndex;
@@ -35,6 +36,7 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
     private void Awake()
     {
         _interactableEther.UnsetInteractable();
+        _interactableTutorialActivator.UnsetInteractable();
 
         digitPanelStateDict = _digitPanelStateDictWrapper.ToDictionary();
         _puzzleEffects = GetComponent<PasswordPuzzleEffects>();
@@ -166,7 +168,7 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
     {
         _panel.sprite = _panelSprites[currentIndex];
     }
-    
+
     private IEnumerator ExecuteSolvedEvent()
     {
         _panel.sprite = _panelSprites[4];
@@ -176,10 +178,11 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
         yield return _puzzleEffects.SpinMagicCircle();
         Close();
         yield return _puzzleEffects.ElevateEtherContainer();
-        
+
         _interactableEther.ExecuteFloating();
         yield return _puzzleEffects.ShowEther();
         _interactableEther.SetInteractable();
+        _interactableTutorialActivator.SetInteractable();
     }
 
     private void ExecuteFailEvent()

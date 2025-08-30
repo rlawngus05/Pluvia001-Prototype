@@ -8,8 +8,8 @@ public delegate void TutorialHandler(TutorialState currentState, TutorialState c
 public class TutorialManager : MonoBehaviour
 {
     [SerializeField] private List<CutSceneActivator> _cutSceneActivators;
-    public static TutorialManager Instance { get; private set; }
     private TutorialState _currentState;
+    public static TutorialManager Instance { get; private set; }
     private event TutorialHandler _onStateChanged;
 
     private void Awake()
@@ -20,6 +20,7 @@ public class TutorialManager : MonoBehaviour
             return;
         }
 
+        DontDestroyOnLoad(gameObject);
         Instance = this;
     }
 
@@ -58,6 +59,16 @@ public class TutorialManager : MonoBehaviour
 
         _cutSceneActivators[(int)Math.Log((double)type, 2.0)].Activate();
         AddState(type);
+    }
+    
+    public bool HasCompletedTutorial()
+    {
+        TutorialState allStates = 0;
+        foreach (TutorialState state in Enum.GetValues(typeof(TutorialState)))
+        {
+            allStates |= state;
+        }
+        return HasState(allStates);
     }
 
     public void Subscribe(TutorialHandler handler) { _onStateChanged += handler; }
