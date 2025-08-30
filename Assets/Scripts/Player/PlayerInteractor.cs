@@ -18,7 +18,7 @@ public class PlayerInteractor : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            _isInteratable = true;
+            _isInteratable = false;
         }
         else
         {
@@ -27,7 +27,8 @@ public class PlayerInteractor : MonoBehaviour
         }
     }
 
-    private void Start() {
+    private void Start()
+    {
         PlayerStateManager.Instance.Subscribe((PlayerState currentState) =>
         {
             if ((currentState & PlayerState.Uninteractable) == PlayerState.Uninteractable) { _isInteratable = false; }
@@ -37,7 +38,7 @@ public class PlayerInteractor : MonoBehaviour
 
     private void Update()
     {
-        if (_isInteratable)
+        if (_isInteratable && TutorialManager.Instance.HasState(TutorialState.Interact)) //! 흠... TutorialManager에 리스너 안 넣는거 맞냐?
         {
             UpdateClosestInteractable();
 

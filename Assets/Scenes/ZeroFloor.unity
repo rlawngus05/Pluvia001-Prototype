@@ -3870,7 +3870,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interactableEffectMaterial: {fileID: 2100000, guid: 847605dbcec3bec48a023e4eaa4d70d0, type: 2}
-  _interactSoundEffect: {fileID: 8300000, guid: b670f495b3a082343b275bc8dde3eff4, type: 3}
+  _interactSoundEffect: {fileID: 8300000, guid: 6e9abf2bc1f746148a9b276230ab7ced, type: 3}
   _isInteractable: 0
   _priority: 1
   itemData: {fileID: 11400000, guid: 4c827483746fea94680ad01a14cf53b9, type: 2}
