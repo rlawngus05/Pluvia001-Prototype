@@ -35,13 +35,15 @@ public class PasswordPuzzleUIScript : MonoBehaviour, IPuzzleObject
 
     private void Awake()
     {
-        _interactableEther.UnsetInteractable();
-        _interactableTutorialActivator.UnsetInteractable();
-
         digitPanelStateDict = _digitPanelStateDictWrapper.ToDictionary();
         _puzzleEffects = GetComponent<PasswordPuzzleEffects>();
 
         _isScrolling = false;
+    }
+
+    private void Start() {
+        _interactableEther.UnsetInteractable();
+        _interactableTutorialActivator.UnsetInteractable();
     }
 
     public void Initialize()

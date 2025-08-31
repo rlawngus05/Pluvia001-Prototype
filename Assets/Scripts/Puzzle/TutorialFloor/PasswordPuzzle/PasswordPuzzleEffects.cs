@@ -235,9 +235,10 @@ public class PasswordPuzzleEffects : MonoBehaviour
     public void PlayFailSequence()
     {
         Vector2 knockbackForce = new Vector2(-_pushedPowerX, 0);
-        
+
         PlayerController.Instance.AddForce(knockbackForce, ForceMode2D.Impulse);
 
-        Debug.Log("Hit animation executing"); // 피격 애니매이션 실행
+        HealthManager.Instance.DecreaseHealth(5);
+        // Debug.Log("Hit animation executing"); // 피격 애니매이션 실행
     }
 }

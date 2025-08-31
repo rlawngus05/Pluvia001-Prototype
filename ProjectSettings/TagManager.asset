@@ -57,6 +57,9 @@ TagManager:
   - name: Border
     uniqueID: 2490905993
     locked: 0
+  - name: InteractablaOnBorder
+    uniqueID: 991225259
+    locked: 0
   - name: Player
     uniqueID: 95219247
     locked: 0
@@ -64,7 +67,7 @@ TagManager:
     uniqueID: 2481724723
     locked: 0
   - name: TopMost
-    uniqueID: 991225259
+    uniqueID: 2352091399
     locked: 0
   m_RenderingLayers:
   - Default
