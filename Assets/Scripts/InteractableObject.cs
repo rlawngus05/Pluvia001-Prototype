@@ -67,6 +67,6 @@ public abstract class InteractableObject : MonoBehaviour, IComparable<Interactab
     {
         if (operand == null) { return 1; }
 
-        return _priority.CompareTo(operand.Priority);
+        return -_priority.CompareTo(operand.Priority);
     }
 }   
