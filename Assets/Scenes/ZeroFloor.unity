@@ -13513,11 +13513,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9200925775097895921, guid: d9f161a95d1e32a46abe9bf07948c8ae, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -82.2
+      value: -69.54
       objectReference: {fileID: 0}
     - target: {fileID: 9200925775097895921, guid: d9f161a95d1e32a46abe9bf07948c8ae, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.6
+      value: 18.18
       objectReference: {fileID: 0}
     - target: {fileID: 9200925775097895921, guid: d9f161a95d1e32a46abe9bf07948c8ae, type: 3}
       propertyPath: m_LocalPosition.z
@@ -22231,7 +22231,7 @@ Transform:
   m_GameObject: {fileID: 1396702352}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.029, y: 0.25, z: 0}
+  m_LocalPosition: {x: -8.27, y: 0.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -25603,11 +25603,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9200925775097895921, guid: d9f161a95d1e32a46abe9bf07948c8ae, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -79.12
+      value: -105.24
       objectReference: {fileID: 0}
     - target: {fileID: 9200925775097895921, guid: d9f161a95d1e32a46abe9bf07948c8ae, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 18.51
+      value: 24.84
       objectReference: {fileID: 0}
     - target: {fileID: 9200925775097895921, guid: d9f161a95d1e32a46abe9bf07948c8ae, type: 3}
       propertyPath: m_LocalPosition.z
@@ -26667,7 +26667,7 @@ MonoBehaviour:
   _isInteractable: 0
   _priority: 0
   _destinationPoint: {fileID: 1396702353}
-  _destinationCameraConfiner: {fileID: 1065123304}
+  _destinationCameraConfiner: {fileID: 226525523}
 --- !u!61 &1642374047
 BoxCollider2D:
   m_ObjectHideFlags: 0
